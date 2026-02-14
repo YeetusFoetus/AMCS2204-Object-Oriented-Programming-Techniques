@@ -13,6 +13,10 @@ public class Library {
                     sayHello();
                     break;
                 case 2:
+                    return;
+                case 3:
+                    return;
+                case 4:
                     exitProgram();
                     return;
                 default:
@@ -24,9 +28,10 @@ public class Library {
         System.out.println("\n====================");
         System.out.println("   MAIN MENU");
         System.out.println("====================");
-        System.out.println("1. Say Hello");
-        System.out.println("2. Exit");
-        System.out.print("Select option: ");
+        System.out.println("1. Member Login");
+        System.out.println("2. Admin Login");
+        System.out.println("3. Register Member");
+        System.out.println("4. Exit");
     }
 
     static void sayHello() {
