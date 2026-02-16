@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class MainMenu {
     Scanner scanner = new Scanner(System.in);
     MemberLogin login = new MemberLogin();
+    RegisterMember register = new RegisterMember();
 
     void start() {
         while (true) {
@@ -16,6 +17,7 @@ public class MainMenu {
                 case 2:
                     return;
                 case 3:
+                    option3();
                     return;
                 case 4:
                     exitProgram();
@@ -38,6 +40,10 @@ public class MainMenu {
 
     void option1() {
         login.login1();
+    }
+
+    void option3() {
+        register.register1();
     }
 
     void exitProgram() {
