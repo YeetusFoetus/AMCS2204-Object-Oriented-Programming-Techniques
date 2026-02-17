@@ -12,7 +12,7 @@ public class MainMenu {
 
             switch (choice) {
                 case 1:
-                    option1();;
+                    option1();
                     return;
                 case 2:
                     return;

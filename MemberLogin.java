@@ -6,7 +6,10 @@ public class MemberLogin {
 
     public void login1() {
         db.addMember(new Member("A123", "Alice"));
+        db.addBook(new Book("B123", "Moby Dick"));
+
         System.out.print("Enter password(ID): ");
+        Catalog catalog = new Catalog();
         
         String password = scanner.next();
 
@@ -20,6 +23,17 @@ public class MemberLogin {
             System.out.println("2. Borrowed books");
             System.out.println("3. Study room booking");
             System.out.println("4. Pay fine");
+
+            int choice = scanner.nextInt();
+
+            switch (choice) { 
+                case 1:
+                    catalog.catalogScreen(db);
+                    break;
+                default:
+                    System.out.println("Invalid choice!");
+                    return;
+            }
         } 
         
         else if (member == null) {
