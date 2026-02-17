@@ -1,17 +1,17 @@
 import java.util.ArrayList;
 
 public class Member {
-    private String memberId;    // Auto-generated
+    private String memberId;    
     private String name;
     private ArrayList<BorrowReturn> borrowedBooks;
-    private ArrayList<StudyRoomBooking> roomBookings;
+    //private ArrayList<StudyRoomBooking> roomBookings;
     private ArrayList<Fine> pendingFines;
 
     public Member(String memberId, String name) {
         this.memberId = memberId;
         this.name = name;
         this.borrowedBooks = new ArrayList<>();
-        this.roomBookings = new ArrayList<>();
+        //this.roomBookings = new ArrayList<>();
         this.pendingFines = new ArrayList<>();
     }
 
