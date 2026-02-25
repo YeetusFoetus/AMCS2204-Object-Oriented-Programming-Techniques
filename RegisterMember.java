@@ -12,9 +12,12 @@ public class RegisterMember {
         System.out.print("\nEnter your name: ");
         String userName = scanner.nextLine();
 
-        Member newMember = new Member(userId, userName);
+        System.out.print("\nEnter your password: ");
+        String userPassword = scanner.nextLine();
 
-        db.addMember(newMember);
+        User newMember = new Member(userId, userName, userPassword);
+
+        db.addUser(newMember);
 
         while (true) {
             System.out.println("Press 1 to return");

@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class MainMenu {
+public class LoginScreen {
     Scanner scanner = new Scanner(System.in);
     MemberLogin login = new MemberLogin();
     RegisterMember register = new RegisterMember();

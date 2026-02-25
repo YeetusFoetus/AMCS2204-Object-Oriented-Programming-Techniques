@@ -2,40 +2,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryDatabase {
-    private List<Member> members;
+    //private List<Member> members;
     private List<Book> books;
+    private List<User> users; 
 
     public LibraryDatabase() {
-        members = new ArrayList<>();
         books = new ArrayList<>();
+        users = new ArrayList<>();
     }
 
-    public void addMember(Member member) {
-        members.add(member);
+    public void addUser(User user) {
+        users.add(user);
     }
 
-    public Member getMemberById(String id) {
-        for (Member m : members) {
-            if (m.getMemberId().equals(id)) {
-                return m;
+    public User getUserById(String id) {
+        for (User u : users) {
+            if (u.getUserId().equals(id)) {
+                return u;
+            }
+        }
+        return null;  // not found
+    }
+
+    public User getUserByName(String name) {
+        for (User u : users) {
+            if (u.getUserName().equals(name)) {
+                return u;
             }
         }
         return null;
-    }
-
-    public Member getMemberByName(String name) {
-        for (Member m : members) {
-            if (m.getName().equals(name)) {
-                return m;
-            }
-        }
-        return null;
-    }
-
-    public void printAllMembers() {
-        for (Member m : members) {
-            System.out.println(m);
-        }
     }
 
     public void addBook(Book book) {
@@ -46,10 +41,14 @@ public class LibraryDatabase {
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
 
-            System.out.printf("%-3d %-5s %-50s\n", 
+            System.out.printf("%-3d %-5s %-15s %-10s %-10s %-10s %-13s\n", 
                 i + 1,
                 book.getBookId(),
-                book.getBookName()
+                book.getBookName(),
+                book.getBookGenre(),
+                book.getBookISBN(),
+                book.getBookSection(),
+                book.getBookStatus()
             );
         }
     }

@@ -5,19 +5,30 @@ public class MemberLogin {
     LibraryDatabase db = new LibraryDatabase();
 
     public void login1() {
-        db.addMember(new Member("A123", "Alice"));
-        db.addBook(new Book("B123", "Moby Dick"));
+        db.addUser(new Member("A123", "Alice", "alice123"));
+
+        db.addBook(
+            new Book
+            (
+                "B123", 
+                "Moby Dick", 
+                "Fantasy", 
+                "98579275",
+                "Fiction",
+                "Available"
+            )
+        );
 
         System.out.print("Enter password(ID): ");
         Catalog catalog = new Catalog();
         
         String password = scanner.next();
 
-        Member member = db.getMemberById(password);
+        User member = db.getUserById(password);
 
         if (member != null) {
             System.out.println("\n==================");
-            System.out.println("Welcome " + member.getName());
+            System.out.println("Welcome " + member.getUserName());
             System.out.println("==================");
             System.out.println("1. Catalog");
             System.out.println("2. Borrowed books");
