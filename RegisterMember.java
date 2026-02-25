@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class RegisterMember {
     Scanner scanner = new Scanner(System.in);
     LibraryDatabase db = new LibraryDatabase();
-    MemberLogin login = new MemberLogin();
+    MemberMenu login = new MemberMenu();
 
     public void register1() {
         System.out.print("Enter your ID: ");

@@ -26,4 +26,8 @@ public class Book {
     public String getBookISBN() { return bookISBN; }
     public String getBookSection() { return bookSection; }
     public String getBookStatus() { return bookStatus; }
+
+    public String changeStatusToLoan() {
+        return this.bookStatus = "On Loan";
+    }
 }

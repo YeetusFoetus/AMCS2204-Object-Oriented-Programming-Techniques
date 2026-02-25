@@ -6,7 +6,7 @@ public class LibraryDatabase {
     private List<Book> books;
     private List<User> users; 
 
-    public LibraryDatabase() {
+    LibraryDatabase() {
         books = new ArrayList<>();
         users = new ArrayList<>();
     }
@@ -35,6 +35,27 @@ public class LibraryDatabase {
 
     public void addBook(Book book) {
         books.add(book);
+    }
+
+    public Book getBookById(String id) {
+        for (Book b : books) {
+            if (b.getBookId().equals(id)) {
+                return b;
+            }
+        }
+        return null;
+    }
+
+    public Book updateBookOnLoan(Book b1) {
+        for (Book b2 : books) {
+            if (b1 == b2) {
+                b1.changeStatusToLoan();
+            }
+            else {
+                System.out.println("This book doesn't exist");
+            }
+        }
+        return null;
     }
 
     public void printAllBooks() {

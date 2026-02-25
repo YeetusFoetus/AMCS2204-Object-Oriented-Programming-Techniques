@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class MemberLogin {
+public class MemberMenu {
     Scanner scanner = new Scanner(System.in);
     LibraryDatabase db = new LibraryDatabase();
 
@@ -41,6 +41,12 @@ public class MemberLogin {
                 case 1:
                     catalog.catalogScreen(db);
                     break;
+                case 2:
+                    System.out.println("Sup");
+                case 3:
+                    System.out.println("Sup");
+                case 4:
+                    System.out.println("Sup");
                 default:
                     System.out.println("Invalid choice!");
                     return;

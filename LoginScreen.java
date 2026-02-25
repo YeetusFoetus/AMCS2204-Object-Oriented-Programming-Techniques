@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class LoginScreen {
     Scanner scanner = new Scanner(System.in);
-    MemberLogin login = new MemberLogin();
+    MemberMenu login = new MemberMenu();
     RegisterMember register = new RegisterMember();
 
     void start() {
@@ -15,6 +15,7 @@ public class LoginScreen {
                     option1();
                     return;
                 case 2:
+                    //option2();
                     return;
                 case 3:
                     option3();
@@ -42,8 +43,16 @@ public class LoginScreen {
         login.login1();
     }
 
+    void option2() {
+
+    }
+
     void option3() {
         register.register1();
+    }
+
+    void option4() {
+
     }
 
     void exitProgram() {
