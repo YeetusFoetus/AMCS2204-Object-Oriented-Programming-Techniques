@@ -1,8 +1,15 @@
 //import java.util.ArrayList;
 
 public class Member extends User {
+
     public Member(String userId, String userName, String userPassword) {
         super(userId, userName, userPassword);
+    }
+
+    @Override
+    // Inheritance(?)
+    public String toCSV() {
+        return "Member," + getUserId() + "," + getUserName() + "," + getUserPassword();
     }
 }
 

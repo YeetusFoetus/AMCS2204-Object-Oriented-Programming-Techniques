@@ -1,7 +1,54 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class LibraryDatabase {
+
+    // File read write
+    public void saveUsersToFile() {
+        try {
+            FileWriter writer = new FileWriter("users.csv");
+
+            for (User user : users) {
+                writer.write(user.toCSV());
+                writer.write("\n");
+            }
+
+            writer.close();
+            System.out.println("Users saved successfully.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadUsersFromFile() {
+        users.clear(); // prevent duplicates
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("users.csv"));
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+
+                User user = UserFactory.createUser(data);
+                users.add(user);
+            }
+
+            reader.close();
+            System.out.println("Users loaded successfully.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Fields
     //private List<Member> members;
     private List<Book> books;
     private List<User> users; 
@@ -11,6 +58,7 @@ public class LibraryDatabase {
         users = new ArrayList<>();
     }
 
+    // Other methods
     public void addUser(User user) {
         users.add(user);
     }

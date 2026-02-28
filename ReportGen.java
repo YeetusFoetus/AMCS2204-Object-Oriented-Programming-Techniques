@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class ReportGen {
     Scanner scanner = new Scanner(System.in);
-    public void main() {
+    public void generateReport() {
         System.out.println("This is the report generator part. Which one do you want to access here?\n");
         System.out.println("1. Borrowing Statistics for Every User\n");
         System.out.println("2. Fines summary\n");

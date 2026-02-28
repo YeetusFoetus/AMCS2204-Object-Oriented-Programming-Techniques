@@ -34,6 +34,7 @@ public class MemberMenu {
             System.out.println("2. Borrowed books");
             System.out.println("3. Study room booking");
             System.out.println("4. Pay fine");
+            System.out.println("5. Return");
 
             int choice = scanner.nextInt();
 

@@ -8,6 +8,8 @@ abstract class User {
     LibraryDatabase db = new LibraryDatabase();
     Scanner scanner = new Scanner(System.in);
 
+    public abstract String toCSV();
+
     //Constructor
     public User(String userId, String userName, String userPassword) {
         this.userId = userId;
