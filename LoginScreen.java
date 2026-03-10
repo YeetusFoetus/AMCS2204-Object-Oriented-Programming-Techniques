@@ -4,9 +4,11 @@ public class LoginScreen {
     Scanner scanner = new Scanner(System.in);
     MemberMenu login = new MemberMenu();
     RegisterMember register = new RegisterMember();
+    Admin admin = new Admin();
 
-    void start() {
-        while (true) {
+    void start() 
+    { int n = 0;
+        while (n != 4) {
             showMenu();
             int choice = scanner.nextInt();
 
@@ -15,7 +17,7 @@ public class LoginScreen {
                     option1();
                     return;
                 case 2:
-                    //option2();
+                    option2();
                     return;
                 case 3:
                     option3();
@@ -28,7 +30,8 @@ public class LoginScreen {
             }
         }
     }
-    
+
+
     void showMenu() {
         System.out.println("\n====================");
         System.out.println("   ABC Library");
@@ -44,7 +47,7 @@ public class LoginScreen {
     }
 
     void option2() {
-
+        admin.adminlogin();
     }
 
     void option3() {
