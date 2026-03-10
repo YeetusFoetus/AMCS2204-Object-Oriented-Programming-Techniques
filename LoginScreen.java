@@ -51,12 +51,9 @@ public class LoginScreen {
         register.register1();
     }
 
-    void option4() {
-
-    }
-
     void exitProgram() {
         System.out.println("Exiting...");
         scanner.close();
+        System.exit(0);
     }
 }

@@ -31,10 +31,11 @@ public class MemberMenu {
             System.out.println("Welcome " + member.getUserName());
             System.out.println("==================");
             System.out.println("1. Catalog");
-            System.out.println("2. Borrowed books");
-            System.out.println("3. Study room booking");
-            System.out.println("4. Pay fine");
-            System.out.println("5. Return");
+            System.out.println("2. Search books");
+            System.out.println("3. Borrowed books");
+            System.out.println("4. Study room booking");
+            System.out.println("5. Pay fine");
+            System.out.println("6. Return");
 
             int choice = scanner.nextInt();
 
@@ -47,6 +48,10 @@ public class MemberMenu {
                 case 3:
                     System.out.println("Sup");
                 case 4:
+                    System.out.println("Sup");
+                case 5:
+                    System.out.println("Sup");
+                case 6:
                     System.out.println("Sup");
                 default:
                     System.out.println("Invalid choice!");

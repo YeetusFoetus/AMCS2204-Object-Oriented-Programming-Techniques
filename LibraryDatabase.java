@@ -89,6 +89,19 @@ public class LibraryDatabase {
         for (Book b : books) {
             if (b.getBookId().equals(id)) {
                 return b;
+            } else {
+                System.out.println("We couldn't find the book you're searching for");
+            }
+        }
+        return null;
+    }
+
+    public Book getBookByName(String name) {
+        for (Book b : books) {
+            if (b.getBookName().equals(name)) {
+                return b;
+            } else {
+                System.out.println("We couldn't find the book you're searching for");
             }
         }
         return null;
