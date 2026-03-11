@@ -1,9 +1,9 @@
 import java.util.Scanner;
 
 public class RegisterMember {
-    Scanner scanner = new Scanner(System.in);
+    Scanner scanner;
     LibraryDatabase db = new LibraryDatabase();
-    MemberMenu login = new MemberMenu();
+    MemberMenu login = new MemberMenu(scanner);
 
     public void register1() {
         System.out.print("Enter your ID: ");

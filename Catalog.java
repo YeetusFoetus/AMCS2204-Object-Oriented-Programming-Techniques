@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 public class Catalog {
-    Scanner scanner = new Scanner(System.in);
-    MemberMenu memberMenu = new MemberMenu();
+    Scanner scanner;
+    MemberMenu memberMenu = new MemberMenu(scanner);
 
     public void catalogScreen(LibraryDatabase db) {
         db.printAllBooks();

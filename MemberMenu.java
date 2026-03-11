@@ -1,8 +1,12 @@
 import java.util.Scanner;
 
 public class MemberMenu {
-    Scanner scanner = new Scanner(System.in);
+    Scanner scanner;
     LibraryDatabase db = new LibraryDatabase();
+
+    public MemberMenu(Scanner scanner) {
+        this.scanner = scanner;
+    }
 
     public void login1() {
         db.addUser(new Member("A123", "Alice", "alice123"));

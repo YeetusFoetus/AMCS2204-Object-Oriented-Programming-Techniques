@@ -2,13 +2,19 @@ import java.util.Scanner;
 
 public class Admin {
 
-    Scanner input = new Scanner(System.in);
+    LoginScreen loginScreen;
+    Scanner scanner;
+
+    public Admin(Scanner scanner) {
+        this.scanner = scanner;
+    }
 
     public void adminlogin() {
-        System.out.println("----Adimin Login----");
+        System.out.println("----Admin Login----");
         System.out.println("Enter your Admin ID: ");
 
-        String id = input.nextLine();
+        scanner.nextLine();
+        String id = scanner.nextLine().trim();
 
         if(id.equals("admin995")){
             System.out.println("Login Success");
@@ -28,7 +34,7 @@ public class Admin {
         System.out.println("3. Update book details");
         System.out.println("4. Back to Main Menu");
         
-        choice = input.nextInt();
+        choice = scanner.nextInt();
 
 
 
