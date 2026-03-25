@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Catalog {
     Scanner scanner;
-    MemberMenu memberMenu = new MemberMenu();
+    MemberMenu memberMenu = new MemberMenu(scanner);
 
     public Catalog(Scanner scanner) {
         this.scanner = scanner;
@@ -52,6 +52,8 @@ public class Catalog {
         } else {
             System.out.println("You did not enter a number.");
         }
+        
+        scanner.nextLine(); 
     } 
 
     public void reserveBook() {

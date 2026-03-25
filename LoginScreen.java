@@ -1,34 +1,33 @@
 import java.util.Scanner;
 
 public class LoginScreen {
-    Scanner scanner = new Scanner(System.in);
-    MemberMenu login = new MemberMenu();
+    Scanner scanner;
+    //MemberMenu login = new MemberMenu();
     RegisterMember register = new RegisterMember();
 
-    void start() {
-        while (true) {
-            showMenu();
-            int choice = scanner.nextInt();
+    public LoginScreen(Scanner scanner) {
+        this.scanner = scanner;
+    }
 
-            switch (choice) {
-                case 1:
-                    option1();
-                    return;
-                case 2:
-                    //option2();
-                    return;
-                case 3:
-                    option3();
-                    return;
-                case 4:
-                    exitProgram();
-                    return;
-                default:
-                    System.out.println("Invalid choice!");
-            }
+    public int start() { 
+        showMenu();
+        int choice = scanner.nextInt();
+
+        switch (choice) {
+            case 1:
+                return 1;
+            case 2:
+                return 2; 
+            case 3:
+                return 3;
+            case 4:
+                return 4;
+            default:
+                System.out.println("Invalid choice!");
+                return 1;
         }
     }
-    
+
     void showMenu() {
         System.out.println("\n====================");
         System.out.println("   ABC Library");
@@ -39,21 +38,20 @@ public class LoginScreen {
         System.out.println("4. Exit");
     }
 
-    void option1() {
+    /*void option1() {
         login.login1();
     }
 
     void option2() {
-
+        return 2;
+        //admin.adminlogin();
     }
 
     void option3() {
         register.register1();
     }
 
-    void exitProgram() {
-        System.out.println("Exiting...");
-        scanner.close();
-        System.exit(0);
-    }
+    void option4() {
+
+    }*/
 }
