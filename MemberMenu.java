@@ -20,7 +20,7 @@ public class MemberMenu {
         );
 
         System.out.print("Enter password(ID): ");
-        Catalog catalog = new Catalog();
+        Catalog catalog = new Catalog(scanner);
         
         String password = scanner.next();
 
@@ -44,15 +44,20 @@ public class MemberMenu {
                     catalog.catalogScreen(db);
                     break;
                 case 2:
-                    System.out.println("Sup");
+                    catalog.searchBook(db);
+                    break;
                 case 3:
                     System.out.println("Sup");
+                    break;
                 case 4:
                     System.out.println("Sup");
+                    break;
                 case 5:
                     System.out.println("Sup");
+                    break;
                 case 6:
                     System.out.println("Sup");
+                    break;
                 default:
                     System.out.println("Invalid choice!");
                     return;
