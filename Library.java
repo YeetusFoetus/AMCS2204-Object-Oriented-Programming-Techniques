@@ -4,15 +4,20 @@ public class Library {
     public static void main(String[] args) {    
         Scanner scanner = new Scanner(System.in);
 
+        LibraryDatabase globalDb = new LibraryDatabase(); //Zheng add 27/3/2026
+
         while (true) {
             LoginScreen loginScreen = new LoginScreen(scanner);
             int role = loginScreen.start();
 
             if (role == 1) {
                 MemberMenu memberMenu = new MemberMenu(scanner);
+                
+                memberMenu.db = globalDb; //Zheng add 27/3/2026
+
                 memberMenu.login1();
             } else if (role == 2) {
-                Admin admin = new Admin(scanner);
+                Admin admin = new Admin(scanner, globalDb);
                 admin.adminlogin();
             } else if (role == 3) {
                 System.out.println("WIP");
