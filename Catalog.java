@@ -28,7 +28,8 @@ public class Catalog {
                 db.updateBookOnLoan(book);
                 memberMenu.login1();
             }
-        }        
+        }     
+        scanner.nextLine();   
     }
 
     public void searchBook(LibraryDatabase db) {
@@ -42,6 +43,7 @@ public class Catalog {
 
         if (scanner.hasNextInt()) {
             choice = scanner.nextInt();
+            scanner.nextLine();
 
             if (choice == 1 || choice == 2) {
                 System.out.println("Number entered successfully.");
@@ -50,7 +52,8 @@ public class Catalog {
             }
 
         } else {
-            System.out.println("You did not enter a number.");
+            System.out.println("You did not enter a number. Press enter to return");
+            scanner.nextLine();
         }
         
         scanner.nextLine(); 
