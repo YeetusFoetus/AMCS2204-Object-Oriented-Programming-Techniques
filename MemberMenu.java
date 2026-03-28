@@ -58,7 +58,7 @@ public class MemberMenu {
                     discussionRoomBooking();
                     break;
                 case 5:
-                    System.out.println("Sup");
+                    payFine();
                     break;
                 case 6:
                     System.out.println("Sup");
@@ -104,5 +104,17 @@ public class MemberMenu {
         }
 
         scanner.nextLine();
+    }
+
+    public void payFine() {
+        System.out.println("Current list of pending fines: \n\n" +
+            "Press x to return"
+        );
+
+        char choice = scanner.next().charAt(0);
+
+        if (choice == 'x') {
+            return;
+        }
     }
 }

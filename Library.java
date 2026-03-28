@@ -26,7 +26,7 @@ public class Library {
 
     static void exitProgram() {
         System.out.println("Exiting...");
-        System.exit(0);;
+        System.exit(0);
     }
 }
 
