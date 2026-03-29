@@ -94,6 +94,12 @@ public class LibraryDatabase {
         return null;
     }
 
+    public void removeBook(Book book){
+        if (book != null) {
+            books.remove(book);
+        }
+    }
+
     public Book updateBookOnLoan(Book b1) {
         for (Book b2 : books) {
             if (b1 == b2) {
@@ -121,4 +127,11 @@ public class LibraryDatabase {
             );
         }
     }
+
+    public String generateNextBookId(){
+        int nextBook = books.size() + 1;
+        return String.format("B%03d", nextBook);
+    }
+
+
 }

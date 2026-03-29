@@ -8,7 +8,7 @@ public class Admin {
     
     public Admin(Scanner scanner, LibraryDatabase db) {
         this.scanner = scanner;
-        this.db = new LibraryDatabase();
+        this.db = db;
     }
 
     public void adminlogin() {
@@ -70,8 +70,8 @@ public class Admin {
 
     public void addCatalog() {
         System.out.println("--- Adding a New Book ---");
-        System.out.println("Enter the Book ID: ");
-        String id = scanner.nextLine();
+        String id = db.generateNextBookId();
+        System.out.println("Generated Book ID: " + id);
 
         System.out.println("Enter the Book Name: ");
         String name = scanner.nextLine();
@@ -97,8 +97,32 @@ public class Admin {
 
     public void removeCatalog() {
         System.out.println("--- Removing a Book ---");
+        System.out.println("Enter the Book ID to remove: ");
+        String id = scanner.nextLine();
+        Book bookToRemove = db.getBookById(id);
+
+        if (bookToRemove != null) {
+            System.out.println("Book found: " + bookToRemove.getBookName());
+            System.out.println("Are you sure you want to remove this book? (Y/N)");
+            String confirmation = scanner.nextLine();
+            switch (confirmation.toUpperCase()) {
+                case "Y":
+                    db.removeBook(bookToRemove);
+                    System.out.println("Book [" + bookToRemove.getBookName() + "] has been removed from the catalog.");
+                    break;
+                case "N":
+                    System.out.println("Removal cancelled.");
+                    break;
+                default:
+                    System.out.println("Invalid input. Removal cancelled.");
+                    break;
+            }
+            }
+            else {
+                System.out.println("Book not found.");
+        }
     }
-    
+
     public void updateCatalog() {
         System.out.println("--- Updating Book Details ---");
     }
