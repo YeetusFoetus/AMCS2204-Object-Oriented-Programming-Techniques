@@ -95,7 +95,7 @@ public class MemberMenu {
             int choice = scanner.nextInt();
             scanner.nextLine();
             
-            System.out.println("Discussion room booked successfully");
+            System.out.println("Discussion room " + choice + " booked successfully. (Press ENTER to return)");
 
         } else {
 
