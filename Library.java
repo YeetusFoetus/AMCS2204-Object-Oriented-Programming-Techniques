@@ -20,7 +20,25 @@ public class Library {
                 Admin admin = new Admin(scanner, globalDb);
                 admin.adminlogin();
             } else if (role == 3) {
-                System.out.println("WIP");
+                System.out.println("Enter your id: ");
+
+                String id = scanner.next();
+                scanner.nextLine();
+
+                System.out.println("Enter your name: ");
+
+                String name = scanner.nextLine();
+
+                System.out.println("Enter your password: ");
+
+                String password = scanner.next();
+                
+                globalDb.loadUsersFromFile();
+                globalDb.addUser(new Member(id, name, password));
+                globalDb.saveUsersToFile();
+
+                // Testing
+                globalDb.getLastUser();
             } else if (role == 4) {
                 exitProgram();
             } else if (role == 0) {
@@ -31,7 +49,7 @@ public class Library {
 
     static void exitProgram() {
         System.out.println("Exiting...");
-        System.exit(0);;
+        System.exit(0);
     }
 }
 

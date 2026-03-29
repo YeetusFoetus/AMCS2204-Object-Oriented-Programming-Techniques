@@ -1,4 +1,6 @@
 public class UserFactory {
+    private UserFactory() {};
+    
     public static User createUser(String[] data) {
 
         String type = data[0];
