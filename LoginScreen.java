@@ -36,6 +36,8 @@ public class LoginScreen {
         System.out.println("2. Admin Login");
         System.out.println("3. Register Member");
         System.out.println("4. Exit");
+
+        System.out.print("Enter choice: ");
     }
 
     /*void option1() {
