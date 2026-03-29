@@ -6,6 +6,15 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 public class LibraryDatabase {
+    // Fields
+    //private List<Member> members;
+    private List<Book> books;
+    private List<User> users; 
+
+    LibraryDatabase() {
+        books = new ArrayList<>();
+        users = new ArrayList<>();
+    }
 
     // File read write
     public void saveUsersToFile() {
@@ -48,16 +57,6 @@ public class LibraryDatabase {
         }
     }
 
-    // Fields
-    //private List<Member> members;
-    private List<Book> books;
-    private List<User> users; 
-
-    LibraryDatabase() {
-        books = new ArrayList<>();
-        users = new ArrayList<>();
-    }
-
     // Other methods
     public void addUser(User user) {
         users.add(user);
@@ -79,6 +78,19 @@ public class LibraryDatabase {
             }
         }
         return null;
+    }
+
+    public void getLastUser() {
+        int size = users.size() - 1;
+
+        if (size >= 0) {
+            User lastUser = users.get(size);
+            System.out.println("ID: " + lastUser.getUserId() +
+                "\nName: " + lastUser.getUserName() +
+                "\nPassword: " + lastUser.getUserPassword());
+        } else {
+            System.out.println("No objects in ArrayList");
+        }
     }
 
     public void addBook(Book book) {

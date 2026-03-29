@@ -9,7 +9,7 @@ public class MemberMenu {
     }
 
     public void login1() {
-        db.addUser(new Member("A123", "Alice", "alice123"));
+        db.loadUsersFromFile();
 
         db.addBook(
             new Book
