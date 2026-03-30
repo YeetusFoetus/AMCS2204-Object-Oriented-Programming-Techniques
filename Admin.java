@@ -30,13 +30,19 @@ public class Admin {
     public void adminMenu(){
         String choice = "0";
 
-        while(!choice.equals("4")){
-        System.out.println("\n1. Add catalog entry");
+        while(!choice.equals("7")){
+        System.out.println("\n====================");
+        System.out.println("     Admin Menu");
+        System.out.println("====================");
+        System.out.println("1. Add catalog entry");
         System.out.println("2. Remove catalog entry");
         System.out.println("3. Update book details");
-        System.out.println("4. Back to Main Menu");
+        System.out.println("4. Register new admin");
+        System.out.println("5. Pending fines");
+        System.out.println("6. Lost books");
+        System.out.println("7. Back to Main Menu");
 
-        System.out.print("Enter choice: ");
+        System.out.print("\nEnter choice: ");
         choice = scanner.nextLine();
 
         switch (choice) {
@@ -53,17 +59,28 @@ public class Admin {
                 break;
             
             case "4":
-                
+                registerAdmin();
+                break;
+
+            case "5":
+                viewPendingFines();
+                break;
+
+            case "6":
+                viewLostBooks();
+                break;
+            
+            case "7":
                 break;
 
             default:
-                System.out.println("Invalid choice! Please select 1-4.");
+                System.out.println("Invalid choice! Please select 1-7.");
                 break;
         }
         
         }
 
-        System.out.println("Returning...");
+        System.out.println("Returning to main menu...");
         return;
         
     }
@@ -126,5 +143,18 @@ public class Admin {
     public void updateCatalog() {
         System.out.println("--- Updating Book Details ---");
     }
+
+    public void registerAdmin() {
+        System.out.println("--- Registering a New Admin ---");
+    }
+
+    public void viewPendingFines() {
+        System.out.println("--- Viewing Pending Fines ---");
+    }
+
+    public void viewLostBooks() {
+        System.out.println("--- Viewing Lost Books ---");
+    }
+
     
 }
