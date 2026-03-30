@@ -11,7 +11,7 @@ public class Admin {
         this.db = db;
     }
 
-    public void adminlogin() {
+    public void adminLogin() {
         System.out.println("----Admin Login----");
         System.out.println("Enter your Admin ID: ");
 
@@ -20,14 +20,14 @@ public class Admin {
 
         if(id.equals("admin995")){
             System.out.println("Login Success");
-            adminmenu();
+            adminMenu();
         }
         else{
             System.out.println("Invalid Login");
         }
     }
 
-    public void adminmenu(){
+    public void adminMenu(){
         String choice = "0";
 
         while(!choice.equals("4")){

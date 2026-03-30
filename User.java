@@ -27,7 +27,7 @@ abstract class User {
         LibraryDatabase db = new LibraryDatabase();
 
         System.out.print("Enter password(ID): ");
-        Catalog catalog = new Catalog();
+        Catalog catalog = new Catalog(scanner);
         
         String password = scanner.next();
 
