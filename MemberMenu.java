@@ -11,17 +11,7 @@ public class MemberMenu {
     public void login1() {
         db.loadUsersFromFile();
 
-        db.addBook(
-            new Book
-            (
-                "B123", 
-                "Moby Dick", 
-                "Fantasy", 
-                "98579275",
-                "Fiction",
-                "Available"
-            )
-        );
+        
 
         System.out.print("Enter password(ID): ");
         Catalog catalog = new Catalog(scanner);
