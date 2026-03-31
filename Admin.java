@@ -5,6 +5,7 @@ public class Admin {
     LoginScreen loginScreen;
     Scanner scanner;
     LibraryDatabase db;
+    ReportGen rg = new ReportGen();
     
     public Admin(Scanner scanner, LibraryDatabase db) {
         this.scanner = scanner;
@@ -35,6 +36,7 @@ public class Admin {
         System.out.println("2. Remove catalog entry");
         System.out.println("3. Update book details");
         System.out.println("4. Back to Main Menu");
+        System.out.println("7. Generate Report");
 
         System.out.print("Enter choice: ");
         choice = scanner.nextLine();
@@ -54,6 +56,10 @@ public class Admin {
             
             case "4":
                 
+                break;
+
+            case "7":
+
                 break;
 
             default:
