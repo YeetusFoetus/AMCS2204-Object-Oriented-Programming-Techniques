@@ -1,6 +1,8 @@
 import java.util.Scanner;
 
 public class ReportGen {
+    Book bookName = new Book("B011", "Tung", "Classic", "978-47387242", "Literature", "Available");
+
     private static Scanner scanner = new Scanner(System.in);
     public void reportGen() {
         int choice = 0;
@@ -8,6 +10,7 @@ public class ReportGen {
             choice = printMenu();
             switch(choice){
             case 1:
+                displayTotalBorrowed();
                 break; //ts for BorrowStat
             case 2:
                 break; // for fine
@@ -38,5 +41,9 @@ public class ReportGen {
         return scanner.nextInt();
     }
 
-    
+    // book name : number
+    public void displayTotalBorrowed(){
+        System.out.println("Book name         " + "Total borrowed");
+        System.out.println(bookName.getBookName());
+    }
 }

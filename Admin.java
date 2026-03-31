@@ -59,7 +59,7 @@ public class Admin {
                 break;
 
             case "7":
-
+                rg.reportGen();
                 break;
 
             default:
