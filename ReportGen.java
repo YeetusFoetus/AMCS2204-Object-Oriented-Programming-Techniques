@@ -1,7 +1,14 @@
 import java.util.Scanner;
+import java.util.Random;
 
 public class ReportGen {
-    Book bookName = new Book("B011", "Tung", "Classic", "978-47387242", "Literature", "Available");
+    Random r = new Random();
+    Book bookName = new Book("B011",
+                            "Tung", 
+                            "Classic", 
+                            "978-47387242", 
+                            "Literature", 
+                            "Available");
 
     private static Scanner scanner = new Scanner(System.in);
     public void reportGen() {
@@ -30,11 +37,11 @@ public class ReportGen {
     }
 
     public static int printMenu(){
-        System.out.println("This is the report generator part. Which one do you want to access here?\n");
-        System.out.println("========================================================================\n");        
-        System.out.println("1. Borrowing Statistics for Every User\n");
-        System.out.println("2. Fines summary\n");
-        System.out.println("3. Lost books\n");
+        System.out.println("This is the report generator part. Which one do you want to access here?");
+        System.out.println("========================================================================");        
+        System.out.println("1. Borrowing Statistics for Every User");
+        System.out.println("2. Fines summary");
+        System.out.println("3. Lost books");
         System.out.println("4. Study Room Statistics");
         System.out.println("5. Exit");
 
@@ -43,7 +50,10 @@ public class ReportGen {
 
     // book name : number
     public void displayTotalBorrowed(){
-        System.out.println("Book name         " + "Total borrowed");
-        System.out.println(bookName.getBookName());
+        int totalBorrowed = r.nextInt(10);
+        System.out.printf("%-12s, %-16s \n", "Book name", "Total borrowed");
+        for(int i = 0; i < 5; i++){
+        System.out.printf("%-12s, %-16d \n",bookName.getBookName(), totalBorrowed);
+        }
     }
 }
