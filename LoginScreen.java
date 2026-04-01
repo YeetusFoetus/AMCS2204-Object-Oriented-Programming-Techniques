@@ -12,6 +12,7 @@ public class LoginScreen {
     public int start() { 
         showMenu();
         int choice = scanner.nextInt();
+        scanner.nextLine();
 
         switch (choice) {
             case 1:

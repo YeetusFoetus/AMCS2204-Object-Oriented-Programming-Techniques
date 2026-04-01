@@ -11,25 +11,30 @@ public class Catalog {
     public void catalogScreen(LibraryDatabase db) {
         db.printAllBooks();
 
-        System.out.println("Reserve a book (Y/N): ");
+        Boolean condition = true; 
 
-        scanner.nextLine();
-
-        String input = scanner.nextLine();
-        char choice = input.charAt(0);
-
-        if (choice == 'Y') {
-            System.out.println("Enter a book to reserve (ID): ");
+        while (condition == true) {
+            System.out.println("Reserve a book (Y/N): ");
             
-            String id = scanner.nextLine();
+            String input = scanner.nextLine();
+            char choice = input.charAt(0);
 
-            if (id != null) {                
-                Book book = db.getBookById(id);
-                db.updateBookOnLoan(book);
-                memberMenu.login1();
+            if (choice == 'Y') {
+                System.out.println("Enter a book to reserve (ID): ");
+                
+                String id = scanner.nextLine();
+
+                if (id != null) {                
+                    Book book = db.getBookById(id);
+                    db.updateBookOnLoan(book);
+                }
+                condition = false;
+            } else if (choice == 'N') {
+                memberMenu.login1(); 
+            } else {
+                System.out.println("Please enter 'Y' or 'N' only");    
             }
-        }     
-        scanner.nextLine();   
+        }
     }
 
     public void searchBook(LibraryDatabase db) {

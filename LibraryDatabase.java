@@ -163,21 +163,24 @@ public class LibraryDatabase {
         return null;
     }
 
-    public Book updateBookOnLoan(Book b1) {
+    public void updateBookOnLoan(Book b1) {
         for (Book b2 : books) {
             if (b1 == b2) {
                 b1.changeStatusToLoan();
-            }
-            else {
+                System.out.println("Success");
+                return;
+            } else {
+                int counter = 0;
+                counter += 1;
+                // (WIP) check array.size() compare with counter 
                 System.out.println("This book doesn't exist");
             }
         }
-        return null;
     }
 
     public void printAllBooks() {
         loadBooksFromFile();
-        
+
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
 
