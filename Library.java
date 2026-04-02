@@ -18,7 +18,7 @@ public class Library {
                 memberMenu.login1();
             } else if (role == 2) {
                 Admin admin = new Admin(scanner, globalDb);
-                admin.adminlogin();
+                admin.adminLogin();
             } else if (role == 3) {
                 System.out.println("Enter your id: ");
 
