@@ -3,6 +3,8 @@ import java.util.Random;
 
 public class ReportGen {
     Random r = new Random();
+    public static final String COMMA_DELIMITER = ",";
+
     Book bookName = new Book("B011",
                             "Tung", 
                             "Classic", 
@@ -48,12 +50,16 @@ public class ReportGen {
         return scanner.nextInt();
     }
 
+
+    
     // book name : number
     public void displayTotalBorrowed(){
-        int totalBorrowed = r.nextInt(10);
-        System.out.printf("%-12s, %-16s \n", "Book name", "Total borrowed");
+        System.out.printf("%-12s %-16s %-12s \n", 
+                        "Book name", "Total borrowed",
+                    "Total returned");
         for(int i = 0; i < 5; i++){
-        System.out.printf("%-12s, %-16d \n",bookName.getBookName(), totalBorrowed);
+        int totalBorrowed = r.nextInt(10);
+        System.out.printf("%-12s %-16d \n",bookName.getBookName(), totalBorrowed);
         }
     }
 }
