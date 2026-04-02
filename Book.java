@@ -6,6 +6,7 @@ public class Book {
     private String bookSection;
     private String bookStatus; 
 
+
     public Book (String bookId, 
             String bookName, 
             String bookGenre, 
@@ -26,6 +27,17 @@ public class Book {
     public String getBookISBN() { return bookISBN; }
     public String getBookSection() { return bookSection; }
     public String getBookStatus() { return bookStatus; }
+
+    public void setBookName(String bookName) { this.bookName = bookName; }
+    public void setBookGenre(String bookGenre) { this.bookGenre = bookGenre; }
+    public void setBookISBN(String bookISBN) { this.bookISBN = bookISBN; }
+    public void setBookSection(String bookSection) { this.bookSection = bookSection; }
+    public void setBookStatus(String bookStatus) { this.bookStatus = bookStatus; }
+    
+    public String toCSV() {
+        return getBookId() + "," + getBookName() + "," + getBookGenre() +
+            "," + getBookISBN() + "," + getBookSection() + "," + getBookStatus();
+    }
 
     public String changeStatusToLoan() {
         return this.bookStatus = "On Loan";

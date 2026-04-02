@@ -16,6 +16,8 @@ public class LibraryDatabase {
         users = new ArrayList<>();
     }
 
+
+    // -------USERS--------
     // File read write
     public void saveUsersToFile() {
         try {
@@ -27,7 +29,7 @@ public class LibraryDatabase {
             }
 
             writer.close();
-            System.out.println("Users saved successfully.");
+            System.out.println("User saved successfully.");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -50,7 +52,7 @@ public class LibraryDatabase {
             }
 
             reader.close();
-            System.out.println("Users loaded successfully.");
+            //System.out.println("Users loaded successfully.");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -97,13 +99,53 @@ public class LibraryDatabase {
         books.add(book);
     }
 
+
+    // -------BOOKS-------
+    public void saveBooksToFile() {
+        try {
+            FileWriter writer = new FileWriter("books.csv");
+
+            for (Book book : books) {
+                writer.write(book.toCSV() +"\n");
+            }
+
+            writer.close();
+            System.out.println("Book saved successfully.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadBooksFromFile() {
+        books.clear(); // prevent duplicates
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("books.csv"));
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+
+                Book book = BookFactory.createBook(data);
+                books.add(book);
+            }
+
+            reader.close();
+            //System.out.println("Users loaded successfully.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }    
+    
     public Book getBookById(String id) {
         for (Book b : books) {
             if (b.getBookId().equals(id)) {
                 return b;
-            } else {
-                System.out.println("We couldn't find the book you're searching for");
-            }
+            } //else {
+                //System.out.println("We couldn't find the book you're searching for");} zheng add// 2/4/2026
         }
         return null;
     }
@@ -138,6 +180,12 @@ public class LibraryDatabase {
     }
 
     public void printAllBooks() {
+        //loadBooksFromFile(); zheng delete 2/4/2026
+        if (books.isEmpty()) {
+            System.out.println("No books in the catalog.");
+            return;
+        }  //zheng add 2/4/2026
+        
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
 

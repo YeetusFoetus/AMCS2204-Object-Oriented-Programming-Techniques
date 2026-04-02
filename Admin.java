@@ -19,11 +19,13 @@ public class Admin {
         String id = scanner.nextLine().trim();
 
         if(id.equals("admin995")){
-            System.out.println("Login Success");
+            System.out.println("Login Success, Please press Enter to continue...");
+            scanner.nextLine();
             adminMenu();
         }
         else{
-            System.out.println("Invalid Login");
+            System.out.println("Invalid Login ID, please try again.");
+            scanner.nextLine();
         }
     }
 
@@ -75,12 +77,14 @@ public class Admin {
 
             default:
                 System.out.println("Invalid choice! Please select 1-7.");
+                scanner.nextLine();
                 break;
         }
         
         }
 
         System.out.println("Returning to main menu...");
+        scanner.nextLine();
         return;
         
     }
@@ -107,8 +111,10 @@ public class Admin {
         Book newBook = new Book(id, name, genre, isbn, section, status);
     
         db.addBook(newBook);
+        db.saveBooksToFile();
     
         System.out.println("\nSuccess! [" + name + "] has been added to the catalog.");
+        scanner.nextLine();
 
     }
 
@@ -120,28 +126,102 @@ public class Admin {
 
         if (bookToRemove != null) {
             System.out.println("Book found: " + bookToRemove.getBookName());
+            System.out.println("\n---Current Details---");
+            System.out.println("ID: " + bookToRemove.getBookId() + "\n");
+            System.out.println("Name: " + bookToRemove.getBookName());
+            System.out.println("Genre: " + bookToRemove.getBookGenre());
+            System.out.println("ISBN: " + bookToRemove.getBookISBN());
+            System.out.println("Section: " + bookToRemove.getBookSection());
+            System.out.println("Status: " + bookToRemove.getBookStatus());
             System.out.println("Are you sure you want to remove this book? (Y/N)");
             String confirmation = scanner.nextLine();
             switch (confirmation.toUpperCase()) {
                 case "Y":
                     db.removeBook(bookToRemove);
+                    db.saveBooksToFile();
                     System.out.println("Book [" + bookToRemove.getBookName() + "] has been removed from the catalog.");
+                    scanner.nextLine();
                     break;
                 case "N":
                     System.out.println("Removal cancelled.");
+                    scanner.nextLine();
                     break;
                 default:
                     System.out.println("Invalid input. Removal cancelled.");
+                    scanner.nextLine();
                     break;
             }
             }
             else {
                 System.out.println("Book not found.");
+                scanner.nextLine();
         }
     }
 
     public void updateCatalog() {
         System.out.println("--- Updating Book Details ---");
+        System.out.println("Enter the Book ID to update: ");
+        String id = scanner.nextLine();
+
+        Book bookToUpdate = db.getBookById(id);
+        if(bookToUpdate != null) {
+            System.out.println("\n---Current Details---");
+            System.out.println("ID: " + bookToUpdate.getBookId() + "\n");
+            System.out.println("1. Name: " + bookToUpdate.getBookName());
+            System.out.println("2. Genre: " + bookToUpdate.getBookGenre());
+            System.out.println("3. ISBN: " + bookToUpdate.getBookISBN());
+            System.out.println("4. Section: " + bookToUpdate.getBookSection());
+            System.out.println("5. Status: " + bookToUpdate.getBookStatus());
+            System.out.println("6. Cancel Update");
+            System.out.print("\nSelect the detail to update (1-6): ");
+            String choice = scanner.nextLine();
+
+            switch (choice) {
+                case "1" :
+                    System.out.print("Enter new Name: ");
+                    bookToUpdate.setBookName(scanner.nextLine());
+                    break;
+
+                case "2" :
+                    System.out.print("Enter new Genre: ");
+                    bookToUpdate.setBookGenre(scanner.nextLine());
+                    break;
+
+                case "3" :
+                    System.out.print("Enter new ISBN: ");
+                    bookToUpdate.setBookISBN(scanner.nextLine());
+                    break;
+                
+                case "4" :
+                    System.out.print("Enter new Section: ");
+                    bookToUpdate.setBookSection(scanner.nextLine());
+                    break;
+
+                case "5" :
+                    System.out.print("Enter new Status: ");
+                    bookToUpdate.setBookStatus(scanner.nextLine());
+                    break;
+
+                case "6" :
+                    System.out.println("Update cancelled");
+                    scanner.nextLine();
+                    return;
+            
+                default:
+                    System.out.println("Invalid choice");
+                    scanner.nextLine();
+                    return;
+            }
+
+            db.saveBooksToFile();
+            System.out.println("\nBook details updated successfully.");
+            scanner.nextLine();
+        
+        }else{
+            System.out.println("Book ID [" + id + "] not found.");
+            scanner.nextLine();
+        } 
+
     }
 
     public void registerAdmin() {
