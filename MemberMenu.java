@@ -11,8 +11,6 @@ public class MemberMenu {
     public void login1() {
         db.loadUsersFromFile();
 
-        
-
         System.out.print("Enter password(ID): ");
         Catalog catalog = new Catalog(scanner);
         
