@@ -4,10 +4,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Random;
 
 public class LibraryDatabase {
     // Fields
     //private List<Member> members;
+    
     private List<Book> books;
     private List<User> users; 
 
@@ -192,4 +194,15 @@ public class LibraryDatabase {
             );
         }
     }
-}
+    public void printBorrowCountBooks() {
+        loadBooksFromFile();
+        Random r = new Random();
+        for (Book book : books) {
+        int totalBorrowed = r.nextInt(20);
+        
+            System.out.printf("%-12s %-3d\n", book.getBookName(), totalBorrowed);
+        }
+    }
+    }
+
+    

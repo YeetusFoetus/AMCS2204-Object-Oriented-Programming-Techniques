@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class ReportGen {
     Random r = new Random();
-    public static final String COMMA_DELIMITER = ",";
+    LibraryDatabase ld = new LibraryDatabase();
 
     Book bookName = new Book("B011",
                             "Tung", 
@@ -13,6 +13,7 @@ public class ReportGen {
                             "Available");
 
     private static Scanner scanner = new Scanner(System.in);
+
     public void reportGen() {
         int choice = 0;
         do {
@@ -54,12 +55,13 @@ public class ReportGen {
     
     // book name : number
     public void displayTotalBorrowed(){
+        ld.loadBooksFromFile();
+
         System.out.printf("%-12s %-16s %-12s \n", 
                         "Book name", "Total borrowed",
                     "Total returned");
-        for(int i = 0; i < 5; i++){
-        int totalBorrowed = r.nextInt(10);
-        System.out.printf("%-12s %-16d \n",bookName.getBookName(), totalBorrowed);
-        }
+
+        ld.printBorrowCountBooks();
     }
+
 }
