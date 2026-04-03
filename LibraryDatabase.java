@@ -97,12 +97,12 @@ public class LibraryDatabase {
         }
     }
 
+
+    // -------BOOKS-------
     public void addBook(Book book) {
         books.add(book);
     }
 
-
-    // -------BOOKS-------
     public void saveBooksToFile() {
         try {
             FileWriter writer = new FileWriter("books.csv");
@@ -165,21 +165,68 @@ public class LibraryDatabase {
         return null;
     }
 
-    public Book updateBookOnLoan(Book b1) {
-        for (Book b2 : books) {
-            if (b1 == b2) {
-                b1.changeStatusToLoan();
-            }
-            else {
-                System.out.println("This book doesn't exist");
+    public Book getBookByGenre(String genre) {
+        for (Book b : books) {
+            if (b.getBookGenre().equals(genre)) {
+                return b;
+            } else {
+                System.out.println("We couldn't find the book you're searching for");
             }
         }
         return null;
     }
 
+    public Book getBookByISBN(String isbn) {
+        for (Book b : books) {
+            if (b.getBookISBN().equals(isbn)) {
+                return b;
+            } else {
+                System.out.println("We couldn't find the book you're searching for");
+            }
+        }
+        return null;
+    }
+
+    public Book getBookBySection(String section) {
+        for (Book b : books) {
+            if (b.getBookSection().equals(section)) {
+                return b;
+            } else {
+                System.out.println("We couldn't find the book you're searching for");
+            }
+        }
+        return null;
+    }
+
+    public Book getBookByStatus(String status) {
+        for (Book b : books) {
+            if (b.getBookStatus().equals(status)) {
+                return b;
+            } else {
+                System.out.println("We couldn't find the book you're searching for");
+            }
+        }
+        return null;
+    }
+
+    public void updateBookOnLoan(Book b1) {
+        for (Book b2 : books) {
+            if (b1 == b2) {
+                b1.changeStatusToLoan();
+                System.out.println("Success");
+                return;
+            } else {
+                int counter = 0;
+                counter += 1;
+                // (WIP) check array.size() compare with counter 
+                System.out.println("This book doesn't exist");
+            }
+        }
+    }
+
     public void printAllBooks() {
         loadBooksFromFile();
-        
+
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
 
@@ -198,7 +245,7 @@ public class LibraryDatabase {
         loadBooksFromFile();
         Random r = new Random();
         for (Book book : books) {
-        int totalBorrowed = r.nextInt(20);
+            int totalBorrowed = r.nextInt(20);
         
             System.out.printf("%-12s %-3d\n", book.getBookName(), totalBorrowed);
         }
