@@ -12,10 +12,13 @@ public class RegisterMember {
         System.out.print("\nEnter your name: ");
         String userName = scanner.nextLine();
 
+        System.out.print("\nEnter your email: ");
+        String userEmail = scanner.nextLine();
+
         System.out.print("\nEnter your password: ");
         String userPassword = scanner.nextLine();
 
-        User newMember = new Member(userId, userName, userPassword);
+        User newMember = new Member(userId, userName, userEmail, userPassword);
 
         db.addUser(newMember);
 
