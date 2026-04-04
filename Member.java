@@ -2,14 +2,18 @@
 
 public class Member extends User {
 
-    public Member(String userId, String userName, String userPassword) {
-        super(userId, userName, userPassword);
+    public Member(String userId, String userName, String userEmail, String userPassword) {
+        super(userId, userName, userEmail, userPassword);
     }
 
     @Override
     // Inheritance(?)
     public String toCSV() {
-        return "Member," + getUserId() + "," + getUserName() + "," + getUserPassword();
+        return "Member," + 
+        getUserId() + "," + 
+        getUserName() + "," + 
+        getUserEmail() + "," +
+        getUserPassword();
     }
 }
 

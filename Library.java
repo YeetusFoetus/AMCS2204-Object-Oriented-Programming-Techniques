@@ -28,12 +28,16 @@ public class Library {
 
                 String name = scanner.nextLine();
 
+                System.out.println("Enter your email: ");
+
+                String email = scanner.nextLine();
+
                 System.out.println("Enter your password: ");
 
                 String password = scanner.nextLine();
                 
                 globalDb.loadUsersFromFile();
-                globalDb.addUser(new Member(id, name, password));
+                globalDb.addUser(new Member(id, name, email, password));
                 globalDb.saveUsersToFile();
 
                 // Testing
