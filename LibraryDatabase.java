@@ -202,8 +202,18 @@ public class LibraryDatabase {
     }
 
     public String generateNextBookId(){
-        int nextBook = books.size() + 1;
-        return String.format("B%03d", nextBook);
+        if(books.isEmpty()) {
+            return "B001";
+        }
+        int maxId = 0;
+        for (Book book : books) {
+            String id = book.getBookId();
+            int num = Integer.parseInt(id.substring(1)); // Extract numeric part
+            if (num > maxId) {
+                maxId = num;
+            }
+        }
+        return String.format("B%03d", maxId + 1);
     }
 
 

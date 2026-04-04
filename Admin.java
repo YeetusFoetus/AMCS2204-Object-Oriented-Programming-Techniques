@@ -94,18 +94,10 @@ public class Admin {
         String id = db.generateNextBookId();
         System.out.println("Generated Book ID: " + id);
 
-        System.out.println("Enter the Book Name: ");
-        String name = scanner.nextLine();
-
-        System.out.println("Enter the Genre: ");
-        String genre = scanner.nextLine();
-
-        System.out.print("Enter ISBN: ");
-        String isbn = scanner.nextLine();
-
-        System.out.println("Enter the Section: ");
-        String section = scanner.nextLine();
-
+        String name = getNonEmptyInput("Enter the Book Name: ");
+        String genre = getNonEmptyInput("Enter the Genre: ");
+        String isbn = getNonEmptyInput("Enter ISBN: ");
+        String section = getNonEmptyInput("Enter the Section: ");
         String status = "Available";
 
         Book newBook = new Book(id, name, genre, isbn, section, status);
@@ -117,6 +109,19 @@ public class Admin {
         scanner.nextLine();
 
     }
+
+    private String getNonEmptyInput(String prompt) {
+    String input = "";
+    while (input.isEmpty()) {
+        System.out.print(prompt);
+        input = scanner.nextLine().trim();
+        
+        if (input.isEmpty()) {
+            System.out.println("Error: Please write something!");
+        }
+    }
+    return input;
+}
 
     public void removeCatalog() {
         System.out.println("--- Removing a Book ---");
