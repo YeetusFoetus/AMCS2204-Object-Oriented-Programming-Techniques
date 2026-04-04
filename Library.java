@@ -6,6 +6,7 @@ public class Library {
 
         LibraryDatabase globalDb = new LibraryDatabase(); //Zheng add 27/3/2026
 
+
         while (true) {
             LoginScreen loginScreen = new LoginScreen(scanner);
             int role = loginScreen.start();

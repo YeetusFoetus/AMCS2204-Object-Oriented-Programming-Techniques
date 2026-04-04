@@ -10,6 +10,7 @@ public class Admin {
     LoginScreen loginScreen;
     Scanner scanner;
     LibraryDatabase db;
+    ReportGen rg = new ReportGen();
 
     private static int nextIdCounter = 1001;
 
@@ -49,6 +50,7 @@ public class Admin {
         System.out.println("3. Update book details");
         System.out.println("4. Register new admin");
         System.out.println("5. Back to Main Menu");
+        System.out.println("7. Generate Report");
 
         System.out.print("Enter choice: ");
         choice = scanner.nextLine();
@@ -72,6 +74,10 @@ public class Admin {
 
             case "5":
                 
+                break;
+
+            case "7":
+                rg.reportGen();
                 break;
 
             default:
