@@ -147,9 +147,7 @@ public class LibraryDatabase {
         for (Book b : books) {
             if (b.getBookId().equals(id)) {
                 return b;
-            } else {
-                System.out.println("We couldn't find the book you're searching for");
-            }
+            } 
         }
         return null;
     }
@@ -209,19 +207,16 @@ public class LibraryDatabase {
         return null;
     }
 
-    public void updateBookOnLoan(Book b1) {
+    public void updateBookReserved(Book b1) {
         for (Book b2 : books) {
-            if (b1 == b2) {
-                b1.changeStatusToLoan();
-                System.out.println("Success");
-                return;
-            } else {
-                int counter = 0;
-                counter += 1;
-                // (WIP) check array.size() compare with counter 
-                System.out.println("This book doesn't exist");
+            if (b1 == b2) { 
+                b1.changeStatustoReserved();
+                saveBooksToFile();
+                System.out.println("Book reserved successfully");
+                return; // Exit the method 
             }
         }
+        System.out.println("This book doesn't exist");
     }
 
     public void printAllBooks() {

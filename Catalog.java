@@ -26,11 +26,12 @@ public class Catalog {
 
                 if (id != null) {                
                     Book book = db.getBookById(id);
-                    db.updateBookOnLoan(book);
+                    db.updateBookReserved(book);
                 }
                 condition = false;
             } else if (choice == 'N') {
-                memberMenu.login1(); 
+                System.out.println("Test");
+                return; 
             } else {
                 System.out.println("Please enter 'Y' or 'N' only");    
             }
@@ -77,7 +78,7 @@ public class Catalog {
 
                     Book id2 = db.getBookById(id1);
 
-                    System.out.printf("%-3d %-5s %-15s %-10s %-10s %-10s %-13s\n", 
+                    System.out.printf("%-5s %-15s %-10s %-10s %-10s %-13s\n", 
                         id2.getBookId(),
                         id2.getBookName(),
                         id2.getBookGenre(),
@@ -93,7 +94,7 @@ public class Catalog {
 
                     Book genre2 = db.getBookByGenre(genre1);
 
-                    System.out.printf("%-3d %-5s %-15s %-10s %-10s %-10s %-13s\n", 
+                    System.out.printf("%-5s %-15s %-10s %-10s %-10s %-13s\n", 
                         genre2.getBookId(),
                         genre2.getBookName(),
                         genre2.getBookGenre(),
@@ -108,7 +109,7 @@ public class Catalog {
 
                     Book isbn2 = db.getBookByISBN(isbn1);
 
-                    System.out.printf("%-3d %-5s %-15s %-10s %-10s %-10s %-13s\n", 
+                    System.out.printf("%-5s %-15s %-10s %-10s %-10s %-13s\n", 
                         isbn2.getBookId(),
                         isbn2.getBookName(),
                         isbn2.getBookGenre(),
@@ -123,7 +124,7 @@ public class Catalog {
 
                     Book sec2 = db.getBookBySection(sec1);
 
-                    System.out.printf("%-3d %-5s %-15s %-10s %-10s %-10s %-13s\n", 
+                    System.out.printf("%-5s %-15s %-10s %-10s %-10s %-13s\n", 
                         sec2.getBookId(),
                         sec2.getBookName(),
                         sec2.getBookGenre(),
@@ -138,7 +139,7 @@ public class Catalog {
 
                     Book status2 = db.getBookByStatus(status1);
 
-                    System.out.printf("%-3d %-5s %-15s %-10s %-10s %-10s %-13s\n", 
+                    System.out.printf("%-5s %-15s %-10s %-10s %-10s %-13s\n", 
                         status2.getBookId(),
                         status2.getBookName(),
                         status2.getBookGenre(),
