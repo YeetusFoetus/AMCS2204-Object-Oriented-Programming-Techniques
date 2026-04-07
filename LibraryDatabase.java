@@ -9,7 +9,7 @@ import java.util.Random;
 public class LibraryDatabase {
     // Fields
     //private List<Member> members;
-    
+
     private List<Book> books;
     private List<User> users; 
 
@@ -216,11 +216,11 @@ public class LibraryDatabase {
 
     public void updateBookReserved(Book b1) {
         for (Book b2 : books) {
-            if (b1 == b2) { 
+            if (b1 == b2) {
                 b1.changeStatustoReserved();
                 saveBooksToFile();
                 System.out.println("Book reserved successfully");
-                return; // Exit the method 
+                return; // Exit the method
             }
         }
         System.out.println("This book doesn't exist");
@@ -269,10 +269,13 @@ public class LibraryDatabase {
         Random r = new Random();
         for (Book book : books) {
             int totalBorrowed = r.nextInt(20);
-        
+
             System.out.printf("%-12s %-3d\n", book.getBookName(), totalBorrowed);
         }
     }
-}
+    public List<User> getAllUsers() {
+        return users;
+    }
 
-    
+
+}

@@ -40,7 +40,7 @@ public class Admin {
         }
     }
 
-    public void adminMenu(){
+    public void adminMenu() {
         String choice = "0";
 
         while(!choice.equals("8")){
@@ -95,7 +95,7 @@ public class Admin {
                 System.out.println("Invalid choice! Please select 1-7.");
                 scanner.nextLine();
                 break;
-        }
+         }
         
         }
 
@@ -326,8 +326,35 @@ public class Admin {
         }
     }
 
+    // Replace the empty method in Admin.java
     public void viewPendingFines() {
-        System.out.println("--- Viewing Pending Fines ---");
+        System.out.println("\n--- Viewing Pending Fines ---");
+
+        // Get all users from the database
+        List<User> allUsers = db.getAllUsers();
+        boolean foundFines = false;
+
+        System.out.printf("%-10s | %-20s | %-10s\n", "User ID", "Name", "Amount Due");
+        System.out.println("--------------------------------------------------");
+
+        for (User user : allUsers) {
+            // Check if the user has a pending fine
+            if (user.getFineAmount() > 0) {
+                System.out.printf("%-10s | %-20s | $%-10.2f\n",
+                        user.getUserId(),
+                        user.getUserName(),
+                        user.getFineAmount());
+                foundFines = true;
+            }
+        }
+
+        if (!foundFines) {
+            System.out.println("No pending fines found in the system.");
+        }
+
+        System.out.println("\nPress Enter to return to menu...");
+        // Use the existing scanner to pause
+        scanner.nextLine();
     }
 
     public void viewLostBooks() {
@@ -335,3 +362,4 @@ public class Admin {
     }
 
 }
+
