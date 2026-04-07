@@ -108,8 +108,7 @@ public class LibraryDatabase {
             FileWriter writer = new FileWriter("books.csv");
 
             for (Book book : books) {
-                writer.write(book.toCSV());
-                writer.write("\n");
+                writer.write(book.toCSV() +"\n");
             }
 
             writer.close();
@@ -147,9 +146,8 @@ public class LibraryDatabase {
         for (Book b : books) {
             if (b.getBookId().equals(id)) {
                 return b;
-            } else {
-                System.out.println("We couldn't find the book you're searching for");
-            }
+            } //else {
+                //System.out.println("We couldn't find the book you're searching for");} zheng add// 2/4/2026
         }
         return null;
     }
@@ -164,6 +162,13 @@ public class LibraryDatabase {
         }
         return null;
     }
+
+    public void removeBook(Book book){
+        if (book != null) {
+            books.remove(book);
+        }
+    }
+
 
     public Book getBookByGenre(String genre) {
         for (Book b : books) {
@@ -225,8 +230,12 @@ public class LibraryDatabase {
     }
 
     public void printAllBooks() {
-        loadBooksFromFile();
-
+        //loadBooksFromFile(); zheng delete 2/4/2026
+        if (books.isEmpty()) {
+            System.out.println("No books in the catalog.");
+            return;
+        }  //zheng add 2/4/2026
+        
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
 
@@ -241,6 +250,23 @@ public class LibraryDatabase {
             );
         }
     }
+
+    public String generateNextBookId(){
+        if(books.isEmpty()) {
+            return "B001";
+        }
+        int maxId = 0;
+        for (Book book : books) {
+            String id = book.getBookId();
+            int num = Integer.parseInt(id.substring(1)); // Extract numeric part
+            if (num > maxId) {
+                maxId = num;
+            }
+        }
+        return String.format("B%03d", maxId + 1);
+    }
+
+
     public void printBorrowCountBooks() {
         loadBooksFromFile();
         Random r = new Random();
@@ -250,6 +276,6 @@ public class LibraryDatabase {
             System.out.printf("%-12s %-3d\n", book.getBookName(), totalBorrowed);
         }
     }
-    }
+}
 
     

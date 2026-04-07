@@ -5,6 +5,7 @@ public class Library {
         Scanner scanner = new Scanner(System.in);
 
         LibraryDatabase globalDb = new LibraryDatabase(); //Zheng add 27/3/2026
+        globalDb.loadBooksFromFile(); //Zheng add 2/4/2026
 
 
         while (true) {

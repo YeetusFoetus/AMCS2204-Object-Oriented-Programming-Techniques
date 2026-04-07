@@ -20,7 +20,7 @@ public class Admin {
     
     public Admin(Scanner scanner, LibraryDatabase db) {
         this.scanner = scanner;
-        this.db = new LibraryDatabase();
+        this.db = db;
 
         loadValidAdminIds();
     }
@@ -44,15 +44,20 @@ public class Admin {
     public void adminMenu(){
         String choice = "0";
 
-        while(!choice.equals("4")){
-        System.out.println("\n1. Add catalog entry");
+        while(!choice.equals("8")){
+        System.out.println("\n====================");
+        System.out.println("     Admin Menu");
+        System.out.println("====================");
+        System.out.println("1. Add catalog entry");
         System.out.println("2. Remove catalog entry");
         System.out.println("3. Update book details");
         System.out.println("4. Register new admin");
-        System.out.println("5. Back to Main Menu");
+        System.out.println("5. Pending fines");
+        System.out.println("6. Lost books");
         System.out.println("7. Generate Report");
+        System.out.println("8. Back to Main Menu");
 
-        System.out.print("Enter choice: ");
+        System.out.print("\nEnter choice: ");
         choice = scanner.nextLine();
 
         switch (choice) {
@@ -73,58 +78,172 @@ public class Admin {
                 break;
 
             case "5":
-                
+                viewPendingFines();
                 break;
 
+            case "6":
+                viewLostBooks();
+                break;
+            
             case "7":
                 rg.reportGen();
                 break;
 
+            case "8":
+                break;
+
             default:
-                System.out.println("Invalid choice! Please select 1-4.");
+                System.out.println("Invalid choice! Please select 1-7.");
+                scanner.nextLine();
                 break;
         }
         
         }
 
-        System.out.println("Returning...");
+        System.out.println("Returning to main menu...");
+        scanner.nextLine();
         return;
         
     }
 
     public void addCatalog() {
         System.out.println("--- Adding a New Book ---");
-        System.out.println("Enter the Book ID: ");
-        String id = scanner.nextLine();
+        String id = db.generateNextBookId();
+        System.out.println("Generated Book ID: " + id);
 
-        System.out.println("Enter the Book Name: ");
-        String name = scanner.nextLine();
-
-        System.out.println("Enter the Genre: ");
-        String genre = scanner.nextLine();
-
-        System.out.print("Enter ISBN: ");
-        String isbn = scanner.nextLine();
-
-        System.out.println("Enter the Section: ");
-        String section = scanner.nextLine();
-
+        String name = getNonEmptyInput("Enter the Book Name: ");
+        String genre = getNonEmptyInput("Enter the Genre: ");
+        String isbn = getNonEmptyInput("Enter ISBN: ");
+        String section = getNonEmptyInput("Enter the Section: ");
         String status = "Available";
 
         Book newBook = new Book(id, name, genre, isbn, section, status);
     
         db.addBook(newBook);
+        db.saveBooksToFile();
     
         System.out.println("\nSuccess! [" + name + "] has been added to the catalog.");
+        scanner.nextLine();
 
     }
+
+    private String getNonEmptyInput(String prompt) {
+    String input = "";
+    while (input.isEmpty()) {
+        System.out.print(prompt);
+        input = scanner.nextLine().trim();
+        
+        if (input.isEmpty()) {
+            System.out.println("Error: Please write something!");
+        }
+    }
+    return input;
+}
 
     public void removeCatalog() {
         System.out.println("--- Removing a Book ---");
+        System.out.println("Enter the Book ID to remove: ");
+        String id = scanner.nextLine();
+        Book bookToRemove = db.getBookById(id);
+
+        if (bookToRemove != null) {
+            System.out.println("Book found: " + bookToRemove.getBookName());
+            System.out.println("\n---Current Details---");
+            System.out.println("ID: " + bookToRemove.getBookId() + "\n");
+            System.out.println("Name: " + bookToRemove.getBookName());
+            System.out.println("Genre: " + bookToRemove.getBookGenre());
+            System.out.println("ISBN: " + bookToRemove.getBookISBN());
+            System.out.println("Section: " + bookToRemove.getBookSection());
+            System.out.println("Status: " + bookToRemove.getBookStatus());
+            System.out.println("Are you sure you want to remove this book? (Y/N)");
+            String confirmation = scanner.nextLine();
+            switch (confirmation.toUpperCase()) {
+                case "Y":
+                    db.removeBook(bookToRemove);
+                    db.saveBooksToFile();
+                    System.out.println("Book [" + bookToRemove.getBookName() + "] has been removed from the catalog.");
+                    scanner.nextLine();
+                    break;
+                case "N":
+                    System.out.println("Removal cancelled.");
+                    scanner.nextLine();
+                    break;
+                default:
+                    System.out.println("Invalid input. Removal cancelled.");
+                    scanner.nextLine();
+                    break;
+            }
+            }
+            else {
+                System.out.println("Book not found.");
+                scanner.nextLine();
+        }
     }
-    
+
     public void updateCatalog() {
         System.out.println("--- Updating Book Details ---");
+        System.out.println("Enter the Book ID to update: ");
+        String id = scanner.nextLine();
+
+        Book bookToUpdate = db.getBookById(id);
+        if(bookToUpdate != null) {
+            System.out.println("\n---Current Details---");
+            System.out.println("ID: " + bookToUpdate.getBookId() + "\n");
+            System.out.println("1. Name: " + bookToUpdate.getBookName());
+            System.out.println("2. Genre: " + bookToUpdate.getBookGenre());
+            System.out.println("3. ISBN: " + bookToUpdate.getBookISBN());
+            System.out.println("4. Section: " + bookToUpdate.getBookSection());
+            System.out.println("5. Status: " + bookToUpdate.getBookStatus());
+            System.out.println("6. Cancel Update");
+            System.out.print("\nSelect the detail to update (1-6): ");
+            String choice = scanner.nextLine();
+
+            switch (choice) {
+                case "1" :
+                    System.out.print("Enter new Name: ");
+                    bookToUpdate.setBookName(scanner.nextLine());
+                    break;
+
+                case "2" :
+                    System.out.print("Enter new Genre: ");
+                    bookToUpdate.setBookGenre(scanner.nextLine());
+                    break;
+
+                case "3" :
+                    System.out.print("Enter new ISBN: ");
+                    bookToUpdate.setBookISBN(scanner.nextLine());
+                    break;
+                
+                case "4" :
+                    System.out.print("Enter new Section: ");
+                    bookToUpdate.setBookSection(scanner.nextLine());
+                    break;
+
+                case "5" :
+                    System.out.print("Enter new Status: ");
+                    bookToUpdate.setBookStatus(scanner.nextLine());
+                    break;
+
+                case "6" :
+                    System.out.println("Update cancelled");
+                    scanner.nextLine();
+                    return;
+            
+                default:
+                    System.out.println("Invalid choice");
+                    scanner.nextLine();
+                    return;
+            }
+
+            db.saveBooksToFile();
+            System.out.println("\nBook details updated successfully.");
+            scanner.nextLine();
+        
+        }else{
+            System.out.println("Book ID [" + id + "] not found.");
+            scanner.nextLine();
+        } 
+
     }
 
     public void registerNewAdmin() {
@@ -207,4 +326,13 @@ public class Admin {
             System.out.println("Error loading admin IDs.");
         }
     }
+
+    public void viewPendingFines() {
+        System.out.println("--- Viewing Pending Fines ---");
+    }
+
+    public void viewLostBooks() {
+        System.out.println("--- Viewing Lost Books ---");
+    }
+
 }
