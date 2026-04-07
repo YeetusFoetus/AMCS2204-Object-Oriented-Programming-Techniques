@@ -4,10 +4,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Random;
 
 public class LibraryDatabase {
     // Fields
     //private List<Member> members;
+    
     private List<Book> books;
     private List<User> users; 
 
@@ -95,12 +97,12 @@ public class LibraryDatabase {
         }
     }
 
+
+    // -------BOOKS-------
     public void addBook(Book book) {
         books.add(book);
     }
 
-
-    // -------BOOKS-------
     public void saveBooksToFile() {
         try {
             FileWriter writer = new FileWriter("books.csv");
@@ -167,16 +169,64 @@ public class LibraryDatabase {
         }
     }
 
-    public Book updateBookOnLoan(Book b1) {
-        for (Book b2 : books) {
-            if (b1 == b2) {
-                b1.changeStatusToLoan();
-            }
-            else {
-                System.out.println("This book doesn't exist");
+
+    public Book getBookByGenre(String genre) {
+        for (Book b : books) {
+            if (b.getBookGenre().equals(genre)) {
+                return b;
+            } else {
+                System.out.println("We couldn't find the book you're searching for");
             }
         }
         return null;
+    }
+
+    public Book getBookByISBN(String isbn) {
+        for (Book b : books) {
+            if (b.getBookISBN().equals(isbn)) {
+                return b;
+            } else {
+                System.out.println("We couldn't find the book you're searching for");
+            }
+        }
+        return null;
+    }
+
+    public Book getBookBySection(String section) {
+        for (Book b : books) {
+            if (b.getBookSection().equals(section)) {
+                return b;
+            } else {
+                System.out.println("We couldn't find the book you're searching for");
+            }
+        }
+        return null;
+    }
+
+    public Book getBookByStatus(String status) {
+        for (Book b : books) {
+            if (b.getBookStatus().equals(status)) {
+                return b;
+            } else {
+                System.out.println("We couldn't find the book you're searching for");
+            }
+        }
+        return null;
+    }
+
+    public void updateBookOnLoan(Book b1) {
+        for (Book b2 : books) {
+            if (b1 == b2) {
+                b1.changeStatusToLoan();
+                System.out.println("Success");
+                return;
+            } else {
+                int counter = 0;
+                counter += 1;
+                // (WIP) check array.size() compare with counter 
+                System.out.println("This book doesn't exist");
+            }
+        }
     }
 
     public void printAllBooks() {
@@ -217,4 +267,15 @@ public class LibraryDatabase {
     }
 
 
+    public void printBorrowCountBooks() {
+        loadBooksFromFile();
+        Random r = new Random();
+        for (Book book : books) {
+            int totalBorrowed = r.nextInt(20);
+        
+            System.out.printf("%-12s %-3d\n", book.getBookName(), totalBorrowed);
+        }
+    }
 }
+
+    

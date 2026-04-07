@@ -10,6 +10,7 @@ public class Admin {
     LoginScreen loginScreen;
     Scanner scanner;
     LibraryDatabase db;
+    ReportGen rg = new ReportGen();
 
     private static int nextIdCounter = 1001;
 
@@ -43,7 +44,7 @@ public class Admin {
     public void adminMenu(){
         String choice = "0";
 
-        while(!choice.equals("7")){
+        while(!choice.equals("8")){
         System.out.println("\n====================");
         System.out.println("     Admin Menu");
         System.out.println("====================");
@@ -53,7 +54,8 @@ public class Admin {
         System.out.println("4. Register new admin");
         System.out.println("5. Pending fines");
         System.out.println("6. Lost books");
-        System.out.println("7. Back to Main Menu");
+        System.out.println("7. Generate Report");
+        System.out.println("8. Back to Main Menu");
 
         System.out.print("\nEnter choice: ");
         choice = scanner.nextLine();
@@ -84,6 +86,10 @@ public class Admin {
                 break;
             
             case "7":
+                rg.reportGen();
+                break;
+
+            case "8":
                 break;
 
             default:

@@ -39,7 +39,7 @@ public class Book {
             "," + getBookISBN() + "," + getBookSection() + "," + getBookStatus();
     }
 
-    public String changeStatusToLoan() {
-        return this.bookStatus = "On Loan";
+    public void changeStatusToLoan() {
+        this.bookStatus = "On Loan";
     }
 }

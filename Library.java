@@ -7,6 +7,7 @@ public class Library {
         LibraryDatabase globalDb = new LibraryDatabase(); //Zheng add 27/3/2026
         globalDb.loadBooksFromFile(); //Zheng add 2/4/2026
 
+
         while (true) {
             LoginScreen loginScreen = new LoginScreen(scanner);
             int role = loginScreen.start();
@@ -23,19 +24,22 @@ public class Library {
             } else if (role == 3) {
                 System.out.println("Enter your id: ");
 
-                String id = scanner.next();
-                scanner.nextLine();
+                String id = scanner.nextLine();
 
                 System.out.println("Enter your name: ");
 
                 String name = scanner.nextLine();
 
+                System.out.println("Enter your email: ");
+
+                String email = scanner.nextLine();
+
                 System.out.println("Enter your password: ");
 
-                String password = scanner.next();
+                String password = scanner.nextLine();
                 
                 globalDb.loadUsersFromFile();
-                globalDb.addUser(new Member(id, name, password));
+                globalDb.addUser(new Member(id, name, email, password));
                 globalDb.saveUsersToFile();
 
                 // Testing
