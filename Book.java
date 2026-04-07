@@ -28,6 +28,12 @@ public class Book {
     public String getBookSection() { return bookSection; }
     public String getBookStatus() { return bookStatus; }
 
+    public void setBookName(String bookName) { this.bookName = bookName; }
+    public void setBookGenre(String bookGenre) { this.bookGenre = bookGenre; }
+    public void setBookISBN(String bookISBN) { this.bookISBN = bookISBN; }
+    public void setBookSection(String bookSection) { this.bookSection = bookSection; }
+    public void setBookStatus(String bookStatus) { this.bookStatus = bookStatus; }
+    
     public String toCSV() {
         return getBookId() + "," + getBookName() + "," + getBookGenre() +
             "," + getBookISBN() + "," + getBookSection() + "," + getBookStatus();
