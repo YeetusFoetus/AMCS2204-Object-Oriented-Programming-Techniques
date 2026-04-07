@@ -42,4 +42,8 @@ public class Book {
     public void changeStatusToLoan() {
         this.bookStatus = "On Loan";
     }
+
+    public void changeStatustoReserved() {
+        this.bookStatus = "Reserved";
+    }
 }
