@@ -29,7 +29,6 @@ public class Admin {
         System.out.println("----Admin Login----");
         System.out.println("Enter your Admin ID: ");
 
-        scanner.nextLine();
         String id = scanner.nextLine().trim();
 
         if(validAdminIds.contains(id)){
