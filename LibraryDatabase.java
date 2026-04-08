@@ -277,5 +277,9 @@ public class LibraryDatabase {
         return users;
     }
 
+    public List<Book> getAllBooks() {
+        return books;
+    }
+
 
 }
