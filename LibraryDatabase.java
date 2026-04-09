@@ -12,7 +12,7 @@ public class LibraryDatabase {
     
     private List<Book> books;
     private List<User> users; 
-
+    
     LibraryDatabase() {
         books = new ArrayList<>();
         users = new ArrayList<>();
@@ -273,6 +273,21 @@ public class LibraryDatabase {
             System.out.printf("%-12s %-3d\n", book.getBookName(), totalBorrowed);
         }
     }
+
+    //----------Discussion Rooms----------------
+
+    /*public void printAllRooms() {
+        for (int i = 0; i < rooms.size(); i++) {
+            DiscussionRoom room = rooms.get(i);
+
+            System.out.printf("%-6s %-1d %-2\n",
+                i + 1,
+                room.getRoomID(),
+                room.getFloor(),
+                room.getCapacity()
+            );
+        }
+    }*/
 }
 
     
