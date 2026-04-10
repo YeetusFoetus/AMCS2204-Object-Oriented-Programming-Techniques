@@ -267,10 +267,13 @@ public class LibraryDatabase {
     public void printBorrowCountBooks() {
         loadBooksFromFile();
         Random r = new Random();
+
         for (Book book : books) {
             int totalBorrowed = r.nextInt(20);
+            int totalReturned = r.nextInt(20);
 
-            System.out.printf("%-12s %-3d\n", book.getBookName(), totalBorrowed);
+        System.out.printf("%-25s %-16d %-16d\n",
+                      book.getBookName(), totalBorrowed, totalReturned);
         }
     }
     public List<User> getAllUsers() {
