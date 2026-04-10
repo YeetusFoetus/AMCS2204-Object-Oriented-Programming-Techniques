@@ -11,8 +11,6 @@ public class MemberMenu {
     public void login1() {
         db.loadUsersFromFile();
 
-        
-
         System.out.print("Enter password(ID): ");
         Catalog catalog = new Catalog(scanner);
         
@@ -45,7 +43,10 @@ public class MemberMenu {
                     System.out.println("Sup");
                     break;
                 case 4:
-                    discussionRoomBooking();
+                    RoomManager.displayAllRooms();
+                    System.out.print("Enter Room ID to reserve (e.g., 1-A): ");
+                    String userChoice = scanner.nextLine();
+                    RoomManager.reserveRoom(userChoice);
                     break;
                 case 5:
                     payFine();
@@ -67,7 +68,8 @@ public class MemberMenu {
     //iteration 1: display room status after entering number
     //iteration 2: display room information as a table 
     public void discussionRoomBooking() {
-        System.out.println("Choose a room to book: \n" +
+        //db.printAllRooms();
+        /*System.out.println("Choose a room to book: \n" +
             "1.   Room A (Floor 1, 4 people)\n" +
             "2.   Room B (Floor 1, 4 people)\n" +
             "3.   Room C (Floor 1, 4 people)\n" +
@@ -93,7 +95,7 @@ public class MemberMenu {
 
         }
 
-        scanner.nextLine();
+        scanner.nextLine();*/
     }
 
     public void payFine() {

@@ -10,6 +10,7 @@ public class Admin extends User {
     LoginScreen loginScreen;
     //Scanner scanner;
     //LibraryDatabase db; zheng delete 9/4/2026
+    ReportGen rg;
 
     private static int nextIdCounter = 1001;
 
@@ -18,15 +19,15 @@ public class Admin extends User {
     private List<String> validAdminIds = new ArrayList<>(List.of("admin995"));
     
     public Admin(Scanner scanner, LibraryDatabase db) {
-        super("admin995", "Default Admin", "admin123");
+        super("admin995", "Default Admin", "admin@gmail.com", "admin123");
         this.scanner = scanner;
         this.db = db;
 
         loadValidAdminIds();
     }
 
-    public Admin(String id, String name, String password) {
-    super(id, name, password);
+    public Admin(String id, String name, String email, String password) {
+    super(id, name, email, password);
     loadValidAdminIds();
     } //zheng add 10/4/2026
 
@@ -43,7 +44,6 @@ public class Admin extends User {
         System.out.println("----Admin Login----");
         System.out.println("Enter your Admin ID: ");
 
-        scanner.nextLine();
         String id = scanner.nextLine().trim();
 
         if(validAdminIds.contains(id)){
@@ -58,7 +58,7 @@ public class Admin extends User {
     public void adminMenu(){
         String choice = "0";
 
-        while(!choice.equals("7")){
+        while(!choice.equals("8")){
         System.out.println("\n====================");
         System.out.println("     Admin Menu");
         System.out.println("====================");
@@ -68,7 +68,8 @@ public class Admin extends User {
         System.out.println("4. Register new admin");
         System.out.println("5. Pending fines");
         System.out.println("6. Lost books");
-        System.out.println("7. Back to Main Menu");
+        System.out.println("7. Generate Report");
+        System.out.println("8. Back to Main Menu");
 
         System.out.print("\nEnter choice: ");
         choice = scanner.nextLine();
@@ -99,6 +100,10 @@ public class Admin extends User {
                 break;
             
             case "7":
+                rg.reportGen();
+                break;
+
+            case "8":
                 break;
 
             default:
@@ -286,7 +291,7 @@ public class Admin extends User {
         //} catch (java.io.IOException e) {
         //    System.out.println("Error saving ID to file.");
         //}   zheng delete 10/4/2026
-        Admin newAdmin = new Admin(newAdminId, name, "admin123");
+        Admin newAdmin = new Admin(newAdminId, name, "test@gmail.com", "admin123");
         db.addUser(newAdmin);
         db.saveUsersToFile();
         //zheng add 10/4/2026
@@ -294,7 +299,7 @@ public class Admin extends User {
         saveCounter(currentIdNumber + 1);
         validAdminIds.add(newAdminId);
 
-         try {
+        try {
             // The 'true' means "append to the end of the file", don't overwrite it
             java.io.FileWriter writer = new java.io.FileWriter("admin_ids.txt", true);
             writer.write(newAdminId + "\n");
