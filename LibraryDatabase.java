@@ -9,10 +9,9 @@ import java.util.Random;
 public class LibraryDatabase {
     // Fields
     //private List<Member> members;
-
     private List<Book> books;
     private List<User> users; 
-
+    
     LibraryDatabase() {
         books = new ArrayList<>();
         users = new ArrayList<>();
@@ -169,6 +168,16 @@ public class LibraryDatabase {
         }
     }
 
+    /*public Book updateBookOnLoan(Book b1) {
+        for (Book b2 : books) {
+            if (b1 == b2) {
+                b1.changeStatusToLoan();
+            }
+            else {
+                System.out.println("This book doesn't exist");
+            }
+        }
+    }*/
 
     public Book getBookByGenre(String genre) {
         for (Book b : books) {
@@ -267,12 +276,31 @@ public class LibraryDatabase {
     public void printBorrowCountBooks() {
         loadBooksFromFile();
         Random r = new Random();
+
         for (Book book : books) {
             int totalBorrowed = r.nextInt(20);
+            int totalReturned = r.nextInt(20);
 
-            System.out.printf("%-12s %-3d\n", book.getBookName(), totalBorrowed);
+        System.out.printf("%-25s %-16d %-16d\n",
+                      book.getBookName(), totalBorrowed, totalReturned);
         }
     }
+
+    //----------Discussion Rooms----------------
+
+    /*public void printAllRooms() {
+        for (int i = 0; i < rooms.size(); i++) {
+            DiscussionRoom room = rooms.get(i);
+
+            System.out.printf("%-6s %-1d %-2\n",
+                i + 1,
+                room.getRoomID(),
+                room.getFloor(),
+                room.getCapacity()
+            );
+        }
+    }*/
+
     public List<User> getAllUsers() {
         return users;
     }

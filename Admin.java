@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Admin {
+public class Admin extends User {
 
     LoginScreen loginScreen;
-    Scanner scanner;
-    LibraryDatabase db;
+    //Scanner scanner;
+    //LibraryDatabase db; zheng delete 9/4/2026
     ReportGen rg = new ReportGen();
 
     private static int nextIdCounter = 1001;
@@ -19,10 +19,25 @@ public class Admin {
     private List<String> validAdminIds = new ArrayList<>(List.of("admin995"));
     
     public Admin(Scanner scanner, LibraryDatabase db) {
+        super("admin995", "Default Admin", "admin@gmail.com", "admin123");
         this.scanner = scanner;
         this.db = db;
 
         loadValidAdminIds();
+    }
+
+    public Admin(String id, String name, String email, String password) {
+    super(id, name, email, password);
+    loadValidAdminIds();
+    } //zheng add 10/4/2026
+
+    @Override
+    public String toCSV() {
+        return "Admin, " + getUserId() + ", " + getUserName() + ", " + getUserPassword();
+    } //zheng add 10/4/2026
+
+    public void mainMenu() {
+        adminLogin();
     }
 
     public void adminLogin() {
@@ -265,6 +280,22 @@ public class Admin {
         String phone = scanner.nextLine();
 
         // 3. Add +1 to the number and save it to the file for the NEXT admin
+        saveCounter(currentIdNumber + 1);
+        validAdminIds.add(newAdminId);
+
+        //try {
+            // The 'true' means "append to the end of the file", don't overwrite it
+        //    java.io.FileWriter writer = new java.io.FileWriter("admin_ids.txt", true);
+        //    writer.write(newAdminId + "\n");
+        //    writer.close();
+        //} catch (java.io.IOException e) {
+        //    System.out.println("Error saving ID to file.");
+        //}   zheng delete 10/4/2026
+        Admin newAdmin = new Admin(newAdminId, name, "test@gmail.com", "admin123");
+        db.addUser(newAdmin);
+        db.saveUsersToFile();
+        //zheng add 10/4/2026
+
         saveCounter(currentIdNumber + 1);
         validAdminIds.add(newAdminId);
 

@@ -6,8 +6,8 @@ abstract class User {
     private String userEmail;
     private String userPassword;
 
-    LibraryDatabase db = new LibraryDatabase();
-    Scanner scanner = new Scanner(System.in);
+    LibraryDatabase db; //= new LibraryDatabase();
+    Scanner scanner; //= new Scanner(System.in); zheng delete 9/4/2026
 
     public abstract String toCSV();
 
