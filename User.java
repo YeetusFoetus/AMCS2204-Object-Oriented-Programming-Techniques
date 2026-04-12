@@ -61,4 +61,14 @@ abstract class User {
             System.out.println("Invalid login");
         }
     }
+
+    private double fineAmount = 0.0; // Default fine is 0.0
+
+    public double getFineAmount() {
+        return fineAmount;
+    }
+
+    public void setFineAmount(double amount) {
+        this.fineAmount = amount;
+    }
 }

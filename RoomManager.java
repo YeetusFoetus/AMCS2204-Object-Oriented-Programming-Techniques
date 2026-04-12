@@ -8,18 +8,18 @@ public class RoomManager {
     // Static block: runs once when the class is loaded
     static {
         // Floor 1
-        rooms.add(new DiscussionRoom("1-A", 1, 2, true));
-        rooms.add(new DiscussionRoom("1-B", 1, 4, false));
-        rooms.add(new DiscussionRoom("1-C", 1, 6, true));
-        rooms.add(new DiscussionRoom("1-D", 1, 8, true));
-        rooms.add(new DiscussionRoom("1-E", 1, 4, false));
+        rooms.add(new DiscussionRoom("1-A", 1, 2, true,0));
+        rooms.add(new DiscussionRoom("1-B", 1, 4, false,0));
+        rooms.add(new DiscussionRoom("1-C", 1, 6, true,0));
+        rooms.add(new DiscussionRoom("1-D", 1, 8, true,0));
+        rooms.add(new DiscussionRoom("1-E", 1, 4, false,0));
 
         // Floor 2
-        rooms.add(new DiscussionRoom("2-A", 2, 2, false));
-        rooms.add(new DiscussionRoom("2-B", 2, 4, true));
-        rooms.add(new DiscussionRoom("2-C", 2, 6, true));
-        rooms.add(new DiscussionRoom("2-D", 2, 8, false));
-        rooms.add(new DiscussionRoom("2-E", 2, 8, true));
+        rooms.add(new DiscussionRoom("2-A", 2, 2, false,0));
+        rooms.add(new DiscussionRoom("2-B", 2, 4, true,0));
+        rooms.add(new DiscussionRoom("2-C", 2, 6, true,0));
+        rooms.add(new DiscussionRoom("2-D", 2, 8, false,0));
+        rooms.add(new DiscussionRoom("2-E", 2, 8, true,0));
     }
 
     // A quick method to print everything to the console

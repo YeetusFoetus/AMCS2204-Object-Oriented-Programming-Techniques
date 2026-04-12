@@ -10,7 +10,7 @@ public class Admin extends User {
     LoginScreen loginScreen;
     //Scanner scanner;
     //LibraryDatabase db; zheng delete 9/4/2026
-    ReportGen rg;
+    ReportGen rg = new ReportGen();
 
     private static int nextIdCounter = 1001;
 
@@ -55,7 +55,7 @@ public class Admin extends User {
         }
     }
 
-    public void adminMenu(){
+    public void adminMenu() {
         String choice = "0";
 
         while(!choice.equals("8")){
@@ -110,7 +110,7 @@ public class Admin extends User {
                 System.out.println("Invalid choice! Please select 1-7.");
                 scanner.nextLine();
                 break;
-        }
+         }
         
         }
 
@@ -357,12 +357,115 @@ public class Admin extends User {
         }
     }
 
+    // Replace the empty method in Admin.java
     public void viewPendingFines() {
-        System.out.println("--- Viewing Pending Fines ---");
+        System.out.println("\n--- Viewing Pending Fines ---");
+
+        // Get all users from the database
+        List<User> allUsers = db.getAllUsers();
+        boolean foundFines = false;
+
+        System.out.printf("%-10s | %-20s | %-10s\n", "User ID", "Name", "Amount Due");
+        System.out.println("--------------------------------------------------");
+
+        for (User user : allUsers) {
+            // Check if the user has a pending fine
+            if (user.getFineAmount() > 0) {
+                System.out.printf("%-10s | %-20s | $%-10.2f\n",
+                        user.getUserId(),
+                        user.getUserName(),
+                        user.getFineAmount());
+                foundFines = true;
+            }
+        }
+
+        if (!foundFines) {
+            System.out.println("No pending fines found in the system.");
+        }
+
+        System.out.println("\nPress Enter to return to menu...");
+        // Use the existing scanner to pause
+        scanner.nextLine();
     }
 
     public void viewLostBooks() {
-        System.out.println("--- Viewing Lost Books ---");
+        String choice = "0";
+        while (!choice.equals("4")) {
+            System.out.println("\n--- Lost Books Management ---");
+            System.out.println("1. Mark Book as Lost");
+            System.out.println("2. Display List of Lost Books");
+            System.out.println("3. Mark Book as Restored");
+            System.out.println("4. Back to Admin Menu");
+            System.out.print("\nEnter choice: ");
+            choice = scanner.nextLine();
+
+            switch (choice) {
+                case "1":
+                    markBookAsLost();
+                    break;
+                case "2":
+                    displayLostBooks();
+                    break;
+                case "3":
+                    restoreLostBook();
+                    break;
+                case "4":
+                    break;
+                default:
+                    System.out.println("Invalid choice!");
+                    break;
+            }
+        }
+    }
+
+    private void markBookAsLost() {
+        System.out.print("Enter Book ID to mark as LOST: ");
+        String id = scanner.nextLine();
+        Book book = db.getBookById(id);
+
+        if (book != null) {
+            // Auto-update status to Unavailable
+            book.setBookStatus("Lost (Unavailable)");
+            db.saveBooksToFile();
+            System.out.println("Success: [" + book.getBookName() + "] is now marked as Lost.");
+        } else {
+            System.out.println("Error: Book ID not found.");
+        }
+        scanner.nextLine();
+    }
+
+    private void displayLostBooks() {
+        System.out.println("\n--- List of Lost Books ---");
+        List<Book> allBooks = db.getAllBooks(); // Assuming db has a method to get the list
+        boolean found = false;
+
+        for (Book book : allBooks) {
+            if (book.getBookStatus().equalsIgnoreCase("Lost (Unavailable)")) {
+                System.out.println("ID: " + book.getBookId() + " | Title: " + book.getBookName());
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("No books are currently marked as lost.");
+        }
+        scanner.nextLine();
+    }
+
+    private void restoreLostBook() {
+        System.out.print("Enter Book ID to RESTORE: ");
+        String id = scanner.nextLine();
+        Book book = db.getBookById(id);
+
+        if (book != null && book.getBookStatus().equalsIgnoreCase("Lost (Unavailable)")) {
+            book.setBookStatus("Available");
+            db.saveBooksToFile();
+            System.out.println("Success: [" + book.getBookName() + "] has been restored to 'Available'.");
+        } else {
+            System.out.println("Error: Book ID not found or book is not currently marked as lost.");
+        }
+        scanner.nextLine();
     }
 
 }
+

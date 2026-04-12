@@ -225,11 +225,11 @@ public class LibraryDatabase {
 
     public void updateBookReserved(Book b1) {
         for (Book b2 : books) {
-            if (b1 == b2) { 
+            if (b1 == b2) {
                 b1.changeStatustoReserved();
                 saveBooksToFile();
                 System.out.println("Book reserved successfully");
-                return; // Exit the method 
+                return; // Exit the method
             }
         }
         System.out.println("This book doesn't exist");
@@ -276,10 +276,13 @@ public class LibraryDatabase {
     public void printBorrowCountBooks() {
         loadBooksFromFile();
         Random r = new Random();
+
         for (Book book : books) {
             int totalBorrowed = r.nextInt(20);
-        
-            System.out.printf("%-12s %-3d\n", book.getBookName(), totalBorrowed);
+            int totalReturned = r.nextInt(20);
+
+        System.out.printf("%-25s %-16d %-16d\n",
+                      book.getBookName(), totalBorrowed, totalReturned);
         }
     }
 
@@ -297,6 +300,14 @@ public class LibraryDatabase {
             );
         }
     }*/
-}
 
-    
+    public List<User> getAllUsers() {
+        return users;
+    }
+
+    public List<Book> getAllBooks() {
+        return books;
+    }
+
+
+}

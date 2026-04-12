@@ -1,9 +1,11 @@
 import java.util.Scanner;
 import java.util.Random;
+import java.util.List;
 
 public class ReportGen {
     Random r = new Random();
     LibraryDatabase ld = new LibraryDatabase();
+    RoomManager rm = new RoomManager();
 
     Book bookName = new Book("B011",
                             "Tung", 
@@ -27,9 +29,9 @@ public class ReportGen {
             case 3:
                 break; // for lost books
             case 4:
+                displayStudyRoom();
                 break; // for the study room stuff
             case 5:
-                System.exit(0);
                 break; // exit 
             default:
                 System.out.println("invalid input");
@@ -57,11 +59,18 @@ public class ReportGen {
     public void displayTotalBorrowed(){
         ld.loadBooksFromFile();
 
-        System.out.printf("%-12s %-16s %-12s \n", 
-                        "Book name", "Total borrowed",
-                    "Total returned");
+        System.out.printf("%-25s %-16s %-16s \n", 
+                        "Book name", "Total borrowed", "Total returned");
 
         ld.printBorrowCountBooks();
     }
+
+    public void displayStudyRoom(){
+        List<DiscussionRoom> room2 = rm.rooms;
+        System.out.printf("%-9s %-20s\n", "Room ID", "Total Booking Count");
+        for (DiscussionRoom r : room2){
+            System.out.printf("%-9s %-20d\n", r.getRoomID(), r.getBookingCount());
+        }
+    } // genuinely dont know how the FUCK i managed to get this to even work but it works
 
 }
