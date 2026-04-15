@@ -9,11 +9,11 @@ import java.util.Random;
 public class LibraryDatabase {
     // Fields
     //private List<Member> members;
-    private List<Book> books;
+    //private List<Book> books;
     private List<User> users; 
     
     LibraryDatabase() {
-        books = new ArrayList<>();
+        //sbooks = new ArrayList<>();
         users = new ArrayList<>();
     }
 
@@ -98,6 +98,7 @@ public class LibraryDatabase {
 
 
     // -------BOOKS-------
+    /* 
     public void addBook(Book book) {
         books.add(book);
     }
@@ -155,9 +156,7 @@ public class LibraryDatabase {
         for (Book b : books) {
             if (b.getBookName().equals(name)) {
                 return b;
-            } else {
-                System.out.println("We couldn't find the book you're searching for");
-            }
+            } 
         }
         return null;
     }
@@ -168,7 +167,7 @@ public class LibraryDatabase {
         }
     }
 
-    /*public Book updateBookOnLoan(Book b1) {
+    public Book updateBookOnLoan(Book b1) {
         for (Book b2 : books) {
             if (b1 == b2) {
                 b1.changeStatusToLoan();
@@ -177,14 +176,12 @@ public class LibraryDatabase {
                 System.out.println("This book doesn't exist");
             }
         }
-    }*/
+    }
 
     public Book getBookByGenre(String genre) {
         for (Book b : books) {
             if (b.getBookGenre().equals(genre)) {
                 return b;
-            } else {
-                System.out.println("We couldn't find the book you're searching for");
             }
         }
         return null;
@@ -194,9 +191,7 @@ public class LibraryDatabase {
         for (Book b : books) {
             if (b.getBookISBN().equals(isbn)) {
                 return b;
-            } else {
-                System.out.println("We couldn't find the book you're searching for");
-            }
+            } 
         }
         return null;
     }
@@ -205,9 +200,7 @@ public class LibraryDatabase {
         for (Book b : books) {
             if (b.getBookSection().equals(section)) {
                 return b;
-            } else {
-                System.out.println("We couldn't find the book you're searching for");
-            }
+            } 
         }
         return null;
     }
@@ -216,9 +209,7 @@ public class LibraryDatabase {
         for (Book b : books) {
             if (b.getBookStatus().equals(status)) {
                 return b;
-            } else {
-                System.out.println("We couldn't find the book you're searching for");
-            }
+            } 
         }
         return null;
     }
@@ -286,6 +277,36 @@ public class LibraryDatabase {
         }
     }
 
+    public void printBookDetails(Book book) {
+        System.out.printf("%-5s %-15s %-10s %-10s %-10s %-13s\n", 
+                book.getBookId(),
+                book.getBookName(),
+                book.getBookGenre(),
+                book.getBookISBN(),
+                book.getBookSection(),
+                book.getBookStatus()
+        );
+    }
+
+    public List<Book> printAllBooksByGenre(String genre) {
+        List<Book> foundBooks = new ArrayList<>();
+
+        for (Book b : books) {
+            if (b.getBookGenre().equals(genre)) {
+                foundBooks.add(b);
+
+                printBookDetails(b);
+            }
+        }
+
+        if (foundBooks.isEmpty()) {
+            System.out.println("Genre not found.");
+        }
+
+        return foundBooks;
+    }
+    */
+
     //----------Discussion Rooms----------------
 
     /*public void printAllRooms() {
@@ -304,10 +325,4 @@ public class LibraryDatabase {
     public List<User> getAllUsers() {
         return users;
     }
-
-    public List<Book> getAllBooks() {
-        return books;
-    }
-
-
 }

@@ -5,7 +5,8 @@ public class Library {
         Scanner scanner = new Scanner(System.in);
 
         LibraryDatabase globalDb = new LibraryDatabase(); //Zheng add 27/3/2026
-        globalDb.loadBooksFromFile(); //Zheng add 2/4/2026
+        BookManager globalBm = new BookManager();
+        globalBm.loadBooksFromFile(); //Zheng add 2/4/2026
         globalDb.loadUsersFromFile(); //Zheng add 10/4/2026
 
         while (true) {
@@ -19,7 +20,7 @@ public class Library {
 
                 memberMenu.login1();
             } else if (role == 2) {
-                Admin admin = new Admin(scanner, globalDb);
+                Admin admin = new Admin(scanner, globalDb, globalBm);
                 admin.adminLogin();
             } else if (role == 3) {
                 System.out.println("Enter your  id: ");

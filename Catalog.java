@@ -8,8 +8,8 @@ public class Catalog {
         this.scanner = scanner;
     }
 
-    public void catalogScreen(LibraryDatabase db) {
-        db.printAllBooks();
+    public void catalogScreen(BookManager bm) {
+        bm.printAllBooks();
 
         Boolean condition = true; 
 
@@ -25,8 +25,8 @@ public class Catalog {
                 String id = scanner.nextLine();
 
                 if (id != null) {                
-                    Book book = db.getBookById(id);
-                    db.updateBookReserved(book);
+                    Book book = bm.getBookById(id);
+                    bm.updateBookReserved(book);
                 }
                 condition = false;
             } else if (choice == 'N') {
@@ -38,17 +38,17 @@ public class Catalog {
         }
     }
 
-    public void searchBook(LibraryDatabase db) {
-        db.loadBooksFromFile();
+    public void searchBook(BookManager bm) {
+        bm.loadBooksFromFile();
 
-        System.out.println("1. Book name\n" +
+        System.out.println(
+            "1. Book name\n" +
             "2. Book ID\n" +
             "3. Genre\n" +
-            "9. Test\n" +
+            "4. Section\n" +
             "Search by: "
         );
 
-        //check for non-integer, not 1 or 2
         int choice;
 
         if (scanner.hasNextInt()) {
@@ -57,101 +57,100 @@ public class Catalog {
 
             switch (choice) {
                 case 1:
-                    System.out.println("Enter book name: ");
-                    String name1 = scanner.nextLine();
-                    name1 = name1.trim();
+                    boolean try1 = true;
 
-                    Book name2 = db.getBookByName(name1);
+                    while (try1) {
+                        System.out.println("Enter book name: ");
+                        String name1 = scanner.nextLine().trim();
 
-                    System.out.printf("%-5s %-15s %-10s %-10s %-10s %-13s\n", 
-                        name2.getBookId(),
-                        name2.getBookName(),
-                        name2.getBookGenre(),
-                        name2.getBookISBN(),
-                        name2.getBookSection(),
-                        name2.getBookStatus()
-                    );
+                        Book name2 = bm.getBookByName(name1);
+
+                        if (name2 != null) {
+                            System.out.printf("%-5s %-15s %-10s %-10s %-10s %-13s\n", 
+                                name2.getBookId(),
+                                name2.getBookName(),
+                                name2.getBookGenre(),
+                                name2.getBookISBN(),
+                                name2.getBookSection(),
+                                name2.getBookStatus()
+                            );
+                        } else {
+                            System.out.println("This book doesn't exist.");
+                        }
+
+                        System.out.print("\nWould you like to try again? (yes/no): ");
+                        String response = scanner.nextLine().trim().toLowerCase();
+                        
+                        if (!response.equals("yes") && !response.equals("y")) {
+                            try1 = false;
+                            System.out.println("Returning to main menu...");
+                        }
+                    }                        
                     break;
                 case 2:
-                    System.out.println("Enter book ID: ");
-                    String id1 = scanner.nextLine();
+                    boolean try2 = true;
 
-                    Book id2 = db.getBookById(id1);
+                    while (try2) {
+                        System.out.println("Enter book ID: ");
+                        String id1 = scanner.nextLine().trim();
 
-                    System.out.printf("%-5s %-15s %-10s %-10s %-10s %-13s\n", 
-                        id2.getBookId(),
-                        id2.getBookName(),
-                        id2.getBookGenre(),
-                        id2.getBookISBN(),
-                        id2.getBookSection(),
-                        id2.getBookStatus()
-                    );
+                        Book id2 = bm.getBookById(id1);
+
+                        if (id2 != null) {
+                            System.out.printf("%-5s %-15s %-10s %-10s %-10s %-13s\n", 
+                                id2.getBookId(),
+                                id2.getBookName(),
+                                id2.getBookGenre(),
+                                id2.getBookISBN(),
+                                id2.getBookSection(),
+                                id2.getBookStatus()
+                            );
+                        } else {
+                            System.out.println("This book doesn't exist.");
+                        }
+
+                        System.out.print("\nWould you like to try again? (yes/no): ");
+                        String response = scanner.nextLine().trim().toLowerCase();
+                        
+                        if (!response.equals("yes") && !response.equals("y")) {
+                            try2 = false;
+                            System.out.println("Returning to main menu...");
+                        }
+                    }
                     break;
                 case 3:
-                    System.out.println("Enter book genre: ");
-                    String genre1 = scanner.nextLine();
-                    System.out.println(genre1);
+                    boolean try3 = true;
 
-                    Book genre2 = db.getBookByGenre(genre1);
+                    while (try3) {
+                        System.out.println("Enter a genre: ");
+                        String genre = scanner.nextLine();
+                        bm.printAllBooksByGenre(genre);
 
-                    System.out.printf("%-5s %-15s %-10s %-10s %-10s %-13s\n", 
-                        genre2.getBookId(),
-                        genre2.getBookName(),
-                        genre2.getBookGenre(),
-                        genre2.getBookISBN(),
-                        genre2.getBookSection(),
-                        genre2.getBookStatus()
-                    );
+                        System.out.print("\nWould you like to search again? (yes/no): ");
+                        String response = scanner.nextLine().trim().toLowerCase();
+                        
+                        if (!response.equals("yes") && !response.equals("y")) {
+                            try3 = false;
+                            System.out.println("Returning ...");
+                        }
+                    }
                     break;
                 case 4:
-                    System.out.println("Enter book ISBN: ");
-                    String isbn1 = scanner.nextLine();
+                    boolean try4 = true;
 
-                    Book isbn2 = db.getBookByISBN(isbn1);
+                    while (try4) {
+                        System.out.println("Enter book section: ");
+                        String section = scanner.nextLine();
+                        bm.printAllBooksBySection(section);
 
-                    System.out.printf("%-5s %-15s %-10s %-10s %-10s %-13s\n", 
-                        isbn2.getBookId(),
-                        isbn2.getBookName(),
-                        isbn2.getBookGenre(),
-                        isbn2.getBookISBN(),
-                        isbn2.getBookSection(),
-                        isbn2.getBookStatus()
-                    );
-                    break;
-                case 5:
-                    System.out.println("Enter book section: ");
-                    String sec1 = scanner.nextLine();
-
-                    Book sec2 = db.getBookBySection(sec1);
-
-                    System.out.printf("%-5s %-15s %-10s %-10s %-10s %-13s\n", 
-                        sec2.getBookId(),
-                        sec2.getBookName(),
-                        sec2.getBookGenre(),
-                        sec2.getBookISBN(),
-                        sec2.getBookSection(),
-                        sec2.getBookStatus()
-                    );
-                    break;
-                case 6:
-                    System.out.println("Enter book status: ");
-                    String status1 = scanner.nextLine();
-
-                    Book status2 = db.getBookByStatus(status1);
-
-                    System.out.printf("%-5s %-15s %-10s %-10s %-10s %-13s\n", 
-                        status2.getBookId(),
-                        status2.getBookName(),
-                        status2.getBookGenre(),
-                        status2.getBookISBN(),
-                        status2.getBookSection(),
-                        status2.getBookStatus()
-                    );
-                    break;
-                case 9:
-                    Book testBook = new Book("apple", "apple", "apple", "apple", "apple", "apple");
-                    String test = testBook.getBookId();
-                    System.out.print(test);
+                        System.out.print("\nWould you like to search again? (yes/no): ");
+                        String response = scanner.nextLine().trim().toLowerCase();
+                        
+                        if (!response.equals("yes") && !response.equals("y")) {
+                            try4 = false;
+                            System.out.println("Returning ...");
+                        }
+                    }
                     break;
                 default:
                     System.out.println("This option isn't available");

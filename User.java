@@ -8,6 +8,7 @@ abstract class User {
 
     LibraryDatabase db; //= new LibraryDatabase();
     Scanner scanner; //= new Scanner(System.in); zheng delete 9/4/2026
+    BookManager bm;
 
     public abstract String toCSV();
 
@@ -49,7 +50,7 @@ abstract class User {
 
             switch (choice) { 
                 case 1:
-                    catalog.catalogScreen(db);
+                    catalog.catalogScreen(bm);
                     break;
                 default:
                     System.out.println("Invalid choice!");
