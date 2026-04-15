@@ -6,6 +6,7 @@ public class ReportGen {
     Random r = new Random();
     LibraryDatabase ld = new LibraryDatabase();
     RoomManager rm = new RoomManager();
+    BookManager bm = new BookManager();
 
     Book bookName = new Book("B011",
                             "Tung", 
@@ -57,12 +58,12 @@ public class ReportGen {
     
     // book name : number
     public void displayTotalBorrowed(){
-        ld.loadBooksFromFile();
+        bm.loadBooksFromFile();
 
         System.out.printf("%-25s %-16s %-16s \n", 
                         "Book name", "Total borrowed", "Total returned");
 
-        ld.printBorrowCountBooks();
+        bm.printBorrowCountBooks();
     }
 
     public void displayStudyRoom(){

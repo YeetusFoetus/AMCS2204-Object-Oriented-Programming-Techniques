@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class MemberMenu {
     Scanner scanner;
     LibraryDatabase db = new LibraryDatabase();
+    BookManager bm = new BookManager();
 
     public MemberMenu(Scanner scanner) {
         this.scanner = scanner;
@@ -12,56 +13,66 @@ public class MemberMenu {
         db.loadUsersFromFile();
 
         System.out.print("Enter password(ID): ");
-        Catalog catalog = new Catalog(scanner);
-        
         String password = scanner.next();
+        scanner.nextLine(); // Consume the leftover newline
 
         User member = db.getUserById(password);
 
         if (member != null) {
-            System.out.println("\n==================");
-            System.out.println("Welcome " + member.getUserName());
-            System.out.println("==================");
-            System.out.println("1. Catalog");
-            System.out.println("2. Search books");
-            System.out.println("3. Your borrowed books");
-            System.out.println("4. Discussion room booking");
-            System.out.println("5. Pay fine");
-            System.out.println("6. Return");
+            Catalog catalog = new Catalog(scanner);
+            boolean loggedIn = true; // Loop control variable
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            while (loggedIn) {
+                System.out.println("\n==================");
+                System.out.println("Welcome " + member.getUserName());
+                System.out.println("==================");
+                System.out.println("1. Catalog");
+                System.out.println("2. Search books");
+                System.out.println("3. Your borrowed books");
+                System.out.println("4. Discussion room booking");
+                System.out.println("5. Pay fine");
+                System.out.println("6. Logout"); 
+                System.out.print("Choose an option: ");
 
-            switch (choice) { 
-                case 1:
-                    catalog.catalogScreen(db);
-                    break;
-                case 2:
-                    catalog.searchBook(db);
-                    break;
-                case 3:
-                    System.out.println("Sup");
-                    break;
-                case 4:
-                    RoomManager.displayAllRooms();
-                    System.out.print("Enter Room ID to reserve (e.g., 1-A): ");
-                    String userChoice = scanner.nextLine();
-                    RoomManager.reserveRoom(userChoice);
-                    break;
-                case 5:
-                    payFine();
-                    break;
-                case 6:
-                    System.out.println("Sup");
-                    break;
-                default:
-                    System.out.println("Invalid choice!");
-                    return;
+                // Use a string or check hasNextInt to avoid crashes if user types a letter
+                if (!scanner.hasNextInt()) {
+                    System.out.println("Please enter a valid number.");
+                    scanner.nextLine(); // clear invalid input
+                    continue;
+                }
+
+                int choice = scanner.nextInt();
+                scanner.nextLine(); 
+
+                switch (choice) {
+                    case 1:
+                        catalog.catalogScreen(bm);
+                        break;
+                    case 2:
+                        catalog.searchBook(bm);
+                        break;
+                    case 3:
+                        System.out.println("Fetching your books...");
+                        break;
+                    case 4:
+                        RoomManager.displayAllRooms();
+                        System.out.print("Enter Room ID to reserve (e.g., 1-A): ");
+                        String userChoice = scanner.nextLine();
+                        RoomManager.reserveRoom(userChoice);
+                        break;
+                    case 5:
+                        payFine();
+                        break;
+                    case 6:
+                        System.out.println("Logging out...");
+                        loggedIn = false; 
+                        break;
+                    default:
+                        System.out.println("Invalid choice!");
+                }
             }
-        } 
-        
-        else if (member == null) {
-            System.out.println("Invalid login");
+        } else {
+            System.out.println("Invalid login credentials.");
         }
     }
 

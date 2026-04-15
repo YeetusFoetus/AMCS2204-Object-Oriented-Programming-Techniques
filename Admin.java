@@ -18,10 +18,11 @@ public class Admin extends User {
     // add "admin995" so the default admin can still log in.
     private List<String> validAdminIds = new ArrayList<>(List.of("admin995"));
     
-    public Admin(Scanner scanner, LibraryDatabase db) {
+    public Admin(Scanner scanner, LibraryDatabase db, BookManager bm) {
         super("admin995", "Default Admin", "admin@gmail.com", "admin123");
         this.scanner = scanner;
         this.db = db;
+        this.bm = bm;
 
         loadValidAdminIds();
     }
@@ -122,7 +123,7 @@ public class Admin extends User {
 
     public void addCatalog() {
         System.out.println("--- Adding a New Book ---");
-        String id = db.generateNextBookId();
+        String id = bm.generateNextBookId();
         System.out.println("Generated Book ID: " + id);
 
         String name = getNonEmptyInput("Enter the Book Name: ");
@@ -133,8 +134,8 @@ public class Admin extends User {
 
         Book newBook = new Book(id, name, genre, isbn, section, status);
     
-        db.addBook(newBook);
-        db.saveBooksToFile();
+        bm.addBook(newBook);
+        bm.saveBooksToFile();
     
         System.out.println("\nSuccess! [" + name + "] has been added to the catalog.");
         scanner.nextLine();
@@ -158,7 +159,7 @@ public class Admin extends User {
         System.out.println("--- Removing a Book ---");
         System.out.println("Enter the Book ID to remove: ");
         String id = scanner.nextLine();
-        Book bookToRemove = db.getBookById(id);
+        Book bookToRemove = bm.getBookById(id);
 
         if (bookToRemove != null) {
             System.out.println("Book found: " + bookToRemove.getBookName());
@@ -173,8 +174,8 @@ public class Admin extends User {
             String confirmation = scanner.nextLine();
             switch (confirmation.toUpperCase()) {
                 case "Y":
-                    db.removeBook(bookToRemove);
-                    db.saveBooksToFile();
+                    bm.removeBook(bookToRemove);
+                    bm.saveBooksToFile();
                     System.out.println("Book [" + bookToRemove.getBookName() + "] has been removed from the catalog.");
                     scanner.nextLine();
                     break;
@@ -199,7 +200,7 @@ public class Admin extends User {
         System.out.println("Enter the Book ID to update: ");
         String id = scanner.nextLine();
 
-        Book bookToUpdate = db.getBookById(id);
+        Book bookToUpdate = bm.getBookById(id);
         if(bookToUpdate != null) {
             System.out.println("\n---Current Details---");
             System.out.println("ID: " + bookToUpdate.getBookId() + "\n");
@@ -249,7 +250,7 @@ public class Admin extends User {
                     return;
             }
 
-            db.saveBooksToFile();
+            bm.saveBooksToFile();
             System.out.println("\nBook details updated successfully.");
             scanner.nextLine();
         
@@ -421,12 +422,12 @@ public class Admin extends User {
     private void markBookAsLost() {
         System.out.print("Enter Book ID to mark as LOST: ");
         String id = scanner.nextLine();
-        Book book = db.getBookById(id);
+        Book book = bm.getBookById(id);
 
         if (book != null) {
             // Auto-update status to Unavailable
             book.setBookStatus("Lost (Unavailable)");
-            db.saveBooksToFile();
+            bm.saveBooksToFile();
             System.out.println("Success: [" + book.getBookName() + "] is now marked as Lost.");
         } else {
             System.out.println("Error: Book ID not found.");
@@ -436,7 +437,7 @@ public class Admin extends User {
 
     private void displayLostBooks() {
         System.out.println("\n--- List of Lost Books ---");
-        List<Book> allBooks = db.getAllBooks(); // Assuming db has a method to get the list
+        List<Book> allBooks = bm.getAllBooks(); // Assuming db has a method to get the list
         boolean found = false;
 
         for (Book book : allBooks) {
@@ -455,11 +456,11 @@ public class Admin extends User {
     private void restoreLostBook() {
         System.out.print("Enter Book ID to RESTORE: ");
         String id = scanner.nextLine();
-        Book book = db.getBookById(id);
+        Book book = bm.getBookById(id);
 
         if (book != null && book.getBookStatus().equalsIgnoreCase("Lost (Unavailable)")) {
             book.setBookStatus("Available");
-            db.saveBooksToFile();
+            bm.saveBooksToFile();
             System.out.println("Success: [" + book.getBookName() + "] has been restored to 'Available'.");
         } else {
             System.out.println("Error: Book ID not found or book is not currently marked as lost.");
