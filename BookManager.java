@@ -140,6 +140,18 @@ public class BookManager {
         System.out.println("This book doesn't exist");
     }
 
+    public void updateBookAvailable(Book b1) {
+        for (Book b2 : books) {
+            if (b1 == b2) {
+                b1.changeStatustoAvailable();
+                saveBooksToFile();
+                System.out.println("Reservation unset successfully");
+                return; // Exit the method
+            }
+        }
+        System.out.println("This book doesn't exist");
+    }
+
     public void printAllBooks() {
         //loadBooksFromFile(); zheng delete 2/4/2026
         if (books.isEmpty()) {
@@ -238,4 +250,6 @@ public class BookManager {
 
         return foundSection;
     }   
+
+
 }
