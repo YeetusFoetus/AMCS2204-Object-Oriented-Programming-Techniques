@@ -26,7 +26,7 @@ public class BookManager {
             }
 
             writer.close();
-            System.out.println("Book saved successfully.");
+            //System.out.println("Book saved successfully."); zheng delete 16/4/2026
 
         } catch (IOException e) {
             e.printStackTrace();
