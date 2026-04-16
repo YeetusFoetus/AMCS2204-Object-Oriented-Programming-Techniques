@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 
 public class Admin extends User {
 
@@ -19,7 +20,7 @@ public class Admin extends User {
     private List<String> validAdminIds = new ArrayList<>(List.of("admin995"));
     
     public Admin(Scanner scanner, LibraryDatabase db, BookManager bm) {
-        super("admin995", "Default Admin", "admin@gmail.com", "admin123");
+        super("admin995", "Default Admin", "admin@gmail.com", "admin123", 0);
         this.scanner = scanner;
         this.db = db;
         this.bm = bm;
@@ -27,14 +28,14 @@ public class Admin extends User {
         loadValidAdminIds();
     }
 
-    public Admin(String id, String name, String email, String password) {
-    super(id, name, email, password);
-    loadValidAdminIds();
+    public Admin(String id, String name, String email, String password, int borrowCounter) {
+        super(id, name, email, password, borrowCounter);
+        loadValidAdminIds();
     } //zheng add 10/4/2026
 
     @Override
     public String toCSV() {
-        return "Admin, " + getUserId() + ", " + getUserName() + ", " + getUserPassword();
+        return "Admin, " + getUserId() + ", " + getUserName() + ", " + getUserEmail() + ", " + getUserPassword() + ", " + getBorrowCounter();
     } //zheng add 10/4/2026
 
     public void mainMenu() {
@@ -59,61 +60,70 @@ public class Admin extends User {
     public void adminMenu() {
         String choice = "0";
 
-        while(!choice.equals("9")){
+        while(!choice.equals("10")){
         System.out.println("\n====================");
         System.out.println("     Admin Menu");
         System.out.println("====================");
-        System.out.println("1. Add catalog entry");
-        System.out.println("2. Remove catalog entry");
-        System.out.println("3. Update book details");
-        System.out.println("4. Register new admin");
-        System.out.println("5. Pending fines");
-        System.out.println("6. Remove Book Reservation");
-        System.out.println("7. Lost books");
-        System.out.println("8. Generate Report");
-        System.out.println("9. Back to Main Menu");
+        System.out.println("1. Lend a book");
+        System.out.println("2. Add catalog entry");
+        System.out.println("3. Remove catalog entry");
+        System.out.println("4. Update book details");
+        System.out.println("5. Register new admin");
+        System.out.println("6. Pending fines");
+        System.out.println("7. Remove Book Reservation");
+        System.out.println("8. Lost books");
+        System.out.println("9. Generate Report");
+        System.out.println("10. Back to Main Menu");
 
         System.out.print("\nEnter choice: ");
         choice = scanner.nextLine();
 
         switch (choice) {
             case "1":
+                System.out.println("Enter user ID:");
+                String UID = scanner.nextLine();
+                System.out.println("Enter book ID: ");
+                String BID = scanner.nextLine();
+                lendBook(UID, BID);
+                break;
+
+            case "2":
                 addCatalog();
                 break;
             
-            case "2":
+            case "3":
                 removeCatalog();
                 break;
         
-            case "3":
+            case "4":
                 updateCatalog();
                 break;
             
-            case "4":
+            case "5":
                 registerNewAdmin();
                 break;
 
-            case "5":
-                viewPendingFines();
+            case "6":
+                //viewPendingFines();
                 break;
 
-            case "6":
+            case "7":
                 removeBookReservation();
                 break; 
 
-            case "7":
+            case "8":
                 viewLostBooks();
                 break;
             
-            case "8":
+            case "9":
                 rg.reportGen();
                 break;
 
-            case "9":
+            case "10":
                 break;
 
             default:
-                System.out.println("Invalid choice! Please select 1-9.");
+                System.out.println("Invalid choice! Please select 1-10.");
                 scanner.nextLine();
                 break;
          }
@@ -124,6 +134,39 @@ public class Admin extends User {
         scanner.nextLine();
         return;
         
+    }
+
+    public void lendBook(String userId, String bookId) {
+        // 1. Fetch the User and Book from your data source (e.g., a List or DB)
+        User user = db.getUserById(userId);
+        Book book = bm.getBookById(bookId);
+
+        // 2. Simple Validation
+        if (user == null || book == null) {
+            System.out.println("Error: User or Book does not exist.");
+            return;
+        }
+
+        if (book.getBookStatus().equalsIgnoreCase("On Loan")) {
+            System.out.println("Error: Book is already borrowed.");
+            return;
+        }
+
+        // 3. Generate Dates using Java's modern Time API
+        LocalDate borrowedDate = LocalDate.now();
+        LocalDate dueDate = borrowedDate.plusDays(14); // Standard 14-day loan
+
+        // 4. Update User info
+        // Increment the counter (current count + 1)
+        user.incrementBorrowCounter();
+
+        // 5. Update Book info
+        book.setBookStatus("On Loan");
+        book.setBorrowedDate(borrowedDate);
+        book.setDueDate(dueDate);
+
+        System.out.println("Success! Book '" + book.getBookName() + "' lent to " + user.getUserName());
+        System.out.println("Due date is: " + dueDate);
     }
 
     public void addCatalog() {
@@ -293,7 +336,7 @@ public class Admin extends User {
         //} catch (java.io.IOException e) {
         //    System.out.println("Error saving ID to file.");
         //}   zheng delete 10/4/2026
-        Admin newAdmin = new Admin(newAdminId, name, "test@gmail.com", "admin123");
+        Admin newAdmin = new Admin(newAdminId, name, "test@gmail.com", "admin123", 0);
         db.addUser(newAdmin);
         db.saveUsersToFile();
         //zheng add 10/4/2026
@@ -359,11 +402,9 @@ public class Admin extends User {
         }
     }
 
-    // Replace the empty method in Admin.java
     public void viewPendingFines() {
         System.out.println("\n--- Viewing Pending Fines ---");
 
-        // Get all users from the database
         List<User> allUsers = db.getAllUsers();
         boolean foundFines = false;
 
@@ -371,7 +412,14 @@ public class Admin extends User {
         System.out.println("--------------------------------------------------");
 
         for (User user : allUsers) {
-            // Check if the user has a pending fine
+
+            // ---> NEW ADDITION: Calculate fines before checking <---
+            // You will need to fetch the list of books this specific user has borrowed.
+            // (Replace 'db.getBorrowedBooksForUser(user)' with whatever method your database uses)
+//            List<Book> userBooks = db.get(user.getUserId());
+//            user.calculateOverdueFines(userBooks);
+
+            // Check if the user has a pending fine (This remains the same)
             if (user.getFineAmount() > 0) {
                 System.out.printf("%-10s | %-20s | $%-10.2f\n",
                         user.getUserId(),
@@ -386,7 +434,6 @@ public class Admin extends User {
         }
 
         System.out.println("\nPress Enter to return to menu...");
-        // Use the existing scanner to pause
         scanner.nextLine();
     }
 

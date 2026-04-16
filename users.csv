@@ -1,14 +1,16 @@
-Member,M001,Alice Johnson,alice.johnson482@gmail.com,pass123
-Member,M002,Bob Smith,bob.smith739@yahoo.com,pass456
-Member,M003,Charlie Brown,charlie.brown615@outlook.com,pass789
-Member,M004,Diana Prince,diana.prince298@gmail.com,pass101
-Member,M005,Ethan Hunt,ethan.hunt874@yahoo.com,pass202
-Member,M006,Fiona Gallagher,fiona.gallagher563@outlook.com,pass303
-Member,M007,George Miller,george.miller921@gmail.com,pass404
-Member,M008,Hannah Abbott,hannah.abbott447@yahoo.com,pass505
-Member,M009,Ian Wright,ian.wright330@outlook.com,pass606
-Member,M010,Julia Roberts,julia.roberts782@gmail.com,pass707
-Member,lsdkfj,sldkfj,slkdfj,sdlkfj
-Admin, ADM-1008, admin1, admin123
-Admin, ADM-1009, admin2, admin123
-Member,666,666,666,666
+Member, M001, Alice Johnson, alice.johnson482@gmail.com, pass123, 0
+Member, M002, Bob Smith, bob.smith739@yahoo.com, pass456, 0
+Member, M003, Charlie Brown, charlie.brown615@outlook.com, pass789, 0
+Member, M004, Diana Prince, diana.prince298@gmail.com, pass101, 0
+Member, M005, Ethan Hunt, ethan.hunt874@yahoo.com, pass202, 0
+Member, M006, Fiona Gallagher, fiona.gallagher563@outlook.com, pass303, 0
+Member, M007, George Miller, george.miller921@gmail.com, pass404, 0
+Member, M008, Hannah Abbott, hannah.abbott447@yahoo.com, pass505, 0
+Member, M009, Ian Wright, ian.wright330@outlook.com, pass606, 0
+Member, M010, Julia Roberts, julia.roberts782@gmail.com, pass707, 0
+Member, lsdkfj, sldkfj, slkdfj, sdlkfj, 0
+Admin, ADM-1008, admin@gmail.com, admin1, admin123, 0
+Admin, ADM-1009, admin2, admin@gmail.com, admin123, 0
+Member, 666, 666, 666, 666, 0
+Member, M011, 555, 555.gmail.com, 66665555, 0
+Member, M012, wk, wk@gamil.com, 114514, 0

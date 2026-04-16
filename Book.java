@@ -1,11 +1,33 @@
+import java.time.LocalDate;
+
 public class Book {
     private String bookId;
     private String bookName;
     private String bookGenre;
     private String bookISBN;
     private String bookSection;
-    private String bookStatus; 
+    private String bookStatus;
+    private LocalDate dueDate;
+    private LocalDate  borrowedDate;
 
+
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    // Getter for borrowedDate
+    public LocalDate getBorrowedDate() {
+        return borrowedDate;
+    }
+
+    // Setter for borrowedDate
+    public void setBorrowedDate(LocalDate borrowedDate) {
+        this.borrowedDate = borrowedDate;
+    }
 
     public Book (String bookId, 
             String bookName, 
@@ -50,4 +72,6 @@ public class Book {
     public void changeStatustoAvailable() {
         this.bookStatus = "Available";
     }
+
+
 }

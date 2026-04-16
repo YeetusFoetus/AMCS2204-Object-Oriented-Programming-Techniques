@@ -39,12 +39,13 @@ public class Library {
 
                 String password = scanner.nextLine();
                 
-                //globalDb.loadUsersFromFile(); zheng delete 16/4/2026
-                globalDb.addUser(new Member(id, name, email, password));
+                globalDb.loadUsersFromFile();
+                globalDb.addUser(new Member(id, name, email, password, 0));
                 globalDb.saveUsersToFile();
 
                 // Testing
                 globalDb.getLastUser();
+
             } else if (role == 4) {
                 exitProgram();
             } else if (role == 0) {
