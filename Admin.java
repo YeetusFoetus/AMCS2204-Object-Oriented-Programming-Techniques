@@ -113,7 +113,7 @@ public class Admin extends User {
                 break;
 
             default:
-                System.out.println("Invalid choice! Please select 1-7.");
+                System.out.println("Invalid choice! Please select 1-9.");
                 scanner.nextLine();
                 break;
          }
@@ -159,6 +159,7 @@ public class Admin extends User {
     }
     return input;
 }
+
 
     public void removeCatalog() {
         System.out.println("--- Removing a Book ---");
@@ -220,28 +221,23 @@ public class Admin extends User {
 
             switch (choice) {
                 case "1" :
-                    System.out.print("Enter new Name: ");
-                    bookToUpdate.setBookName(scanner.nextLine());
+                    bookToUpdate.setBookName(getNonEmptyInput("Enter new Name: "));
                     break;
 
                 case "2" :
-                    System.out.print("Enter new Genre: ");
-                    bookToUpdate.setBookGenre(scanner.nextLine());
+                    bookToUpdate.setBookGenre(getNonEmptyInput("Enter new Genre: "));
                     break;
 
                 case "3" :
-                    System.out.print("Enter new ISBN: ");
-                    bookToUpdate.setBookISBN(scanner.nextLine());
+                    bookToUpdate.setBookISBN(getNonEmptyInput("Enter new ISBN: "));
                     break;
                 
                 case "4" :
-                    System.out.print("Enter new Section: ");
-                    bookToUpdate.setBookSection(scanner.nextLine());
+                    bookToUpdate.setBookSection(getNonEmptyInput("Enter new Section: "));
                     break;
 
                 case "5" :
-                    System.out.print("Enter new Status: ");
-                    bookToUpdate.setBookStatus(scanner.nextLine());
+                    bookToUpdate.setBookStatus(getNonEmptyInput("Enter new Status: "));
                     break;
 
                 case "6" :
