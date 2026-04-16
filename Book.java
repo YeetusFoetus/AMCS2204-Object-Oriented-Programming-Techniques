@@ -46,4 +46,8 @@ public class Book {
     public void changeStatustoReserved() {
         this.bookStatus = "Reserved";
     }
+
+    public void changeStatustoAvailable() {
+        this.bookStatus = "Available";
+    }
 }
