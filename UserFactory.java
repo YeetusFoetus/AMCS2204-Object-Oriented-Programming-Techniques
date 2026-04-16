@@ -18,7 +18,7 @@ public class UserFactory {
 
         switch (type) {
             case "Member":
-                return new Member(id, name, email, password);
+                return new Member(id, name, email, password, 0);
             case"Admin":
                 return new Admin(id, name, email, password);
             default:

@@ -40,7 +40,7 @@ public class Library {
                 String password = scanner.nextLine();
                 
                 globalDb.loadUsersFromFile();
-                globalDb.addUser(new Member(id, name, email, password));
+                globalDb.addUser(new Member(id, name, email, password, 0));
                 globalDb.saveUsersToFile();
 
                 // Testing

@@ -9,17 +9,17 @@ public class ReportGen {
     BookManager bm = new BookManager();
 
     Book bookName = new Book("B011",
-                            "Tung", 
-                            "Classic", 
-                            "978-47387242", 
-                            "Literature", 
+                            "Tung",
+                            "Classic",
+                            "978-47387242",
+                            "Literature",
                             "Available");
 
     private static Scanner scanner = new Scanner(System.in);
 
     public void reportGen() {
         int choice = 0;
-        
+
         do {
             try{
                 choice = printMenu();
@@ -37,7 +37,7 @@ public class ReportGen {
                     case 5:
                         break; // exit 
                     default:
-                        System.out.println("invalid input");
+                        System.out.println("Invalid input");
                         return;
                     }
                 } catch (Exception e){
@@ -50,7 +50,7 @@ public class ReportGen {
     public static int printMenu(){
         System.out.println("========================================================================");
         System.out.println("This is the report generator part. Which one do you want to access here?");
-        System.out.println("========================================================================");        
+        System.out.println("========================================================================");
         System.out.println("1. Borrowing Statistics for Every User");
         System.out.println("2. Fines summary");
         System.out.println("3. Lost books");
@@ -62,12 +62,12 @@ public class ReportGen {
     }
 
 
-    
+
     // book name : number
     public void displayTotalBorrowed(){
         bm.loadBooksFromFile();
 
-        System.out.printf("%-25s %-16s %-16s \n", 
+        System.out.printf("%-25s %-16s %-16s \n",
                         "Book name", "Total borrowed", "Total returned");
 
         bm.printBorrowCountBooks();
