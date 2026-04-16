@@ -39,7 +39,7 @@ public class Library {
 
                 String password = scanner.nextLine();
                 
-                globalDb.loadUsersFromFile();
+                //globalDb.loadUsersFromFile(); zheng delete 16/4/2026
                 globalDb.addUser(new Member(id, name, email, password));
                 globalDb.saveUsersToFile();
 

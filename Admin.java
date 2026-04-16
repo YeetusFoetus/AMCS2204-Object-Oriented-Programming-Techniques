@@ -156,9 +156,9 @@ public class Admin extends User {
         if (input.isEmpty()) {
             System.out.println("Error: Please write something!");
         }
+        }
+        return input;
     }
-    return input;
-}
 
 
     public void removeCatalog() {
@@ -390,6 +390,24 @@ public class Admin extends User {
         scanner.nextLine();
     }
 
+    public void removeBookReservation() {
+        System.out.println("--- Book Reservation Removal ---");
+        System.out.println("Enter Book ID to remove reservation: ");
+        String id = scanner.nextLine();
+        Book bookToCancel = bm.getBookById(id);
+
+        if(bookToCancel !=null){
+            if ("Reserved".equals(bookToCancel.getBookStatus())) {            
+            bm.updateBookAvailable(bookToCancel); 
+        } else {
+            System.out.println("This book is not currently reserved.");
+        }
+        } else {
+        System.out.println("Book ID [" + id + "] not found.");
+        }
+        scanner.nextLine();
+    }
+
     public void viewLostBooks() {
         String choice = "0";
         while (!choice.equals("4")) {
@@ -436,23 +454,6 @@ public class Admin extends User {
         scanner.nextLine();
     }
 
-    public void removeBookReservation() {
-        System.out.println("--- Book Reservation Removal ---");
-        System.out.println("Enter Book ID to remove reservation: ");
-        String id = scanner.nextLine();
-        Book bookToCancel = bm.getBookById(id);
-
-        if(bookToCancel !=null){
-            if ("Reserved".equals(bookToCancel.getBookStatus())) {            
-            bm.updateBookAvailable(bookToCancel); 
-        } else {
-            System.out.println("This book is not currently reserved.");
-        }
-        } else {
-        System.out.println("Book ID [" + id + "] not found.");
-        }
-        scanner.nextLine();
-    }
 
     private void displayLostBooks() {
         System.out.println("\n--- List of Lost Books ---");
