@@ -59,7 +59,7 @@ public class Admin extends User {
     public void adminMenu() {
         String choice = "0";
 
-        while(!choice.equals("8")){
+        while(!choice.equals("9")){
         System.out.println("\n====================");
         System.out.println("     Admin Menu");
         System.out.println("====================");
@@ -68,9 +68,10 @@ public class Admin extends User {
         System.out.println("3. Update book details");
         System.out.println("4. Register new admin");
         System.out.println("5. Pending fines");
-        System.out.println("6. Lost books");
-        System.out.println("7. Generate Report");
-        System.out.println("8. Back to Main Menu");
+        System.out.println("6. Remove Book Reservation");
+        System.out.println("7. Lost books");
+        System.out.println("8. Generate Report");
+        System.out.println("9. Back to Main Menu");
 
         System.out.print("\nEnter choice: ");
         choice = scanner.nextLine();
@@ -97,14 +98,18 @@ public class Admin extends User {
                 break;
 
             case "6":
+                removeBookReservation();
+                break; 
+
+            case "7":
                 viewLostBooks();
                 break;
             
-            case "7":
+            case "8":
                 rg.reportGen();
                 break;
 
-            case "8":
+            case "9":
                 break;
 
             default:
@@ -431,6 +436,24 @@ public class Admin extends User {
             System.out.println("Success: [" + book.getBookName() + "] is now marked as Lost.");
         } else {
             System.out.println("Error: Book ID not found.");
+        }
+        scanner.nextLine();
+    }
+
+    public void removeBookReservation() {
+        System.out.println("--- Book Reservation Removal ---");
+        System.out.println("Enter Book ID to remove reservation: ");
+        String id = scanner.nextLine();
+        Book bookToCancel = bm.getBookById(id);
+
+        if(bookToCancel !=null){
+            if ("Reserved".equals(bookToCancel.getBookStatus())) {            
+            bm.updateBookAvailable(bookToCancel); 
+        } else {
+            System.out.println("This book is not currently reserved.");
+        }
+        } else {
+        System.out.println("Book ID [" + id + "] not found.");
         }
         scanner.nextLine();
     }
