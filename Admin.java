@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 
 public class Admin extends User {
 
@@ -19,7 +20,7 @@ public class Admin extends User {
     private List<String> validAdminIds = new ArrayList<>(List.of("admin995"));
     
     public Admin(Scanner scanner, LibraryDatabase db, BookManager bm) {
-        super("admin995", "Default Admin", "admin@gmail.com", "admin123");
+        super("admin995", "Default Admin", "admin@gmail.com", "admin123", 0);
         this.scanner = scanner;
         this.db = db;
         this.bm = bm;
@@ -28,7 +29,7 @@ public class Admin extends User {
     }
 
     public Admin(String id, String name, String email, String password) {
-    super(id, name, email, password);
+    super(id, name, email, password, 0);
     loadValidAdminIds();
     } //zheng add 10/4/2026
 
@@ -79,6 +80,11 @@ public class Admin extends User {
 
         switch (choice) {
             case "1":
+                System.out.println("Enter user ID:");
+                String UID = scanner.nextLine();
+                System.out.println("Enter book ID: ");
+                String BID = scanner.nextLine();
+                lendBook(UID, BID);
                 break;
 
             case "2":
@@ -98,7 +104,7 @@ public class Admin extends User {
                 break;
 
             case "6":
-                viewPendingFines();
+                //viewPendingFines();
                 break;
 
             case "7":
@@ -128,6 +134,39 @@ public class Admin extends User {
         scanner.nextLine();
         return;
         
+    }
+
+    public void lendBook(String userId, String bookId) {
+        // 1. Fetch the User and Book from your data source (e.g., a List or DB)
+        User user = db.getUserById(userId);
+        Book book = bm.getBookById(bookId);
+
+        // 2. Simple Validation
+        if (user == null || book == null) {
+            System.out.println("Error: User or Book does not exist.");
+            return;
+        }
+
+        if (book.getBookStatus().equalsIgnoreCase("On Loan")) {
+            System.out.println("Error: Book is already borrowed.");
+            return;
+        }
+
+        // 3. Generate Dates using Java's modern Time API
+        LocalDate borrowedDate = LocalDate.now();
+        LocalDate dueDate = borrowedDate.plusDays(14); // Standard 14-day loan
+
+        // 4. Update User info
+        // Increment the counter (current count + 1)
+        user.incrementBorrowCounter();
+
+        // 5. Update Book info
+        book.setBookStatus("On Loan");
+        book.setBorrowedDate(borrowedDate);
+        book.setDueDate(dueDate);
+
+        System.out.println("Success! Book '" + book.getBookName() + "' lent to " + user.getUserName());
+        System.out.println("Due date is: " + dueDate);
     }
 
     public void addCatalog() {
@@ -367,11 +406,9 @@ public class Admin extends User {
         }
     }
 
-    // Replace the empty method in Admin.java
     public void viewPendingFines() {
         System.out.println("\n--- Viewing Pending Fines ---");
 
-        // Get all users from the database
         List<User> allUsers = db.getAllUsers();
         boolean foundFines = false;
 
@@ -379,7 +416,14 @@ public class Admin extends User {
         System.out.println("--------------------------------------------------");
 
         for (User user : allUsers) {
-            // Check if the user has a pending fine
+
+            // ---> NEW ADDITION: Calculate fines before checking <---
+            // You will need to fetch the list of books this specific user has borrowed.
+            // (Replace 'db.getBorrowedBooksForUser(user)' with whatever method your database uses)
+//            List<Book> userBooks = db.get(user.getUserId());
+//            user.calculateOverdueFines(userBooks);
+
+            // Check if the user has a pending fine (This remains the same)
             if (user.getFineAmount() > 0) {
                 System.out.printf("%-10s | %-20s | $%-10.2f\n",
                         user.getUserId(),
@@ -394,7 +438,6 @@ public class Admin extends User {
         }
 
         System.out.println("\nPress Enter to return to menu...");
-        // Use the existing scanner to pause
         scanner.nextLine();
     }
 
