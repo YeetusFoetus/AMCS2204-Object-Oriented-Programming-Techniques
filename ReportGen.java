@@ -1,19 +1,10 @@
 import java.util.Scanner;
-import java.util.Random;
 import java.util.List;
 
 public class ReportGen {
-    Random r = new Random();
     LibraryDatabase ld = new LibraryDatabase();
     RoomManager rm = new RoomManager();
     BookManager bm = new BookManager();
-
-    Book bookName = new Book("B011",
-                            "Tung", 
-                            "Classic", 
-                            "978-47387242", 
-                            "Literature", 
-                            "Available");
 
     private static Scanner scanner = new Scanner(System.in);
 
@@ -28,6 +19,7 @@ public class ReportGen {
                         displayTotalBorrowed();
                         break; //ts for BorrowStat
                     case 2:
+                        displayFines();
                         break; // for fine
                     case 3:
                         break; // for lost books
@@ -67,20 +59,24 @@ public class ReportGen {
     public void displayTotalBorrowed(){
         bm.loadBooksFromFile();
 
-        System.out.printf("%-25s %-16s %-16s \n", 
+        System.out.printf("%-25s | %-16s | %-16s \n", 
                         "Book name", "Total borrowed", "Total returned");
 
         bm.printBorrowCountBooks();
         System.out.println("\n");
     }
 
+    public void displayFines(){
+        
+    }
+
     public void displayStudyRoom(){
         List<DiscussionRoom> room2 = RoomManager.rooms;
-        System.out.printf("%-9s %-20s\n", "Room ID", "Total Booking Count");
+        System.out.printf("%-9s | %-20s\n", "Room ID", "Total Booking Count");
         for (DiscussionRoom r : room2){
-            System.out.printf("%-9s %-20d\n", r.getRoomID(), r.getBookingCount());
+            System.out.printf("%-9s | %-20d\n", r.getRoomID(), r.getBookingCount());
         }
         System.out.println("\n");
-    } // genuinely dont know how the FUCK i managed to get this to even work but it works
+    } // it works
 
 }

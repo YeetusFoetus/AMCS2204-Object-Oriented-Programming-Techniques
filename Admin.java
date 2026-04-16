@@ -79,6 +79,7 @@ public class Admin extends User {
 
         switch (choice) {
             case "1":
+                lendBook();
                 break;
 
             case "2":
@@ -128,6 +129,13 @@ public class Admin extends User {
         scanner.nextLine();
         return;
         
+    }
+
+    public void lendBook(){
+        System.out.println("Enter user ID to lend to: ");
+        String userID = scanner.nextLine();
+        System.out.println("Enter Book ID to lend to the user: ");
+        String bookID = scanner.nextLine();
     }
 
     public void addCatalog() {
