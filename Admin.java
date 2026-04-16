@@ -59,61 +59,65 @@ public class Admin extends User {
     public void adminMenu() {
         String choice = "0";
 
-        while(!choice.equals("9")){
+        while(!choice.equals("10")){
         System.out.println("\n====================");
         System.out.println("     Admin Menu");
         System.out.println("====================");
-        System.out.println("1. Add catalog entry");
-        System.out.println("2. Remove catalog entry");
-        System.out.println("3. Update book details");
-        System.out.println("4. Register new admin");
-        System.out.println("5. Pending fines");
-        System.out.println("6. Remove Book Reservation");
-        System.out.println("7. Lost books");
-        System.out.println("8. Generate Report");
-        System.out.println("9. Back to Main Menu");
+        System.out.println("1. Lend a book");
+        System.out.println("2. Add catalog entry");
+        System.out.println("3. Remove catalog entry");
+        System.out.println("4. Update book details");
+        System.out.println("5. Register new admin");
+        System.out.println("6. Pending fines");
+        System.out.println("7. Remove Book Reservation");
+        System.out.println("8. Lost books");
+        System.out.println("9. Generate Report");
+        System.out.println("10. Back to Main Menu");
 
         System.out.print("\nEnter choice: ");
         choice = scanner.nextLine();
 
         switch (choice) {
             case "1":
+                break;
+
+            case "2":
                 addCatalog();
                 break;
             
-            case "2":
+            case "3":
                 removeCatalog();
                 break;
         
-            case "3":
+            case "4":
                 updateCatalog();
                 break;
             
-            case "4":
+            case "5":
                 registerNewAdmin();
                 break;
 
-            case "5":
+            case "6":
                 viewPendingFines();
                 break;
 
-            case "6":
+            case "7":
                 removeBookReservation();
                 break; 
 
-            case "7":
+            case "8":
                 viewLostBooks();
                 break;
             
-            case "8":
+            case "9":
                 rg.reportGen();
                 break;
 
-            case "9":
+            case "10":
                 break;
 
             default:
-                System.out.println("Invalid choice! Please select 1-7.");
+                System.out.println("Invalid choice! Please select 1-10.");
                 scanner.nextLine();
                 break;
          }
