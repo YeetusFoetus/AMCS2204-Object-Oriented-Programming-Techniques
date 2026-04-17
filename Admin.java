@@ -104,7 +104,7 @@ public class Admin extends User {
                 break;
 
             case "6":
-                //viewPendingFines();
+                viewPendingFines();
                 break;
 
             case "7":
@@ -156,6 +156,10 @@ public class Admin extends User {
         LocalDate borrowedDate = LocalDate.now();
         LocalDate dueDate = borrowedDate.plusDays(14); // Standard 14-day loan
 
+        //to test overdue
+//      LocalDate borrowedDate = LocalDate.now().minusDays(30);
+//      LocalDate dueDate = borrowedDate.plusDays(1);
+
         // 4. Update User info
         // Increment the counter (current count + 1)
         user.incrementBorrowCounter();
@@ -165,10 +169,13 @@ public class Admin extends User {
         book.setBorrowedDate(borrowedDate);
         book.setDueDate(dueDate);
 
+        book.setBorrowerId(user.getUserId());
+
+        bm.saveBooksToFile();
+
         System.out.println("Success! Book '" + book.getBookName() + "' lent to " + user.getUserName());
         System.out.println("Due date is: " + dueDate);
     }
-
     public void addCatalog() {
         System.out.println("--- Adding a New Book ---");
         String id = bm.generateNextBookId();
@@ -412,26 +419,41 @@ public class Admin extends User {
         List<User> allUsers = db.getAllUsers();
         boolean foundFines = false;
 
-        System.out.printf("%-10s | %-20s | %-10s\n", "User ID", "Name", "Amount Due");
-        System.out.println("--------------------------------------------------");
-
         for (User user : allUsers) {
 
-            // ---> NEW ADDITION: Calculate fines before checking <---
-            // You will need to fetch the list of books this specific user has borrowed.
-            // (Replace 'db.getBorrowedBooksForUser(user)' with whatever method your database uses)
-//            List<Book> userBooks = db.get(user.getUserId());
-//            user.calculateOverdueFines(userBooks);
+            // 1. Skip if user is null (BRACKET CLOSES IMMEDIATELY)
+            if (user == null) {
+                continue;
+            }
 
-            // Check if the user has a pending fine (This remains the same)
+            // 2. Create a fresh list just for THIS user
+            List<Book> thisUsersBooks = new ArrayList<>();
+
+            // 3. Loop through all books to find the ones this user borrowed
+            for (Book book : bm.getAllBooks()) {
+                if ("On Loan".equals(book.getBookStatus()) && user.getUserId().equals(book.getBorrowerId())) {
+                    thisUsersBooks.add(book);
+                }
+            }
+
+            // 4. Calculate fines using ONLY their specific books
+            user.calculateOverdueFines(thisUsersBooks);
+
+            // 5. Print out the details if they owe money
             if (user.getFineAmount() > 0) {
-                System.out.printf("%-10s | %-20s | $%-10.2f\n",
-                        user.getUserId(),
-                        user.getUserName(),
-                        user.getFineAmount());
+                System.out.println("\n-----------------------Pending Fines---------------------------");
+                System.out.println("User: " + user.getUserName() + " (ID: " + user.getUserId() + ")");
+                System.out.println("Total Amount Due: $" + String.format("%.2f", user.getFineAmount()));
+                System.out.println("Breakdown:");
+
+                // Loops through the Fine objects
+                for (Fine fineRecord : user.getFineDetails()) {
+                    System.out.println("  -> " + fineRecord.toString());
+                }
                 foundFines = true;
             }
-        }
+
+        } // <-- Closes the main (User user : allUsers) loop
 
         if (!foundFines) {
             System.out.println("No pending fines found in the system.");

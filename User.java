@@ -21,7 +21,7 @@ abstract class User {
     private List<Fine> fineDetails = new ArrayList<>();
 
     //Constructor
-    public User(String userId, String userName, String userEmail,String userPassword, int borrowCounter) {
+    public User(String userId, String userName, String userEmail, String userPassword, int borrowCounter) {
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
@@ -30,13 +30,29 @@ abstract class User {
     }
 
     //Getter
-    public String getUserId() { return userId; }
-    public String getUserName() { return userName; }
-    public String getUserEmail() { return userEmail; }
-    public String getUserPassword() { return userPassword; }
-    public int getBorrowCounter() { return borrowCounter; }
+    public String getUserId() {
+        return userId;
+    }
 
-    public double getFineAmount() { return fineAmount; }
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public int getBorrowCounter() {
+        return borrowCounter;
+    }
+
+    public double getFineAmount() {
+        return fineAmount;
+    }
 
     public void setFineAmount(double amount) {
         this.fineAmount = amount;
@@ -59,7 +75,7 @@ abstract class User {
 
         System.out.print("Enter password(ID): ");
         Catalog catalog = new Catalog(scanner);
-        
+
         String password = scanner.next();
 
         User member = db.getUserById(password);
@@ -75,7 +91,7 @@ abstract class User {
 
             int choice = scanner.nextInt();
 
-            switch (choice) { 
+            switch (choice) {
                 case 1:
                     catalog.catalogScreen(bm);
                     break;
@@ -83,37 +99,40 @@ abstract class User {
                     System.out.println("Invalid choice!");
                     return;
             }
-        } 
-        
-        else if (member == null) {
+        } else if (member == null) {
             System.out.println("Invalid login");
         }
     }
 
-//    public void calculateOverdueFines(List<Book> borrowedBooks) {
-//        this.fineAmount = 0.0; // Reset fine to recalculate
-//        this.fineDetails.clear(); // Clear old fine details
-//
-//        LocalDate today = LocalDate.now();
-//        double fineRatePerDay = 0.50; // $0.50 per day overdue
-//
-//        for (Book book : borrowedBooks) {
-//            // Check if the book has a due date AND today is after the due date
-//            if (book.getDueDate() != null && today.isAfter(book.getDueDate())) {
-//
-//                // Calculate how many days late it is
-//                long daysOverdue = ChronoUnit.DAYS.between(book.getDueDate(), today);
-//                double bookFine = daysOverdue * fineRatePerDay;
-//
-//                // Add to total amount
-//                this.fineAmount += bookFine;
-//
-//                // Create a Fine object (using your Fine.java) and add it to the list
-//                String reason = "Overdue: " + book.getBookName() + " (" + daysOverdue + " days)";
-//                Fine fineRecord = new Fine(reason, bookFine);
-//                fineDetails.add(fineRecord);
-//            }
-//        }
+    public List<Fine> getFineDetails() {
+        return fineDetails;
     }
+
+    public void calculateOverdueFines(List<Book> borrowedBooks) {
+        this.fineAmount = 0.0; // Reset fine to recalculate
+        this.fineDetails.clear(); // Clear old fine details
+
+        LocalDate today = LocalDate.now();
+        double fineRatePerDay = 0.50; // $0.50 per day overdue
+
+        for (Book book : borrowedBooks) {
+            // Check if the book has a due date AND today is after the due date
+            if (book.getDueDate() != null && today.isAfter(book.getDueDate())) {
+
+                // Calculate how many days late it is
+                long daysOverdue = ChronoUnit.DAYS.between(book.getDueDate(), today);
+                double bookFine = daysOverdue * fineRatePerDay;
+
+                // Add to total amount
+                this.fineAmount += bookFine;
+
+                // Create a Fine object (using your Fine.java) and add it to the list
+                String reason = "Overdue: " + book.getBookName() + " (" + daysOverdue + " days)";
+                Fine fineRecord = new Fine(reason, bookFine);
+                fineDetails.add(fineRecord);
+            }
+        }
+    }
+}
 
 

@@ -9,6 +9,7 @@ public class Book {
     private String bookStatus;
     private LocalDate dueDate;
     private LocalDate  borrowedDate;
+    private String borrowerId = null;
 
 
     public LocalDate getDueDate() {
@@ -27,6 +28,14 @@ public class Book {
     // Setter for borrowedDate
     public void setBorrowedDate(LocalDate borrowedDate) {
         this.borrowedDate = borrowedDate;
+    }
+
+    public String getBorrowerId() {
+        return borrowerId;
+    }
+
+    public void setBorrowerId(String borrowerId) {
+        this.borrowerId = borrowerId;
     }
 
     public Book (String bookId, 
