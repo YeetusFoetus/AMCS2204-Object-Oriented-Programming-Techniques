@@ -9,11 +9,12 @@ public class Member extends User {
     @Override
     // Inheritance(?)
     public String toCSV() {
-        return "Member," + 
-        getUserId() + "," + 
-        getUserName() + "," + 
-        getUserEmail() + "," +
-        getUserPassword();
+        return "Member, " + 
+        getUserId() + ", " + 
+        getUserName() + ", " + 
+        getUserEmail() + ", " +
+        getUserPassword() + ", " +
+        getBorrowCounter();
     }
 }
 

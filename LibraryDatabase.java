@@ -21,8 +21,7 @@ public class LibraryDatabase {
     // -------USERS--------
     // File read write
     public void saveUsersToFile() {
-        try {
-            FileWriter writer = new FileWriter("users.csv");
+        try (FileWriter writer = new FileWriter("users.csv")){
 
             for (User user : users) {
                 writer.write(user.toCSV());
@@ -40,21 +39,25 @@ public class LibraryDatabase {
     public void loadUsersFromFile() {
         users.clear(); // prevent duplicates
 
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("users.csv"));
-
+        try (BufferedReader reader = new BufferedReader(new FileReader("users.csv"))){
             String line;
 
             while ((line = reader.readLine()) != null) {
+                if(line.trim().isEmpty()) {
+                    continue; // Skip empty lines
+                }
                 String[] data = line.split(",");
+                for (int i = 0; i < data.length; i++) {
+                    data[i] = data[i].trim(); // Remove leading/trailing whitespace
+                }
 
                 User user = UserFactory.createUser(data);
-                users.add(user);
+                if(user != null) {
+                    users.add(user);
+                } else {
+                    System.out.println("Invalid user data: " + line);
+                }
             }
-
-            reader.close();
-            //System.out.println("Users loaded successfully.");
-
         } catch (IOException e) {
             e.printStackTrace();
         }

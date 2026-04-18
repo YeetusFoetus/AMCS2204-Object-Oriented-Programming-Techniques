@@ -45,6 +45,7 @@ public class Library {
 
                 // Testing
                 globalDb.getLastUser();
+
             } else if (role == 4) {
                 exitProgram();
             } else if (role == 0) {

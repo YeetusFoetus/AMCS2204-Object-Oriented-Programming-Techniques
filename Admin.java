@@ -28,14 +28,14 @@ public class Admin extends User {
         loadValidAdminIds();
     }
 
-    public Admin(String id, String name, String email, String password) {
-    super(id, name, email, password, 0);
-    loadValidAdminIds();
+    public Admin(String id, String name, String email, String password, int borrowCounter) {
+        super(id, name, email, password, borrowCounter);
+        loadValidAdminIds();
     } //zheng add 10/4/2026
 
     @Override
     public String toCSV() {
-        return "Admin, " + getUserId() + ", " + getUserName() + ", " + getUserPassword();
+        return "Admin, " + getUserId() + ", " + getUserName() + ", " + getUserEmail() + ", " + getUserPassword() + ", " + getBorrowCounter();
     } //zheng add 10/4/2026
 
     public void mainMenu() {
@@ -207,9 +207,10 @@ public class Admin extends User {
         if (input.isEmpty()) {
             System.out.println("Error: Please write something!");
         }
+        }
+        return input;
     }
-    return input;
-}
+
 
     public void removeCatalog() {
         System.out.println("--- Removing a Book ---");
@@ -271,28 +272,23 @@ public class Admin extends User {
 
             switch (choice) {
                 case "1" :
-                    System.out.print("Enter new Name: ");
-                    bookToUpdate.setBookName(scanner.nextLine());
+                    bookToUpdate.setBookName(getNonEmptyInput("Enter new Name: "));
                     break;
 
                 case "2" :
-                    System.out.print("Enter new Genre: ");
-                    bookToUpdate.setBookGenre(scanner.nextLine());
+                    bookToUpdate.setBookGenre(getNonEmptyInput("Enter new Genre: "));
                     break;
 
                 case "3" :
-                    System.out.print("Enter new ISBN: ");
-                    bookToUpdate.setBookISBN(scanner.nextLine());
+                    bookToUpdate.setBookISBN(getNonEmptyInput("Enter new ISBN: "));
                     break;
                 
                 case "4" :
-                    System.out.print("Enter new Section: ");
-                    bookToUpdate.setBookSection(scanner.nextLine());
+                    bookToUpdate.setBookSection(getNonEmptyInput("Enter new Section: "));
                     break;
 
                 case "5" :
-                    System.out.print("Enter new Status: ");
-                    bookToUpdate.setBookStatus(scanner.nextLine());
+                    bookToUpdate.setBookStatus(getNonEmptyInput("Enter new Status: "));
                     break;
 
                 case "6" :
@@ -348,7 +344,7 @@ public class Admin extends User {
         //} catch (java.io.IOException e) {
         //    System.out.println("Error saving ID to file.");
         //}   zheng delete 10/4/2026
-        Admin newAdmin = new Admin(newAdminId, name, "test@gmail.com", "admin123");
+        Admin newAdmin = new Admin(newAdminId, name, "test@gmail.com", "admin123", 0);
         db.addUser(newAdmin);
         db.saveUsersToFile();
         //zheng add 10/4/2026
@@ -464,6 +460,24 @@ public class Admin extends User {
         scanner.nextLine();
     }
 
+    public void removeBookReservation() {
+        System.out.println("--- Book Reservation Removal ---");
+        System.out.println("Enter Book ID to remove reservation: ");
+        String id = scanner.nextLine();
+        Book bookToCancel = bm.getBookById(id);
+
+        if(bookToCancel !=null){
+            if ("Reserved".equals(bookToCancel.getBookStatus())) {            
+            bm.updateBookAvailable(bookToCancel); 
+        } else {
+            System.out.println("This book is not currently reserved.");
+        }
+        } else {
+        System.out.println("Book ID [" + id + "] not found.");
+        }
+        scanner.nextLine();
+    }
+
     public void viewLostBooks() {
         String choice = "0";
         while (!choice.equals("4")) {
@@ -510,23 +524,6 @@ public class Admin extends User {
         scanner.nextLine();
     }
 
-    public void removeBookReservation() {
-        System.out.println("--- Book Reservation Removal ---");
-        System.out.println("Enter Book ID to remove reservation: ");
-        String id = scanner.nextLine();
-        Book bookToCancel = bm.getBookById(id);
-
-        if(bookToCancel !=null){
-            if ("Reserved".equals(bookToCancel.getBookStatus())) {            
-            bm.updateBookAvailable(bookToCancel); 
-        } else {
-            System.out.println("This book is not currently reserved.");
-        }
-        } else {
-        System.out.println("Book ID [" + id + "] not found.");
-        }
-        scanner.nextLine();
-    }
 
     private void displayLostBooks() {
         System.out.println("\n--- List of Lost Books ---");
