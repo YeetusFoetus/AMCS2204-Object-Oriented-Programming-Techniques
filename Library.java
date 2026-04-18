@@ -6,6 +6,7 @@ public class Library {
 
         LibraryDatabase globalDb = new LibraryDatabase(); //Zheng add 27/3/2026
         BookManager globalBm = new BookManager();
+        LoanManager globalLm = new LoanManager();
         globalBm.loadBooksFromFile(); //Zheng add 2/4/2026
         globalDb.loadUsersFromFile(); //Zheng add 10/4/2026
 
@@ -20,7 +21,7 @@ public class Library {
 
                 memberMenu.login1();
             } else if (role == 2) {
-                Admin admin = new Admin(scanner, globalDb, globalBm);
+                Admin admin = new Admin(scanner, globalDb, globalBm, globalLm);
                 admin.adminLogin();
             } else if (role == 3) {
                 System.out.println("Enter your  id: ");
@@ -40,11 +41,12 @@ public class Library {
                 String password = scanner.nextLine();
                 
                 globalDb.loadUsersFromFile();
-                globalDb.addUser(new Member(id, name, email, password));
+                globalDb.addUser(new Member(id, name, email, password, 0));
                 globalDb.saveUsersToFile();
 
                 // Testing
                 globalDb.getLastUser();
+
             } else if (role == 4) {
                 exitProgram();
             } else if (role == 0) {

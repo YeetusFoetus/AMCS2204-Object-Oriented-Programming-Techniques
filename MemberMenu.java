@@ -14,7 +14,7 @@ public class MemberMenu {
 
         System.out.print("Enter password(ID): ");
         String password = scanner.next();
-        scanner.nextLine(); // Consume the leftover newline
+        scanner.nextLine();
 
         User member = db.getUserById(password);
 
@@ -74,39 +74,6 @@ public class MemberMenu {
         } else {
             System.out.println("Invalid login credentials.");
         }
-    }
-
-    //iteration 1: display room status after entering number
-    //iteration 2: display room information as a table 
-    public void discussionRoomBooking() {
-        //db.printAllRooms();
-        /*System.out.println("Choose a room to book: \n" +
-            "1.   Room A (Floor 1, 4 people)\n" +
-            "2.   Room B (Floor 1, 4 people)\n" +
-            "3.   Room C (Floor 1, 4 people)\n" +
-            "4.   Room D (Floor 1, 4 people)\n" +
-            "5.   Room E (Floor 1, 6 people)\n" +
-            "6.   Room F (Floor 1, 6 people)\n" +
-            "7.   Room G (Floor 2, 6 people)\n" +
-            "8.   Room H (Floor 2, 6 people)\n" +
-            "9.   Room I (Floor 2, 8 people)\n" +
-            "10.  Room J (Floor 2, 8 people)\n" +
-            "Enter number: "
-        );
-
-        if (scanner.hasNextInt()) {
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-            
-            System.out.println("Discussion room " + choice + " booked successfully. (Press ENTER to return)");
-
-        } else {
-
-            System.out.println("Failed to book");
-
-        }
-
-        scanner.nextLine();*/
     }
 
     public void payFine() {

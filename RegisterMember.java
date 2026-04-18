@@ -18,7 +18,7 @@ public class RegisterMember {
         System.out.print("\nEnter your password: ");
         String userPassword = scanner.nextLine();
 
-        User newMember = new Member(userId, userName, userEmail, userPassword);
+        User newMember = new Member(userId, userName, userEmail, userPassword, 0);
 
         db.addUser(newMember);
 

@@ -18,6 +18,7 @@ public class DiscussionRoom {
     public int getCapacity() { return capacity; }
     public Boolean getStatus() { return status; }
     public int getBookingCount() { return bookingCount; }
+    public void incrementBookingCount() { bookingCount++;}
 
     public void setRoomID(String roomID) { this.roomID = roomID; }
     public void setFloor(int floor) { this.floor = floor; }

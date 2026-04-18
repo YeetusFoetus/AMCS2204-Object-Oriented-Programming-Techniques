@@ -5,12 +5,13 @@ public class ReportGen {
     LibraryDatabase ld = new LibraryDatabase();
     RoomManager rm = new RoomManager();
     BookManager bm = new BookManager();
+    LoanManager lm = new LoanManager();
 
     private static Scanner scanner = new Scanner(System.in);
 
     public void reportGen() {
         int choice = 0;
-        
+
         do {
             try{
                 choice = printMenu();
@@ -29,7 +30,7 @@ public class ReportGen {
                     case 5:
                         break; // exit 
                     default:
-                        System.out.println("invalid input");
+                        System.out.println("Invalid input");
                         return;
                     }
                 } catch (Exception e){
@@ -42,7 +43,7 @@ public class ReportGen {
     public static int printMenu(){
         System.out.println("========================================================================");
         System.out.println("This is the report generator part. Which one do you want to access here?");
-        System.out.println("========================================================================");        
+        System.out.println("========================================================================");
         System.out.println("1. Borrowing Statistics for Every User");
         System.out.println("2. Fines summary");
         System.out.println("3. Lost books");
@@ -54,19 +55,20 @@ public class ReportGen {
     }
 
 
-    
+
     // book name : number
     public void displayTotalBorrowed(){
         bm.loadBooksFromFile();
 
-        System.out.printf("%-25s | %-16s | %-16s \n", 
-                        "Book name", "Total borrowed", "Total returned");
+        System.out.printf("%-20s | %-16s\n", 
+                        "User's name", "Total borrow count");
 
         bm.printBorrowCountBooks();
         System.out.println("\n");
     }
 
     public void displayFines(){
+        
         
     }
 
