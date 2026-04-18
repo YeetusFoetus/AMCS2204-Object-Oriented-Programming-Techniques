@@ -153,12 +153,12 @@ public class Admin extends User {
         }
 
         // 3. Generate Dates using Java's modern Time API
-        LocalDate borrowedDate = LocalDate.now();
-        LocalDate dueDate = borrowedDate.plusDays(14); // Standard 14-day loan
+//      LocalDate borrowedDate = LocalDate.now();
+//      LocalDate dueDate = borrowedDate.plusDays(14); // Standard 14-day loan
 
         //to test overdue
-//      LocalDate borrowedDate = LocalDate.now().minusDays(30);
-//      LocalDate dueDate = borrowedDate.plusDays(1);
+       LocalDate borrowedDate = LocalDate.now().minusDays(30);
+       LocalDate dueDate = borrowedDate.plusDays(1);
 
         // 4. Update User info
         // Increment the counter (current count + 1)
@@ -176,6 +176,7 @@ public class Admin extends User {
         System.out.println("Success! Book '" + book.getBookName() + "' lent to " + user.getUserName());
         System.out.println("Due date is: " + dueDate);
     }
+
     public void addCatalog() {
         System.out.println("--- Adding a New Book ---");
         String id = bm.generateNextBookId();
