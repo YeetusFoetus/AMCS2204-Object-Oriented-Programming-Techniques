@@ -12,6 +12,7 @@ public class Admin extends User {
     //Scanner scanner;
     //LibraryDatabase db; zheng delete 9/4/2026
     ReportGen rg = new ReportGen();
+    
 
     private static int nextIdCounter = 1001;
 
@@ -19,23 +20,24 @@ public class Admin extends User {
     // add "admin995" so the default admin can still log in.
     private List<String> validAdminIds = new ArrayList<>(List.of("admin995"));
     
-    public Admin(Scanner scanner, LibraryDatabase db, BookManager bm) {
+    public Admin(Scanner scanner, LibraryDatabase db, BookManager bm, LoanManager lm) {
         super("admin995", "Default Admin", "admin@gmail.com", "admin123", 0);
         this.scanner = scanner;
         this.db = db;
         this.bm = bm;
+        this.lm = lm;
 
         loadValidAdminIds();
     }
 
-    public Admin(String id, String name, String email, String password) {
-    super(id, name, email, password, 0);
-    loadValidAdminIds();
+    public Admin(String id, String name, String email, String password, int borrowCounter) {
+        super(id, name, email, password, borrowCounter);
+        loadValidAdminIds();
     } //zheng add 10/4/2026
 
     @Override
     public String toCSV() {
-        return "Admin, " + getUserId() + ", " + getUserName() + ", " + getUserPassword();
+        return "Admin, " + getUserId() + ", " + getUserName() + ", " + getUserEmail() + ", " + getUserPassword() + ", " + getBorrowCounter();
     } //zheng add 10/4/2026
 
     public void mainMenu() {
@@ -153,12 +155,12 @@ public class Admin extends User {
         }
 
         // 3. Generate Dates using Java's modern Time API
-        LocalDate borrowedDate = LocalDate.now();
-        LocalDate dueDate = borrowedDate.plusDays(14); // Standard 14-day loan
+//      LocalDate borrowedDate = LocalDate.now();
+//      LocalDate dueDate = borrowedDate.plusDays(14); // Standard 14-day loan
 
         //to test overdue
-//      LocalDate borrowedDate = LocalDate.now().minusDays(30);
-//      LocalDate dueDate = borrowedDate.plusDays(1);
+       LocalDate borrowedDate = LocalDate.now().minusDays(30);
+       LocalDate dueDate = borrowedDate.plusDays(1);
 
         // 4. Update User info
         // Increment the counter (current count + 1)
@@ -171,11 +173,16 @@ public class Admin extends User {
 
         book.setBorrowerId(user.getUserId());
 
+        // 6. Create and save Loan record
+        Loan newLoan = new Loan(userId, bookId, borrowedDate, dueDate);
+        lm.addLoan(newLoan);
+
         bm.saveBooksToFile();
 
         System.out.println("Success! Book '" + book.getBookName() + "' lent to " + user.getUserName());
         System.out.println("Due date is: " + dueDate);
     }
+
     public void addCatalog() {
         System.out.println("--- Adding a New Book ---");
         String id = bm.generateNextBookId();
@@ -206,9 +213,10 @@ public class Admin extends User {
         if (input.isEmpty()) {
             System.out.println("Error: Please write something!");
         }
+        }
+        return input;
     }
-    return input;
-}
+
 
     public void removeCatalog() {
         System.out.println("--- Removing a Book ---");
@@ -270,28 +278,23 @@ public class Admin extends User {
 
             switch (choice) {
                 case "1" :
-                    System.out.print("Enter new Name: ");
-                    bookToUpdate.setBookName(scanner.nextLine());
+                    bookToUpdate.setBookName(getNonEmptyInput("Enter new Name: "));
                     break;
 
                 case "2" :
-                    System.out.print("Enter new Genre: ");
-                    bookToUpdate.setBookGenre(scanner.nextLine());
+                    bookToUpdate.setBookGenre(getNonEmptyInput("Enter new Genre: "));
                     break;
 
                 case "3" :
-                    System.out.print("Enter new ISBN: ");
-                    bookToUpdate.setBookISBN(scanner.nextLine());
+                    bookToUpdate.setBookISBN(getNonEmptyInput("Enter new ISBN: "));
                     break;
                 
                 case "4" :
-                    System.out.print("Enter new Section: ");
-                    bookToUpdate.setBookSection(scanner.nextLine());
+                    bookToUpdate.setBookSection(getNonEmptyInput("Enter new Section: "));
                     break;
 
                 case "5" :
-                    System.out.print("Enter new Status: ");
-                    bookToUpdate.setBookStatus(scanner.nextLine());
+                    bookToUpdate.setBookStatus(getNonEmptyInput("Enter new Status: "));
                     break;
 
                 case "6" :
@@ -347,7 +350,7 @@ public class Admin extends User {
         //} catch (java.io.IOException e) {
         //    System.out.println("Error saving ID to file.");
         //}   zheng delete 10/4/2026
-        Admin newAdmin = new Admin(newAdminId, name, "test@gmail.com", "admin123");
+        Admin newAdmin = new Admin(newAdminId, name, "test@gmail.com", "admin123", 0);
         db.addUser(newAdmin);
         db.saveUsersToFile();
         //zheng add 10/4/2026
@@ -463,6 +466,24 @@ public class Admin extends User {
         scanner.nextLine();
     }
 
+    public void removeBookReservation() {
+        System.out.println("--- Book Reservation Removal ---");
+        System.out.println("Enter Book ID to remove reservation: ");
+        String id = scanner.nextLine();
+        Book bookToCancel = bm.getBookById(id);
+
+        if(bookToCancel !=null){
+            if ("Reserved".equals(bookToCancel.getBookStatus())) {            
+            bm.updateBookAvailable(bookToCancel); 
+        } else {
+            System.out.println("This book is not currently reserved.");
+        }
+        } else {
+        System.out.println("Book ID [" + id + "] not found.");
+        }
+        scanner.nextLine();
+    }
+
     public void viewLostBooks() {
         String choice = "0";
         while (!choice.equals("4")) {
@@ -509,23 +530,6 @@ public class Admin extends User {
         scanner.nextLine();
     }
 
-    public void removeBookReservation() {
-        System.out.println("--- Book Reservation Removal ---");
-        System.out.println("Enter Book ID to remove reservation: ");
-        String id = scanner.nextLine();
-        Book bookToCancel = bm.getBookById(id);
-
-        if(bookToCancel !=null){
-            if ("Reserved".equals(bookToCancel.getBookStatus())) {            
-            bm.updateBookAvailable(bookToCancel); 
-        } else {
-            System.out.println("This book is not currently reserved.");
-        }
-        } else {
-        System.out.println("Book ID [" + id + "] not found.");
-        }
-        scanner.nextLine();
-    }
 
     private void displayLostBooks() {
         System.out.println("\n--- List of Lost Books ---");

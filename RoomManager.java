@@ -5,7 +5,6 @@ public class RoomManager {
     // Making the list static so it exists as long as the program is running
     public static final List<DiscussionRoom> rooms = new ArrayList<>();
 
-    // Static block: runs once when the class is loaded
     static {
         // Floor 1
         rooms.add(new DiscussionRoom("1-A", 1, 2, true,0));
@@ -22,7 +21,6 @@ public class RoomManager {
         rooms.add(new DiscussionRoom("2-E", 2, 8, true,0));
     }
 
-    // A quick method to print everything to the console
     public static void displayAllRooms() {
         System.out.println("--- Discussion Room Status ---");
         for (DiscussionRoom r : rooms) {
