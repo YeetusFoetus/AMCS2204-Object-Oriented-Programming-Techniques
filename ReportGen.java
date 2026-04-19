@@ -20,15 +20,10 @@ public class ReportGen {
                         displayTotalBorrowed();
                         break; //ts for BorrowStat
                     case 2:
-                        displayFines();
+                        displayStudyRoom();
                         break; // for fine
                     case 3:
                         break; // for lost books
-                    case 4:
-                        displayStudyRoom();
-                        break; // for the study room stuff
-                    case 5:
-                        break; // exit 
                     default:
                         System.out.println("Invalid input");
                         return;
@@ -45,15 +40,12 @@ public class ReportGen {
         System.out.println("This is the report generator part. Which one do you want to access here?");
         System.out.println("========================================================================");
         System.out.println("1. Borrowing Statistics for Every User");
-        System.out.println("2. Fines summary");
-        System.out.println("3. Lost books");
-        System.out.println("4. Discussion Room Statistics");
-        System.out.println("5. Exit");
+        System.out.println("2. Discussion Room Statistics");
+        System.out.println("3. Exit");
 
         scanner.nextLine();
         return scanner.nextInt();
     }
-
 
 
     // book name : number
@@ -67,10 +59,6 @@ public class ReportGen {
         System.out.println("\n");
     }
 
-    public void displayFines(){
-        
-        
-    }
 
     public void displayStudyRoom(){
         List<DiscussionRoom> room2 = RoomManager.rooms;

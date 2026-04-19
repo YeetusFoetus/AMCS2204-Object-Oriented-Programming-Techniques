@@ -1,7 +1,9 @@
 import java.util.Scanner;
 
 public class Library {
-    public static void main(String[] args) {    
+
+    public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
 
         LibraryDatabase globalDb = new LibraryDatabase(); //Zheng add 27/3/2026
@@ -54,6 +56,7 @@ public class Library {
                 System.out.println();
                 ConsoleUtils.printCentered("Registration successful!");
                 System.out.println();
+                scanner.nextLine();
 
                 // Testing
                 globalDb.getLastUser();
@@ -68,6 +71,7 @@ public class Library {
             }
         }
     }
+
 
     static void exitProgram() {
         ConsoleUtils.clearScreen();
