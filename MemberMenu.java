@@ -4,9 +4,11 @@ public class MemberMenu {
     Scanner scanner;
     LibraryDatabase db = new LibraryDatabase();
     BookManager bm = new BookManager();
+    LoanManager lm;
 
-    public MemberMenu(Scanner scanner) {
+    public MemberMenu(Scanner scanner, LoanManager lm) {
         this.scanner = scanner;
+        this.lm = lm;
     }
 
     public void login1() {
@@ -52,7 +54,8 @@ public class MemberMenu {
                         catalog.searchBook(bm);
                         break;
                     case 3:
-                        System.out.println("Fetching your books...");
+                        System.out.println("Fetching your books...\n");
+                        System.out.println(lm.printAllLoans());
                         break;
                     case 4:
                         RoomManager.displayAllRooms();

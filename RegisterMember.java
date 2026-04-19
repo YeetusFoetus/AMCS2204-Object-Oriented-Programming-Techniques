@@ -2,8 +2,9 @@ import java.util.Scanner;
 
 public class RegisterMember {
     Scanner scanner;
+    LoanManager lm;
     LibraryDatabase db = new LibraryDatabase();
-    MemberMenu login = new MemberMenu(scanner);
+    MemberMenu login = new MemberMenu(scanner, lm);
 
     public void register1() {
         System.out.print("Enter your ID: ");
