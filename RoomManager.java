@@ -22,33 +22,42 @@ public class RoomManager {
     }
 
     public static void displayAllRooms() {
-        System.out.println("--- Discussion Room Status ---");
+        ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║             DISCUSSION ROOMS             ║");
+        ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
+        System.out.println();
+
+        // Setup column headers
+        String header = String.format("%-8s %-8s %-10s %-10s", "Room ID", "Floor", "Capacity", "Status");
+        ConsoleUtils.printCentered(header);
+        ConsoleUtils.printCentered("-----------------------------------------");
+
         for (DiscussionRoom r : rooms) {
-            // Using a ternary operator for a cleaner 'Available' vs 'Occupied' print
             String statusText = r.getStatus() ? "Available" : "Occupied";
-            System.out.println("ID: " + r.getRoomID() + " | Floor: " + r.getFloor() + 
-                               " | Cap: " + r.getCapacity() + " | Status: " + statusText);
+            String roomData = String.format("%-8s %-8d %-10d %-10s",
+                    r.getRoomID(), r.getFloor(), r.getCapacity(), statusText);
+            ConsoleUtils.printCentered(roomData);
         }
     }
 
     public static boolean reserveRoom(String id) {
+        System.out.println();
+
         for (DiscussionRoom room : rooms) {
-            // Find the room that matches the ID (ignoring case is usually safer)
             if (room.getRoomID().equalsIgnoreCase(id)) {
                 if (room.getStatus()) { // If status is true (available)
                     room.setStatus(false); // Change to occupied
-                    System.out.println("Success: " + id + " has been reserved.");
+                    ConsoleUtils.printCentered("Success: Room " + id + " has been reserved.");
                     room.incrementBookingCount();
-                    return true; 
+                    return true;
                 } else {
-                    System.out.println("Error: " + id + " is already occupied.");
+                    ConsoleUtils.printCentered("Error: Room " + id + " is already occupied.");
                     return false;
                 }
             }
         }
 
-        System.out.println("Error: Room ID " + id + " not found.");
-        
+        ConsoleUtils.printCentered("Error: Room ID " + id + " not found.");
         return false;
     }
 }

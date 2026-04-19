@@ -51,4 +51,15 @@ public class LoginScreen {
         
         ConsoleUtils.printCenteredInput("Enter choice: ");
     }
+
+    static void exitProgram() {
+        ConsoleUtils.clearScreen();
+        System.out.println();
+        ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║            EXITING SYSTEM...             ║");
+        ConsoleUtils.printCentered("║                 GOODBYE!                 ║");
+        ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
+        System.out.println();
+        System.exit(0);
+    }
 }

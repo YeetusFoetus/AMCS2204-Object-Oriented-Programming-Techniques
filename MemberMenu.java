@@ -14,7 +14,14 @@ public class MemberMenu {
     public void login1() {
         db.loadUsersFromFile();
 
-        System.out.print("Enter password(ID): ");
+        // Clear screen and center the login prompt
+        ConsoleUtils.clearScreen();
+        System.out.println();
+        ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║                MEMBER LOGIN              ║");
+        ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
+        ConsoleUtils.printCenteredInput("Enter password(ID): ");
+
         String password = scanner.next();
         scanner.nextLine();
 
@@ -22,30 +29,42 @@ public class MemberMenu {
 
         if (member != null) {
             Catalog catalog = new Catalog(scanner);
-            boolean loggedIn = true; // Loop control variable
+            boolean loggedIn = true;
 
             while (loggedIn) {
                 ConsoleUtils.clearScreen();
-                System.out.println("\n==================");
-                System.out.println("Welcome " + member.getUserName());
-                System.out.println("==================");
-                System.out.println("1. Catalog");
-                System.out.println("2. Search books");
-                System.out.println("3. Your borrowed books");
-                System.out.println("4. Discussion room booking");
-                System.out.println("5. Pay fine");
-                System.out.println("6. Logout"); 
-                System.out.print("Choose an option: ");
+                System.out.println();
+                ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+                ConsoleUtils.printCentered("║                                          ║");
 
-                // Use a string or check hasNextInt to avoid crashes if user types a letter
+                // Dynamically pad the welcome message to maintain the 42-character inner width
+                String welcomeText = "Welcome " + member.getUserName();
+                int totalSpaces = 42 - welcomeText.length();
+                int leftSpaces = totalSpaces / 2;
+                int rightSpaces = totalSpaces - leftSpaces;
+                ConsoleUtils.printCentered("║" + " ".repeat(Math.max(0, leftSpaces)) + welcomeText + " ".repeat(Math.max(0, rightSpaces)) + "║");
+
+                ConsoleUtils.printCentered("║                                          ║");
+                ConsoleUtils.printCentered("╠══════════════════════════════════════════╣");
+                ConsoleUtils.printCentered("║                                          ║");
+                ConsoleUtils.printCentered("║        1. Catalog                        ║");
+                ConsoleUtils.printCentered("║        2. Search books                   ║");
+                ConsoleUtils.printCentered("║        3. Your borrowed books            ║");
+                ConsoleUtils.printCentered("║        4. Discussion room booking        ║");
+                ConsoleUtils.printCentered("║        5. Pay fine                       ║");
+                ConsoleUtils.printCentered("║        6. Logout                         ║");
+                ConsoleUtils.printCentered("║                                          ║");
+                ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
+                ConsoleUtils.printCenteredInput("Choose an option: ");
+
                 if (!scanner.hasNextInt()) {
-                    System.out.println("Please enter a valid number.");
+                    ConsoleUtils.printCentered("\nPlease enter a valid number.\n");
                     scanner.nextLine(); // clear invalid input
                     continue;
                 }
 
                 int choice = scanner.nextInt();
-                scanner.nextLine(); 
+                scanner.nextLine();
 
                 switch (choice) {
                     case 1:
@@ -55,40 +74,62 @@ public class MemberMenu {
                         catalog.searchBook(bm);
                         break;
                     case 3:
-                        System.out.println("Fetching your books...\n");
+                        ConsoleUtils.clearScreen();
+                        System.out.println();
+                        ConsoleUtils.printCentered("Fetching your books...");
+                        scanner.nextLine();
                         System.out.println(lm.printAllLoans());
+                        scanner.nextLine();
                         break;
                     case 4:
+                        ConsoleUtils.clearScreen();
+                        System.out.println();
                         RoomManager.displayAllRooms();
-                        System.out.print("Enter Room ID to reserve (e.g., 1-A): ");
+                        System.out.println();
+                        ConsoleUtils.printCenteredInput("Enter Room ID to reserve (e.g., 1-A): ");
                         String userChoice = scanner.nextLine();
                         RoomManager.reserveRoom(userChoice);
+                        scanner.nextLine();
                         break;
                     case 5:
                         payFine();
                         break;
                     case 6:
-                        System.out.println("Logging out...");
-                        loggedIn = false; 
+                        ConsoleUtils.clearScreen();
+                        System.out.println();
+                        ConsoleUtils.printCentered("Logging out...");
+                        loggedIn = false;
                         break;
                     default:
-                        System.out.println("Invalid choice!");
+                        ConsoleUtils.printCentered("Invalid choice! Press Enter to continue.");
+                        scanner.nextLine(); // Pause to let them see the error
                 }
             }
         } else {
-            System.out.println("Invalid login credentials.");
+            ConsoleUtils.clearScreen();
+            System.out.println();
+            ConsoleUtils.printCentered("Invalid login credentials.");
+            System.out.println();
+            ConsoleUtils.printCenteredInput("Press Enter to return...");
+            scanner.nextLine();
         }
     }
 
     public void payFine() {
-        System.out.println("Current list of pending fines: \n\n" +
-            "Press x to return"
-        );
-
-        char choice = scanner.next().charAt(0);
-
-        if (choice == 'x') {
-            return;
-        }
+        ConsoleUtils.clearScreen();
+        System.out.println();
+        ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║                                          ║");
+        ConsoleUtils.printCentered("║      Current list of pending fines:      ║");
+        ConsoleUtils.printCentered("║                                          ║");
+        ConsoleUtils.printCentered("╠══════════════════════════════════════════╣");
+        ConsoleUtils.printCentered("║                                          ║");
+        ConsoleUtils.printCentered("║            (No fines pending)            ║");
+        ConsoleUtils.printCentered("║                                          ║");
+        ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
+        System.out.println();
+        ConsoleUtils.printCenteredInput("Press Enter to return");
+        scanner.nextLine();
+        return;
     }
 }

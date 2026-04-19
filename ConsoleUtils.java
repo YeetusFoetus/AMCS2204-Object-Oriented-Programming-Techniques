@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class ConsoleUtils {
     private static final int TERMINAL_WIDTH = 120;
 
@@ -37,7 +39,7 @@ public class ConsoleUtils {
             for (int i = 0; i < 30; i++) System.out.println();
         }
     }
-    
+
     public static void printLine() {
         printCentered("═".repeat(50));
     }

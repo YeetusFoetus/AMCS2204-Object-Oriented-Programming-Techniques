@@ -73,7 +73,7 @@ public class Admin extends User {
         ConsoleUtils.printCentered("║                Admin Menu                ║");
         ConsoleUtils.printCentered("╠══════════════════════════════════════════╣");
         ConsoleUtils.printCentered("║          1. Lend a book                  ║");
-        ConsoleUtils.printCentered("║          2. Register New Admin           ║");
+        ConsoleUtils.printCentered("║          2. Add new book                 ║");
         ConsoleUtils.printCentered("║          3. Remove catalog entry         ║");
         ConsoleUtils.printCentered("║          4. Update book details          ║");
         ConsoleUtils.printCentered("║          5. Register new admin           ║");
@@ -190,6 +190,7 @@ public class Admin extends User {
 
         ConsoleUtils.printCentered("Success! Book '" + book.getBookName() + "' lent to " + user.getUserName());
         ConsoleUtils.printCentered("Due date is: " + dueDate);
+        scanner.nextLine();
     }
 
     public void addCatalog() {
@@ -355,14 +356,14 @@ public class Admin extends User {
         String newAdminId = "ADM-" + currentIdNumber;
         ConsoleUtils.printCentered("Auto-generated Admin ID : " + newAdminId);
 
-        ConsoleUtils.printCenteredInput("Enter Admin Name        : ");
-        String name = scanner.nextLine();
+        String name = getNonEmptyInput("Enter Admin Name        : ");
+        scanner.nextLine();
 
-        ConsoleUtils.printCenteredInput("Enter Admin Email       : ");
-        String email = scanner.nextLine();
+        String email = getNonEmptyInput("Enter Admin Email       : ");
+        scanner.nextLine();
 
-        ConsoleUtils.printCenteredInput("Enter Admin Phone No    : ");
-        String phone = scanner.nextLine();
+        String phone = getNonEmptyInput("Enter Admin Phone No    : ");
+        scanner.nextLine();
 
         // 3. Add +1 to the number and save it to the file for the NEXT admin
         saveCounter(currentIdNumber + 1);
