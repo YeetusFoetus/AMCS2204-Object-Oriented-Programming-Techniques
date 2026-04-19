@@ -34,8 +34,8 @@ public class LoanManager {
         File file = new File("loans.csv");
         
         // DEBUG LINE 1: Check if the file even exists
-        System.out.println("Looking for file at: " + file.getAbsolutePath());
-        System.out.println("Does file exist? " + file.exists());
+        //System.out.println("Looking for file at: " + file.getAbsolutePath());
+        //System.out.println("Does file exist? " + file.exists());
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
@@ -53,8 +53,8 @@ public class LoanManager {
                 count++;
             }
             // DEBUG LINE 2: See how many lines were actually read
-            System.out.println("Lines read from file: " + count);
-        } catch (IOException e) {
+            //System.out.println("Lines read from file: " + count);
+            } catch (IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
         }
     }

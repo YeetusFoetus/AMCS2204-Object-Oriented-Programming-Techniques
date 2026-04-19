@@ -21,52 +21,72 @@ public class ReportGen {
                         break; //ts for BorrowStat
                     case 2:
                         displayStudyRoom();
-                        break; // for fine
+                        break;
                     case 3:
-                        break; // for lost books
-                    default:
-                        System.out.println("Invalid input");
                         return;
+                    default:
+                        ConsoleUtils.printCentered("Invalid input");
+                        scanner.nextLine();
                     }
                 } catch (Exception e){
-                    System.out.println("Invalid input! Try again.\n");
+                    ConsoleUtils.printCentered("Invalid input! Try again.");
              }
-        } while (choice != 5);
+        } while (choice != 3);
+        scanner.nextLine();
 
     }
 
     public static int printMenu(){
-        System.out.println("========================================================================");
-        System.out.println("This is the report generator part. Which one do you want to access here?");
-        System.out.println("========================================================================");
-        System.out.println("1. Borrowing Statistics for Every User");
-        System.out.println("2. Discussion Room Statistics");
-        System.out.println("3. Exit");
-
+        ConsoleUtils.clearScreen();
+        System.out.println("\n\n\n\n");
+        ConsoleUtils.printCentered("╔════════════════════════════════════════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║  This is the report generator part. Which one do you want to access here?  ║");
+        ConsoleUtils.printCentered("╠════════════════════════════════════════════════════════════════════════════╣");
+        ConsoleUtils.printCentered("║          1. Borrowing Statistics for Every User                            ║");
+        ConsoleUtils.printCentered("║          2. Discussion Room Statistics                                     ║");
+        ConsoleUtils.printCentered("║          3. Exit                                                           ║");
+        ConsoleUtils.printCentered("╚════════════════════════════════════════════════════════════════════════════╝");
+        ConsoleUtils.printCenteredInput("Enter choice: ");
+        int choice = scanner.nextInt();
         scanner.nextLine();
-        return scanner.nextInt();
+        return choice;
     }
 
 
     // book name : number
     public void displayTotalBorrowed(){
         bm.loadBooksFromFile();
+        int tableWidth = 46; 
+        String offset = ConsoleUtils.getPadding(tableWidth);
 
-        System.out.printf("%-20s | %-16s\n", 
-                        "User's name", "Total borrow count");
+        System.out.print(offset);
+        System.out.printf("%-20s | %-16s\n", "User's name", "Total borrow count");
+        
+        System.out.print(offset);
+        System.out.println("-".repeat(tableWidth));
 
-        bm.printBorrowCountBooks();
-        System.out.println("\n");
+        bm.printBorrowCountBooks(offset); 
+        
+        System.out.println();
+        ConsoleUtils.printCenteredInput("Press Enter to return...");
+        scanner.nextLine();
     }
 
 
     public void displayStudyRoom(){
         List<DiscussionRoom> room2 = RoomManager.rooms;
+        int tableWidth = 46; 
+        String offset = ConsoleUtils.getPadding(tableWidth);
+        ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║    Discussion Room Booking Statistics    ║");
+        ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
+        System.out.print(offset);
         System.out.printf("%-9s | %-20s\n", "Room ID", "Total Booking Count");
         for (DiscussionRoom r : room2){
+            System.out.print(offset);
             System.out.printf("%-9s | %-20d\n", r.getRoomID(), r.getBookingCount());
         }
-        System.out.println("\n");
+        scanner.nextLine();
     } // it works
 
 }

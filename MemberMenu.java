@@ -128,12 +128,8 @@ public class MemberMenu {
         ConsoleUtils.printCentered("║                                          ║");
         ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
         System.out.println();
-        ConsoleUtils.printCenteredInput("Press x to return: ");
-
-        char choice = scanner.next().charAt(0);
-
-        if (choice == 'x' || choice == 'X') {
-            return;
-        }
+        ConsoleUtils.printCenteredInput("Press Enter to return");
+        scanner.nextLine();
+        return;
     }
 }
