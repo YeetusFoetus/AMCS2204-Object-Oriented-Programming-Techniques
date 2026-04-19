@@ -9,52 +9,46 @@ public class LoginScreen {
         this.scanner = scanner;
     }
 
-    public int start() { 
-        showMenu();
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+    public int start() {
+        int choice = -1;
 
-        switch (choice) {
-            case 1:
-                return 1;
-            case 2:
-                return 2; 
-            case 3:
-                return 3;
-            case 4:
-                return 4;
-            default:
-                System.out.println("Invalid choice!");
-                return 1;
+        while (true) {
+            showMenu();
+
+            if (scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+                scanner.nextLine();
+                
+                if (choice >= 1 && choice <= 4) {
+                    return choice;
+                } else {
+                    System.out.println("Error: Please choose a number between 1 and 4.");
+                }
+            } else {
+                System.out.println("Error: Invalid input. Please enter a NUMBER.");
+                scanner.nextLine(); 
+            }
         }
     }
 
+
     void showMenu() {
-        System.out.println("\n====================");
-        System.out.println("   ABC Library");
-        System.out.println("====================");
-        System.out.println("1. Member Login");
-        System.out.println("2. Admin Login");
-        System.out.println("3. Register Member");
-        System.out.println("4. Exit");
-
-        System.out.print("Enter choice: ");
+        ConsoleUtils.clearScreen();
+        System.out.println("\n\n\n\n");
+        ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║                                          ║");
+        ConsoleUtils.printCentered("║               ABC LIBRARY                ║");
+        ConsoleUtils.printCentered("║                                          ║");
+        ConsoleUtils.printCentered("╠══════════════════════════════════════════╣");
+        ConsoleUtils.printCentered("║                                          ║");
+        ConsoleUtils.printCentered("║             1. Member Login              ║");
+        ConsoleUtils.printCentered("║             2. Admin Login               ║");
+        ConsoleUtils.printCentered("║             3. Register Member           ║");
+        ConsoleUtils.printCentered("║             4. Exit                      ║");
+        ConsoleUtils.printCentered("║                                          ║");
+        ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
+        System.out.println();
+        
+        ConsoleUtils.printCenteredInput("Enter choice: ");
     }
-
-    /*void option1() {
-        login.login1();
-    }
-
-    void option2() {
-        return 2;
-        //admin.adminlogin();
-    }
-
-    void option3() {
-        register.register1();
-    }
-
-    void option4() {
-
-    }*/
 }

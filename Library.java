@@ -1,23 +1,24 @@
 import java.util.Scanner;
 
 public class Library {
-    public static void main(String[] args) {
+    public static void main(String[] args) {    
         Scanner scanner = new Scanner(System.in);
 
-        LibraryDatabase globalDb = new LibraryDatabase();
+        LibraryDatabase globalDb = new LibraryDatabase(); //Zheng add 27/3/2026
         BookManager globalBm = new BookManager();
         LoanManager globalLm = new LoanManager();
-        globalBm.loadBooksFromFile();
-        globalDb.loadUsersFromFile();
+        globalBm.loadBooksFromFile(); //Zheng add 2/4/2026
+        globalDb.loadUsersFromFile(); //Zheng add 10/4/2026
 
         while (true) {
             LoginScreen loginScreen = new LoginScreen(scanner);
             int role = loginScreen.start();
 
             if (role == 1) {
-                MemberMenu memberMenu = new MemberMenu(scanner);
+                MemberMenu memberMenu = new MemberMenu(scanner, globalLm);
 
-                memberMenu.db = globalDb;
+                memberMenu.db = globalDb; //Zheng add 27/3/2026
+
 
                 memberMenu.login1();
             } else if (role == 2) {
@@ -57,7 +58,6 @@ public class Library {
                 // Testing
                 globalDb.getLastUser();
 
-
             } else if (role == 4) {
                 exitProgram();
             } else if (role == 0) {
@@ -80,3 +80,4 @@ public class Library {
         System.exit(0);
     }
 }
+

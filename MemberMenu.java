@@ -4,9 +4,11 @@ public class MemberMenu {
     Scanner scanner;
     LibraryDatabase db = new LibraryDatabase();
     BookManager bm = new BookManager();
+    LoanManager lm;
 
-    public MemberMenu(Scanner scanner) {
+    public MemberMenu(Scanner scanner, LoanManager lm) {
         this.scanner = scanner;
+        this.lm = lm;
     }
 
     public void login1() {
@@ -76,7 +78,8 @@ public class MemberMenu {
                         System.out.println();
                         ConsoleUtils.printCentered("Fetching your books...");
                         scanner.nextLine();
-                        // You might want to add a pause here later so the user can actually read the list!
+                        System.out.println(lm.printAllLoans());
+                        scanner.nextLine();
                         break;
                     case 4:
                         ConsoleUtils.clearScreen();

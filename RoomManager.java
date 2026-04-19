@@ -41,14 +41,14 @@ public class RoomManager {
     }
 
     public static boolean reserveRoom(String id) {
-        System.out.println(); // Add a little space before the result message
+        System.out.println();
 
         for (DiscussionRoom room : rooms) {
-            // Find the room that matches the ID (ignoring case is safer)
             if (room.getRoomID().equalsIgnoreCase(id)) {
                 if (room.getStatus()) { // If status is true (available)
                     room.setStatus(false); // Change to occupied
                     ConsoleUtils.printCentered("Success: Room " + id + " has been reserved.");
+                    room.incrementBookingCount();
                     return true;
                 } else {
                     ConsoleUtils.printCentered("Error: Room " + id + " is already occupied.");

@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class Catalog {
     Scanner scanner;
+    LoanManager lm;
     MemberMenu memberMenu; // Removed the instantiation here to avoid a potential infinite loop/stack overflow
 
     public Catalog(Scanner scanner) {
@@ -74,6 +75,7 @@ public class Catalog {
         ConsoleUtils.printCentered("║             2. Book ID                   ║");
         ConsoleUtils.printCentered("║             3. Genre                     ║");
         ConsoleUtils.printCentered("║             4. Section                   ║");
+        ConsoleUtils.printCentered("║             5. Return                    ║");
         ConsoleUtils.printCentered("║                                          ║");
         ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
         ConsoleUtils.printCenteredInput("Search by: ");
@@ -82,11 +84,12 @@ public class Catalog {
 
         if (scanner.hasNextInt()) {
             choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
                     boolean try1 = true;
+
                     while (try1) {
                         System.out.println();
                         ConsoleUtils.printCenteredInput("Enter book name: ");
@@ -119,7 +122,6 @@ public class Catalog {
                         }
                     }
                     break;
-
                 case 2:
                     boolean try2 = true;
                     while (try2) {
@@ -153,9 +155,9 @@ public class Catalog {
                         }
                     }
                     break;
-
                 case 3:
                     boolean try3 = true;
+
                     while (try3) {
                         System.out.println();
                         ConsoleUtils.printCenteredInput("Enter a genre: ");
@@ -173,7 +175,6 @@ public class Catalog {
                         }
                     }
                     break;
-
                 case 4:
                     boolean try4 = true;
                     while (try4) {
@@ -193,7 +194,6 @@ public class Catalog {
                         }
                     }
                     break;
-
                 default:
                     System.out.println();
                     ConsoleUtils.printCentered("This option isn't available");

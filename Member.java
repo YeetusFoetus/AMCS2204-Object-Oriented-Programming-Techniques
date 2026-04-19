@@ -14,7 +14,7 @@ public class Member extends User {
         getUserName() + ", " + 
         getUserEmail() + ", " +
         getUserPassword() + ", " +
-        getBorrowCounter();
+        getBorrowCounter();     //zheng add 16/4/2026
     }
 }
 

@@ -4,7 +4,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class BookManager {
     private List<Book> books = new ArrayList<>();
@@ -54,13 +53,14 @@ public class BookManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
+    }    
+    
     public Book getBookById(String id) {
         for (Book b : books) {
             if (b.getBookId().equals(id)) {
                 return b;
-            }
+            } //else {
+                //System.out.println("We couldn't find the book you're searching for");} zheng add// 2/4/2026
         }
         return null;
     }
@@ -70,7 +70,7 @@ public class BookManager {
             // Using equalsIgnoreCase is safer for user searches
             if (b.getBookName().equalsIgnoreCase(name)) {
                 return b;
-            }
+            } 
         }
         return null;
     }
@@ -94,7 +94,7 @@ public class BookManager {
         for (Book b : books) {
             if (b.getBookISBN().equals(isbn)) {
                 return b;
-            }
+            } 
         }
         return null;
     }
@@ -103,7 +103,7 @@ public class BookManager {
         for (Book b : books) {
             if (b.getBookSection().equalsIgnoreCase(section)) {
                 return b;
-            }
+            } 
         }
         return null;
     }
@@ -112,7 +112,7 @@ public class BookManager {
         for (Book b : books) {
             if (b.getBookStatus().equalsIgnoreCase(status)) {
                 return b;
-            }
+            } 
         }
         return null;
     }
@@ -147,6 +147,7 @@ public class BookManager {
     }
 
     public void printAllBooks() {
+        loadBooksFromFile();
         if (books.isEmpty()) {
             System.out.println();
             ConsoleUtils.printCentered("No books in the catalog.");
@@ -191,8 +192,9 @@ public class BookManager {
 
 
     public void printBorrowCountBooks() {
-        loadBooksFromFile();
-        Random r = new Random();
+        LibraryDatabase ld = new LibraryDatabase();
+        ld.loadUsersFromFile();
+        List<User> BorrowUser = ld.getAllUsers();
 
         ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
         ConsoleUtils.printCentered("║             BORROW STATISTICS            ║");
@@ -203,13 +205,10 @@ public class BookManager {
         ConsoleUtils.printCentered(header);
         ConsoleUtils.printCentered("-----------------------------------------------------------");
 
-        for (Book book : books) {
-            int totalBorrowed = r.nextInt(20);
-            int totalReturned = r.nextInt(20);
-
-            String data = String.format("%-25s %-16d %-16d",
-                    book.getBookName(), totalBorrowed, totalReturned);
-            ConsoleUtils.printCentered(data);
+        for (User user : BorrowUser) {
+            if(user.getBorrowCounter() > 0){
+                System.out.printf("%-18s %-8d\n", user.getUserName(), user.getBorrowCounter());
+            }
         }
     }
 
@@ -249,8 +248,8 @@ public class BookManager {
         }
 
         return foundGenre;
-    }
-
+    }   
+    
     public List<Book> printAllBooksBySection(String section) {
         List<Book> foundSection = new ArrayList<>();
         boolean headerPrinted = false;
