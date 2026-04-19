@@ -29,16 +29,45 @@ public class LoginScreen {
         }
     }
 
-    void showMenu() {
-        System.out.println("\n====================");
-        System.out.println("   ABC Library");
-        System.out.println("====================");
-        System.out.println("1. Member Login");
-        System.out.println("2. Admin Login");
-        System.out.println("3. Register Member");
-        System.out.println("4. Exit");
+    
+    private void printCentered(String text) {
+        int width = 120;
+        int padding = (width - text.length()) / 2;
+        if (padding > 0) {
+            System.out.println(" ".repeat(padding) + text);
+        } else {
+            System.out.println(text);
+        }
+    }
 
-        System.out.print("Enter choice: ");
+    private void printCenteredInput(String text) {
+        int width = 120;
+        int padding = (width - text.length()) / 2; 
+        if (padding > 0) {
+            System.out.print(" ".repeat(padding) + text);
+        } else {
+            System.out.print(text);
+        }
+    }
+
+    void showMenu() {
+        ConsoleUtils.clearScreen();
+        System.out.println("\n\n\n\n");
+        printCentered("╔══════════════════════════════════════════╗");
+        printCentered("║                                          ║");
+        printCentered("║               ABC LIBRARY                ║");
+        printCentered("║                                          ║");
+        printCentered("╠══════════════════════════════════════════╣");
+        printCentered("║                                          ║");
+        printCentered("║             1. Member Login              ║");
+        printCentered("║             2. Admin Login               ║");
+        printCentered("║             3. Register Member           ║");
+        printCentered("║             4. Exit                      ║");
+        printCentered("║                                          ║");
+        printCentered("╚══════════════════════════════════════════╝");
+        System.out.println();
+        
+        printCenteredInput("Enter choice: ");
     }
 
     /*void option1() {

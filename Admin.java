@@ -36,7 +36,7 @@ public class Admin extends User {
     @Override
     public String toCSV() {
         return "Admin, " + getUserId() + ", " + getUserName() + ", " + getUserEmail() + ", " + getUserPassword() + ", " + getBorrowCounter();
-    } //zheng add 10/4/2026
+    }
 
     public void mainMenu() {
         adminLogin();
@@ -61,6 +61,7 @@ public class Admin extends User {
         String choice = "0";
 
         while(!choice.equals("10")){
+        ConsoleUtils.clearScreen();
         System.out.println("\n====================");
         System.out.println("     Admin Menu");
         System.out.println("====================");
@@ -104,7 +105,7 @@ public class Admin extends User {
                 break;
 
             case "6":
-                //viewPendingFines();
+                viewPendingFines();
                 break;
 
             case "7":
