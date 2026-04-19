@@ -15,7 +15,7 @@ public class Library {
             int role = loginScreen.start();
 
             if (role == 1) {
-                MemberMenu memberMenu = new MemberMenu(scanner);
+                MemberMenu memberMenu = new MemberMenu(scanner, globalLm);
                 
                 memberMenu.db = globalDb; //Zheng add 27/3/2026
 
@@ -51,7 +51,7 @@ public class Library {
                 exitProgram();
             } else if (role == 0) {
                 System.out.println("Please try again.");
-            }
+            } 
         }
     }
 

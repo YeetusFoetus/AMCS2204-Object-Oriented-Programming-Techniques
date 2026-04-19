@@ -2,7 +2,8 @@ import java.util.Scanner;
 
 public class Catalog {
     Scanner scanner;
-    MemberMenu memberMenu = new MemberMenu(scanner);
+    LoanManager lm;
+    MemberMenu memberMenu = new MemberMenu(scanner, lm);
 
     public Catalog(Scanner scanner) {
         this.scanner = scanner;
