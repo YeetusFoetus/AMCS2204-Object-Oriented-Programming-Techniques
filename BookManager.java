@@ -201,8 +201,6 @@ public class BookManager {
         ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
         System.out.println();
 
-        String header = String.format("%-25s %-16s %-16s", "Book Name", "Total Borrowed", "Total Returned");
-        ConsoleUtils.printCentered(header);
         ConsoleUtils.printCentered("-----------------------------------------------------------");
 
         for (User user : BorrowUser) {

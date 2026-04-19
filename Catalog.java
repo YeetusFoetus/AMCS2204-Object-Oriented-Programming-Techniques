@@ -42,8 +42,6 @@ public class Catalog {
                     Book book = bm.getBookById(id);
                     if (book != null) {
                         bm.updateBookReserved(book);
-                        System.out.println();
-                        ConsoleUtils.printCentered("Book reserved successfully!");
                     } else {
                         System.out.println();
                         ConsoleUtils.printCentered("Book not found.");
