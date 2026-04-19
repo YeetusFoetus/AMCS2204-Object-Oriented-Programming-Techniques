@@ -4,7 +4,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class BookManager {
     private List<Book> books = new ArrayList<>();
@@ -153,7 +152,7 @@ public class BookManager {
     }
 
     public void printAllBooks() {
-        loadBooksFromFile();
+        loadBooksFromFile(); 
         if (books.isEmpty()) {
             System.out.println("No books in the catalog.");
             return;
@@ -191,17 +190,17 @@ public class BookManager {
 
 
     public void printBorrowCountBooks() {
-        loadBooksFromFile();
-        Random r = new Random();
+        LibraryDatabase ld = new LibraryDatabase();
+        ld.loadUsersFromFile();
+        List<User> BorrowUser = ld.getAllUsers();
 
-        for (Book book : books) {
-            int totalBorrowed = r.nextInt(20);
-            int totalReturned = r.nextInt(20);
-
-        System.out.printf("%-25s %-16d %-16d\n",
-                      book.getBookName(), totalBorrowed, totalReturned);
+        for (User user : BorrowUser) {
+            if(user.getBorrowCounter() > 0){
+                System.out.printf("%-18s %-8d\n", user.getUserName(), user.getBorrowCounter());
+            }
         }
     }
+    
 
     public void printBookDetails(Book book) {
         System.out.printf("%-5s %-15s %-10s %-10s %-10s %-13s\n", 

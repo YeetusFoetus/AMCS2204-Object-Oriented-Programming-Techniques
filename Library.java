@@ -6,6 +6,7 @@ public class Library {
 
         LibraryDatabase globalDb = new LibraryDatabase(); //Zheng add 27/3/2026
         BookManager globalBm = new BookManager();
+        LoanManager globalLm = new LoanManager();
         globalBm.loadBooksFromFile(); //Zheng add 2/4/2026
         globalDb.loadUsersFromFile(); //Zheng add 10/4/2026
 
@@ -14,13 +15,13 @@ public class Library {
             int role = loginScreen.start();
 
             if (role == 1) {
-                MemberMenu memberMenu = new MemberMenu(scanner);
+                MemberMenu memberMenu = new MemberMenu(scanner, globalLm);
                 
                 memberMenu.db = globalDb; //Zheng add 27/3/2026
 
                 memberMenu.login1();
             } else if (role == 2) {
-                Admin admin = new Admin(scanner, globalDb, globalBm);
+                Admin admin = new Admin(scanner, globalDb, globalBm, globalLm);
                 admin.adminLogin();
             } else if (role == 3) {
                 System.out.println("Enter your  id: ");
@@ -50,7 +51,7 @@ public class Library {
                 exitProgram();
             } else if (role == 0) {
                 System.out.println("Please try again.");
-            }
+            } 
         }
     }
 

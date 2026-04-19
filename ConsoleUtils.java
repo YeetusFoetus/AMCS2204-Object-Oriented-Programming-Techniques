@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class ConsoleUtils {
     private static final int TERMINAL_WIDTH = 120;
 

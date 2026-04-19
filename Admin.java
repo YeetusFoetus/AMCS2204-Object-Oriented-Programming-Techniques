@@ -14,6 +14,7 @@ public class Admin extends User {
     //LibraryDatabase db; zheng delete 9/4/2026
     ReportGen rg = new ReportGen();
 
+
     private static int nextIdCounter = 1001;
 
 
@@ -21,11 +22,12 @@ public class Admin extends User {
     // add "admin995" so the default admin can still log in.
     private List<String> validAdminIds = new ArrayList<>(List.of("admin995"));
     
-    public Admin(Scanner scanner, LibraryDatabase db, BookManager bm) {
+    public Admin(Scanner scanner, LibraryDatabase db, BookManager bm, LoanManager lm) {
         super("admin995", "Default Admin", "admin@gmail.com", "admin123", 0);
         this.scanner = scanner;
         this.db = db;
         this.bm = bm;
+        this.lm = lm;
 
         loadValidAdminIds();
     }
@@ -46,7 +48,9 @@ public class Admin extends User {
 
     public void adminLogin() {
         ConsoleUtils.clearScreen();
-        ConsoleUtils.printCentered("----Admin Login----");
+        ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║              Admin Login                 ║");
+        ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
         ConsoleUtils.printCenteredInput("Enter your Admin ID: ");
 
         String id = scanner.nextLine().trim();
@@ -159,17 +163,30 @@ public class Admin extends User {
         }
 
         // 3. Generate Dates using Java's modern Time API
-        LocalDate borrowedDate = LocalDate.now();
-        LocalDate dueDate = borrowedDate.plusDays(14); // Standard 14-day loan
+//      LocalDate borrowedDate = LocalDate.now();
+//      LocalDate dueDate = borrowedDate.plusDays(14); // Standard 14-day loan
+
+        //to test overdue
+       LocalDate borrowedDate = LocalDate.now().minusDays(30);
+       LocalDate dueDate = borrowedDate.plusDays(1);
 
         // 4. Update User info
         // Increment the counter (current count + 1)
         user.incrementBorrowCounter();
+        db.saveUsersToFile();
 
         // 5. Update Book info
         book.setBookStatus("On Loan");
         book.setBorrowedDate(borrowedDate);
         book.setDueDate(dueDate);
+        book.setBorrowerId(user.getUserId());
+
+        // 6. Create and save Loan record
+        Loan newLoan = new Loan(userId, bookId, borrowedDate, dueDate);
+        lm.addLoan(newLoan);
+
+        lm.saveLoansToFile();
+        bm.saveBooksToFile();
 
         ConsoleUtils.printCentered("Success! Book '" + book.getBookName() + "' lent to " + user.getUserName());
         ConsoleUtils.printCentered("Due date is: " + dueDate);
@@ -435,21 +452,39 @@ public class Admin extends User {
 
         for (User user : allUsers) {
 
-            // ---> NEW ADDITION: Calculate fines before checking <---
-            // You will need to fetch the list of books this specific user has borrowed.
-            // (Replace 'db.getBorrowedBooksForUser(user)' with whatever method your database uses)
-//            List<Book> userBooks = db.get(user.getUserId());
-//            user.calculateOverdueFines(userBooks);
+            // 1. Skip if user is null (BRACKET CLOSES IMMEDIATELY)
+            if (user == null) {
+                continue;
+            }
 
-            // Check if the user has a pending fine (This remains the same)
+            // 2. Create a fresh list just for THIS user
+            List<Book> thisUsersBooks = new ArrayList<>();
+
+            // 3. Loop through all books to find the ones this user borrowed
+            for (Book book : bm.getAllBooks()) {
+                if ("On Loan".equals(book.getBookStatus()) && user.getUserId().equals(book.getBorrowerId())) {
+                    thisUsersBooks.add(book);
+                }
+            }
+
+            // 4. Calculate fines using ONLY their specific books
+            user.calculateOverdueFines(thisUsersBooks);
+
+            // 5. Print out the details if they owe money
             if (user.getFineAmount() > 0) {
-                System.out.printf("%-10s | %-20s | $%-10.2f\n",
-                        user.getUserId(),
-                        user.getUserName(),
-                        user.getFineAmount());
+                System.out.println("\n-----------------------Pending Fines---------------------------");
+                System.out.println("User: " + user.getUserName() + " (ID: " + user.getUserId() + ")");
+                System.out.println("Total Amount Due: $" + String.format("%.2f", user.getFineAmount()));
+                System.out.println("Breakdown:");
+
+                // Loops through the Fine objects
+                for (Fine fineRecord : user.getFineDetails()) {
+                    System.out.println("  -> " + fineRecord.toString());
+                }
                 foundFines = true;
             }
-        }
+
+        } // <-- Closes the main (User user : allUsers) loop
 
         if (!foundFines) {
             ConsoleUtils.printCentered("No pending fines found in the system.");

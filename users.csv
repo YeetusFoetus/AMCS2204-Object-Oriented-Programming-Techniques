@@ -1,8 +1,8 @@
-Member, M001, Alice Johnson, alice.johnson482@gmail.com, pass123, 0
-Member, M002, Bob Smith, bob.smith739@yahoo.com, pass456, 0
+Member, M001, Alice Johnson, alice.johnson482@gmail.com, pass123, 2
+Member, M002, Bob Smith, bob.smith739@yahoo.com, pass456, 5
 Member, M003, Charlie Brown, charlie.brown615@outlook.com, pass789, 0
-Member, M004, Diana Prince, diana.prince298@gmail.com, pass101, 0
-Member, M005, Ethan Hunt, ethan.hunt874@yahoo.com, pass202, 0
+Member, M004, Diana Prince, diana.prince298@gmail.com, pass101, 5
+Member, M005, Ethan Hunt, ethan.hunt874@yahoo.com, pass202, 1
 Member, M006, Fiona Gallagher, fiona.gallagher563@outlook.com, pass303, 0
 Member, M007, George Miller, george.miller921@gmail.com, pass404, 0
 Member, M008, Hannah Abbott, hannah.abbott447@yahoo.com, pass505, 0
@@ -14,3 +14,5 @@ Admin, ADM-1009, admin2, admin@gmail.com, admin123, 0
 Member, 666, 666, 666, 666, 0
 Member, M011, 555, 555.gmail.com, 66665555, 0
 Member, M012, wk, wk@gamil.com, 114514, 0
+Member, M013, apple, apple@gmail.com, apple123, 0
+Admin, ADM-1012, , test@gmail.com, admin123, 0
