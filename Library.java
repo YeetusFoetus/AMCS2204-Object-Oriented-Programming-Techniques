@@ -51,7 +51,7 @@ public class Library {
                 exitProgram();
             } else if (role == 0) {
                 System.out.println("Please try again.");
-            }
+            } 
         }
     }
 
