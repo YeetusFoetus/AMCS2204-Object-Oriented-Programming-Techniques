@@ -72,16 +72,16 @@ public class Admin extends User {
         ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
         ConsoleUtils.printCentered("║                Admin Menu                ║");
         ConsoleUtils.printCentered("╠══════════════════════════════════════════╣");
-        ConsoleUtils.printCentered("║             1. Lend a book               ║");
-        ConsoleUtils.printCentered("║             2. Register New Admin        ║");
-        ConsoleUtils.printCentered("║             3. Remove catalog entry      ║");
-        ConsoleUtils.printCentered("║             4. Update book details       ║");
-        ConsoleUtils.printCentered("║             5. Register new admin        ║");
-        ConsoleUtils.printCentered("║             6. Pending fines             ║");
-        ConsoleUtils.printCentered("║             7. Remove Book Reservation   ║");
-        ConsoleUtils.printCentered("║             8. Lost books                ║");
-        ConsoleUtils.printCentered("║             9. Generate Report           ║");
-        ConsoleUtils.printCentered("║             10. Back to Main Menu        ║");
+        ConsoleUtils.printCentered("║          1. Lend a book                  ║");
+        ConsoleUtils.printCentered("║          2. Register New Admin           ║");
+        ConsoleUtils.printCentered("║          3. Remove catalog entry         ║");
+        ConsoleUtils.printCentered("║          4. Update book details          ║");
+        ConsoleUtils.printCentered("║          5. Register new admin           ║");
+        ConsoleUtils.printCentered("║          6. Pending fines                ║");
+        ConsoleUtils.printCentered("║          7. Remove Book Reservation      ║");
+        ConsoleUtils.printCentered("║          8. Lost books                   ║");
+        ConsoleUtils.printCentered("║          9. Generate Report              ║");
+        ConsoleUtils.printCentered("║          10. Back to Main Menu           ║");
         ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
 
         ConsoleUtils.printCenteredInput("Enter choice: ");
@@ -242,8 +242,10 @@ public class Admin extends User {
 
         if (bookToRemove != null) {
             ConsoleUtils.printCentered("Book found: " + bookToRemove.getBookName());
-            ConsoleUtils.printCentered("\n---Current Details---");
-            ConsoleUtils.printCentered("ID: " + bookToRemove.getBookId() + "\n");
+            ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+            ConsoleUtils.printCentered("║            Current Details               ║");
+            ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
+            ConsoleUtils.printCentered("ID: " + bookToRemove.getBookId());
             ConsoleUtils.printCentered("Name: " + bookToRemove.getBookName());
             ConsoleUtils.printCentered("Genre: " + bookToRemove.getBookGenre());
             ConsoleUtils.printCentered("ISBN: " + bookToRemove.getBookISBN());
@@ -277,22 +279,24 @@ public class Admin extends User {
     public void updateCatalog() {
         ConsoleUtils.clearScreen();
         ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
-        ConsoleUtils.printCentered("║             Updating Book Details        ║");
+        ConsoleUtils.printCentered("║           Updating Book Details          ║");
         ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
         ConsoleUtils.printCenteredInput("Enter the Book ID to update: ");
         String id = scanner.nextLine();
 
         Book bookToUpdate = bm.getBookById(id);
         if(bookToUpdate != null) {
-            ConsoleUtils.printCentered("\n---Current Details---");
-            ConsoleUtils.printCentered("ID: " + bookToUpdate.getBookId() + "\n");
+            ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+            ConsoleUtils.printCentered("║            Current Details               ║");
+            ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
+            ConsoleUtils.printCentered("ID: " + bookToUpdate.getBookId());
             ConsoleUtils.printCentered("1. Name: " + bookToUpdate.getBookName());
             ConsoleUtils.printCentered("2. Genre: " + bookToUpdate.getBookGenre());
             ConsoleUtils.printCentered("3. ISBN: " + bookToUpdate.getBookISBN());
             ConsoleUtils.printCentered("4. Section: " + bookToUpdate.getBookSection());
             ConsoleUtils.printCentered("5. Status: " + bookToUpdate.getBookStatus());
             ConsoleUtils.printCentered("6. Cancel Update");
-            ConsoleUtils.printCenteredInput("\nSelect the detail to update (1-6): ");
+            ConsoleUtils.printCenteredInput("Select the detail to update (1-6): ");
             String choice = scanner.nextLine();
 
             switch (choice) {
@@ -328,7 +332,7 @@ public class Admin extends User {
             }
 
             bm.saveBooksToFile();
-            ConsoleUtils.printCentered("\nBook details updated successfully.");
+            ConsoleUtils.printCentered("Book details updated successfully.");
             scanner.nextLine();
         
         }else{
@@ -389,7 +393,7 @@ public class Admin extends User {
             System.out.println("Error saving ID to file.");
         }
 
-        System.out.println("\nSuccess! New admin [" + name + "] registered with ID [" + newAdminId + "].");
+        ConsoleUtils.printCentered("Success! New admin [" + name + "] registered with ID [" + newAdminId + "].");
     }
 
     // Reads the last saved ID from a file. If the file doesn't exist, it starts at 1001.
@@ -441,12 +445,16 @@ public class Admin extends User {
     public void viewPendingFines() {
         ConsoleUtils.clearScreen();
         ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
-        ConsoleUtils.printCentered("║             Viewing Pending Fines        ║");
+        ConsoleUtils.printCentered("║          Viewing Pending Fines           ║");
         ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
 
         List<User> allUsers = db.getAllUsers();
         boolean foundFines = false;
 
+        int tableWidth = 46; 
+        String offset = ConsoleUtils.getPadding(tableWidth);
+
+        System.out.print(offset);
         System.out.printf("%-10s | %-20s | %-10s\n", "User ID", "Name", "Amount Due");
         ConsoleUtils.printCentered("--------------------------------------------------");
 
@@ -472,7 +480,9 @@ public class Admin extends User {
 
             // 5. Print out the details if they owe money
             if (user.getFineAmount() > 0) {
-                System.out.println("\n-----------------------Pending Fines---------------------------");
+                ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+                ConsoleUtils.printCentered("║            Pending Fines                 ║");
+                ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
                 System.out.println("User: " + user.getUserName() + " (ID: " + user.getUserId() + ")");
                 System.out.println("Total Amount Due: $" + String.format("%.2f", user.getFineAmount()));
                 System.out.println("Breakdown:");
@@ -496,7 +506,9 @@ public class Admin extends User {
 
     public void removeBookReservation() {
         ConsoleUtils.clearScreen();
-        ConsoleUtils.printCentered("--- Book Reservation Removal ---");
+        ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║        Book Reservation Removal          ║");
+        ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
         ConsoleUtils.printCenteredInput("Enter Book ID to remove reservation: ");
         String id = scanner.nextLine();
         Book bookToCancel = bm.getBookById(id);
@@ -516,11 +528,15 @@ public class Admin extends User {
     public void viewLostBooks() {
         String choice = "0";
         while (!choice.equals("4")) {
-            ConsoleUtils.printCentered("\n--- Lost Books Management ---");
-            ConsoleUtils.printCentered("1. Mark Book as Lost");
-            ConsoleUtils.printCentered("2. Display List of Lost Books");
-            ConsoleUtils.printCentered("3. Mark Book as Restored");
-            ConsoleUtils.printCentered("4. Back to Admin Menu");
+            ConsoleUtils.clearScreen();
+            ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+            ConsoleUtils.printCentered("║          Lost Books Management           ║");
+            ConsoleUtils.printCentered("╠══════════════════════════════════════════╣");
+            ConsoleUtils.printCentered("║       1. Mark Book as Lost               ║");
+            ConsoleUtils.printCentered("║       2. Display List of Lost Books      ║");
+            ConsoleUtils.printCentered("║       3. Mark Book as Restored           ║");
+            ConsoleUtils.printCentered("║       4. Back to Admin Menu              ║");
+            ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
             ConsoleUtils.printCenteredInput("Enter choice: ");
             choice = scanner.nextLine();
 
@@ -544,7 +560,7 @@ public class Admin extends User {
     }
 
     private void markBookAsLost() {
-        ConsoleUtils.printCentered("Enter Book ID to mark as LOST: ");
+        ConsoleUtils.printCenteredInput("Enter Book ID to mark as LOST: ");
         String id = scanner.nextLine();
         Book book = bm.getBookById(id);
 
@@ -562,7 +578,7 @@ public class Admin extends User {
 
     private void displayLostBooks() {
         ConsoleUtils.clearScreen();
-        ConsoleUtils.printCentered("\n--- List of Lost Books ---");
+        ConsoleUtils.printCentered("--- List of Lost Books ---");
         List<Book> allBooks = bm.getAllBooks(); // Assuming db has a method to get the list
         boolean found = false;
 

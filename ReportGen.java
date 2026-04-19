@@ -30,28 +30,33 @@ public class ReportGen {
                     case 5:
                         break; // exit 
                     default:
-                        System.out.println("Invalid input");
+                        ConsoleUtils.printCentered("Invalid input");
                         return;
                     }
                 } catch (Exception e){
-                    System.out.println("Invalid input! Try again.\n");
+                    ConsoleUtils.printCentered("Invalid input! Try again.");
              }
         } while (choice != 5);
+        scanner.nextLine();
 
     }
 
     public static int printMenu(){
-        System.out.println("========================================================================");
-        System.out.println("This is the report generator part. Which one do you want to access here?");
-        System.out.println("========================================================================");
-        System.out.println("1. Borrowing Statistics for Every User");
-        System.out.println("2. Fines summary");
-        System.out.println("3. Lost books");
-        System.out.println("4. Discussion Room Statistics");
-        System.out.println("5. Exit");
-
+        ConsoleUtils.clearScreen();
+        System.out.println("\n\n\n\n");
+        ConsoleUtils.printCentered("╔════════════════════════════════════════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║  This is the report generator part. Which one do you want to access here?  ║");
+        ConsoleUtils.printCentered("╠════════════════════════════════════════════════════════════════════════════╣");
+        ConsoleUtils.printCentered("║          1. Borrowing Statistics for Every User                            ║");
+        ConsoleUtils.printCentered("║          2. Fines summary                                                  ║");
+        ConsoleUtils.printCentered("║          3. Lost books                                                     ║");
+        ConsoleUtils.printCentered("║          4. Discussion Room Statistics                                     ║");
+        ConsoleUtils.printCentered("║          5. Exit                                                           ║");
+        ConsoleUtils.printCentered("╚════════════════════════════════════════════════════════════════════════════╝");
+        ConsoleUtils.printCenteredInput("Enter choice: ");
+        int choice = scanner.nextInt();
         scanner.nextLine();
-        return scanner.nextInt();
+        return choice;
     }
 
 
@@ -59,12 +64,20 @@ public class ReportGen {
     // book name : number
     public void displayTotalBorrowed(){
         bm.loadBooksFromFile();
+        int tableWidth = 46; 
+        String offset = ConsoleUtils.getPadding(tableWidth);
 
-        System.out.printf("%-20s | %-16s\n", 
-                        "User's name", "Total borrow count");
+        System.out.print(offset);
+        System.out.printf("%-20s | %-16s\n", "User's name", "Total borrow count");
+        
+        System.out.print(offset);
+        System.out.println("-".repeat(tableWidth));
 
-        bm.printBorrowCountBooks();
-        System.out.println("\n");
+        bm.printBorrowCountBooks(offset); 
+        
+        System.out.println();
+        ConsoleUtils.printCenteredInput("Press Enter to return...");
+        scanner.nextLine();
     }
 
     public void displayFines(){
@@ -74,11 +87,18 @@ public class ReportGen {
 
     public void displayStudyRoom(){
         List<DiscussionRoom> room2 = RoomManager.rooms;
+        int tableWidth = 46; 
+        String offset = ConsoleUtils.getPadding(tableWidth);
+        System.out.print(offset);
+        ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║    Discussion Room Booking Statistics    ║");
+        ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
+        System.out.print(offset);
         System.out.printf("%-9s | %-20s\n", "Room ID", "Total Booking Count");
         for (DiscussionRoom r : room2){
             System.out.printf("%-9s | %-20d\n", r.getRoomID(), r.getBookingCount());
         }
-        System.out.println("\n");
+        scanner.nextLine();
     } // it works
 
 }

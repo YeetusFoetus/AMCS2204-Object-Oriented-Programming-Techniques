@@ -189,15 +189,14 @@ public class BookManager {
     }
 
 
-    public void printBorrowCountBooks() {
+    public void printBorrowCountBooks(String offset) {
         LibraryDatabase ld = new LibraryDatabase();
         ld.loadUsersFromFile();
         List<User> BorrowUser = ld.getAllUsers();
 
-        for (User user : BorrowUser) {
-            if(user.getBorrowCounter() > 0){
-                System.out.printf("%-18s %-8d\n", user.getUserName(), user.getBorrowCounter());
-            }
+        for (User user : BorrowUser){
+        System.out.print(offset);
+        System.out.printf("%-20s | %-16d\n", user.getUserName(), user.getBorrowCounter());
         }
     }
     

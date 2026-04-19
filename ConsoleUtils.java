@@ -19,6 +19,12 @@ public class ConsoleUtils {
         }
     }
 
+    public static String getPadding(int textLength) {
+    int width = 120;
+    int padding = (width - textLength) / 2;
+    return (padding > 0) ? " ".repeat(padding) : "";
+    }
+
     public static void clearScreen() {
         try {
             if (System.getProperty("os.name").contains("Windows")) {

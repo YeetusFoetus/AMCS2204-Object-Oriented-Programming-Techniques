@@ -9,6 +9,13 @@
             "name": "Library",
             "request": "launch",
             "mainClass": "Library",
+            "projectName": "AMCS2204-Object-Oriented-Programming-Techniques_ba7b5652"
+        },
+        {
+            "type": "java",
+            "name": "Library",
+            "request": "launch",
+            "mainClass": "Library",
             "projectName": "AMCS2204-Object-Oriented-Programming-Techniques_83e0648f"
         },
         {
