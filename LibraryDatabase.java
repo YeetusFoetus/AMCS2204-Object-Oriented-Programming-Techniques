@@ -29,7 +29,7 @@ public class LibraryDatabase {
             }
 
             writer.close();
-            System.out.println("User saved successfully.");
+            ConsoleUtils.printCentered("User saved successfully.");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -87,15 +87,32 @@ public class LibraryDatabase {
     }
 
     public void getLastUser() {
-        int size = users.size() - 1;
+        if (!users.isEmpty()) {
 
-        if (size >= 0) {
-            User lastUser = users.get(size);
-            System.out.println("ID: " + lastUser.getUserId() +
-                "\nName: " + lastUser.getUserName() +
-                "\nPassword: " + lastUser.getUserPassword());
+            User lastUser = users.get(users.size() - 1);
+
+            System.out.println();
+            ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+            ConsoleUtils.printCentered("║           NEW MEMBER REGISTERED          ║");
+            ConsoleUtils.printCentered("╠══════════════════════════════════════════╣");
+            ConsoleUtils.printCentered("║                                          ║");
+
+            // %-40s pads the string with spaces on the right up to 40 characters
+            String idLine = String.format("║  %-40s║", "ID: " + lastUser.getUserId());
+            String nameLine = String.format("║  %-40s║", "Name: " + lastUser.getUserName());
+            String passLine = String.format("║  %-40s║", "Password: " + lastUser.getUserPassword());
+
+            ConsoleUtils.printCentered(idLine);
+            ConsoleUtils.printCentered(nameLine);
+            ConsoleUtils.printCentered(passLine);
+
+            ConsoleUtils.printCentered("║                                          ║");
+            ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
+            System.out.println();
         } else {
-            System.out.println("No objects in ArrayList");
+            System.out.println();
+            ConsoleUtils.printCentered("No users currently in the database.");
+            System.out.println();
         }
     }
 
