@@ -12,6 +12,7 @@ public class Admin extends User {
     //Scanner scanner;
     //LibraryDatabase db; zheng delete 9/4/2026
     ReportGen rg = new ReportGen();
+    
 
     private static int nextIdCounter = 1001;
 
@@ -19,11 +20,12 @@ public class Admin extends User {
     // add "admin995" so the default admin can still log in.
     private List<String> validAdminIds = new ArrayList<>(List.of("admin995"));
     
-    public Admin(Scanner scanner, LibraryDatabase db, BookManager bm) {
+    public Admin(Scanner scanner, LibraryDatabase db, BookManager bm, LoanManager lm) {
         super("admin995", "Default Admin", "admin@gmail.com", "admin123", 0);
         this.scanner = scanner;
         this.db = db;
         this.bm = bm;
+        this.lm = lm;
 
         loadValidAdminIds();
     }
@@ -170,6 +172,10 @@ public class Admin extends User {
         book.setDueDate(dueDate);
 
         book.setBorrowerId(user.getUserId());
+
+        // 6. Create and save Loan record
+        Loan newLoan = new Loan(userId, bookId, borrowedDate, dueDate);
+        lm.addLoan(newLoan);
 
         bm.saveBooksToFile();
 

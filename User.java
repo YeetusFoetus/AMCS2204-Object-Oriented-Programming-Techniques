@@ -14,6 +14,7 @@ abstract class User {
     LibraryDatabase db; //= new LibraryDatabase();
     Scanner scanner; //= new Scanner(System.in); zheng delete 9/4/2026
     BookManager bm;
+    LoanManager lm;
 
     public abstract String toCSV();
 
