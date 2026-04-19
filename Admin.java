@@ -9,12 +9,14 @@ import java.time.LocalDate;
 public class Admin extends User {
 
     LoginScreen loginScreen;
+    
     //Scanner scanner;
     //LibraryDatabase db; zheng delete 9/4/2026
     ReportGen rg = new ReportGen();
 
 
     private static int nextIdCounter = 1001;
+
 
     // A list to hold all valid Admin IDs in memory.
     // add "admin995" so the default admin can still log in.
@@ -38,24 +40,27 @@ public class Admin extends User {
     @Override
     public String toCSV() {
         return "Admin, " + getUserId() + ", " + getUserName() + ", " + getUserEmail() + ", " + getUserPassword() + ", " + getBorrowCounter();
-    } //zheng add 10/4/2026
+    }
 
     public void mainMenu() {
         adminLogin();
     }
 
     public void adminLogin() {
-        System.out.println("----Admin Login----");
-        System.out.println("Enter your Admin ID: ");
+        ConsoleUtils.clearScreen();
+        ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║              Admin Login                 ║");
+        ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
+        ConsoleUtils.printCenteredInput("Enter your Admin ID: ");
 
         String id = scanner.nextLine().trim();
 
         if(validAdminIds.contains(id)){
-            System.out.println("Login Success");
+            ConsoleUtils.printCentered("Login Success");
             adminMenu();
         }
         else{
-            System.out.println("Invalid Login. Admin ID not recognized.");
+            ConsoleUtils.printCentered("Invalid Login. Admin ID not recognized.");
         }
     }
 
@@ -63,28 +68,31 @@ public class Admin extends User {
         String choice = "0";
 
         while(!choice.equals("10")){
-        System.out.println("\n====================");
-        System.out.println("     Admin Menu");
-        System.out.println("====================");
-        System.out.println("1. Lend a book");
-        System.out.println("2. Add catalog entry");
-        System.out.println("3. Remove catalog entry");
-        System.out.println("4. Update book details");
-        System.out.println("5. Register new admin");
-        System.out.println("6. Pending fines");
-        System.out.println("7. Remove Book Reservation");
-        System.out.println("8. Lost books");
-        System.out.println("9. Generate Report");
-        System.out.println("10. Back to Main Menu");
+        ConsoleUtils.clearScreen();
+        ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║                Admin Menu                ║");
+        ConsoleUtils.printCentered("╠══════════════════════════════════════════╣");
+        ConsoleUtils.printCentered("║             1. Lend a book               ║");
+        ConsoleUtils.printCentered("║             2. Register New Admin        ║");
+        ConsoleUtils.printCentered("║             3. Remove catalog entry      ║");
+        ConsoleUtils.printCentered("║             4. Update book details       ║");
+        ConsoleUtils.printCentered("║             5. Register new admin        ║");
+        ConsoleUtils.printCentered("║             6. Pending fines             ║");
+        ConsoleUtils.printCentered("║             7. Remove Book Reservation   ║");
+        ConsoleUtils.printCentered("║             8. Lost books                ║");
+        ConsoleUtils.printCentered("║             9. Generate Report           ║");
+        ConsoleUtils.printCentered("║             10. Back to Main Menu        ║");
+        ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
 
-        System.out.print("\nEnter choice: ");
+        ConsoleUtils.printCenteredInput("Enter choice: ");
         choice = scanner.nextLine();
 
         switch (choice) {
             case "1":
-                System.out.println("Enter user ID:");
+                ConsoleUtils.clearScreen();
+                ConsoleUtils.printCenteredInput("Enter user ID:");
                 String UID = scanner.nextLine();
-                System.out.println("Enter book ID: ");
+                ConsoleUtils.printCenteredInput("Enter book ID: ");
                 String BID = scanner.nextLine();
                 lendBook(UID, BID);
                 break;
@@ -125,14 +133,14 @@ public class Admin extends User {
                 break;
 
             default:
-                System.out.println("Invalid choice! Please select 1-10.");
+                ConsoleUtils.printCentered("Invalid choice! Please select 1-10.");
                 scanner.nextLine();
                 break;
          }
         
         }
 
-        System.out.println("Returning to main menu...");
+        ConsoleUtils.printCentered("Returning to main menu...");
         scanner.nextLine();
         return;
         
@@ -145,12 +153,12 @@ public class Admin extends User {
 
         // 2. Simple Validation
         if (user == null || book == null) {
-            System.out.println("Error: User or Book does not exist.");
+            ConsoleUtils.printCentered("Error: User or Book does not exist.");
             return;
         }
 
         if (book.getBookStatus().equalsIgnoreCase("On Loan")) {
-            System.out.println("Error: Book is already borrowed.");
+            ConsoleUtils.printCentered("Error: Book is already borrowed.");
             return;
         }
 
@@ -171,7 +179,6 @@ public class Admin extends User {
         book.setBookStatus("On Loan");
         book.setBorrowedDate(borrowedDate);
         book.setDueDate(dueDate);
-
         book.setBorrowerId(user.getUserId());
 
         // 6. Create and save Loan record
@@ -181,14 +188,18 @@ public class Admin extends User {
         lm.saveLoansToFile();
         bm.saveBooksToFile();
 
-        System.out.println("Success! Book '" + book.getBookName() + "' lent to " + user.getUserName());
-        System.out.println("Due date is: " + dueDate);
+        ConsoleUtils.printCentered("Success! Book '" + book.getBookName() + "' lent to " + user.getUserName());
+        ConsoleUtils.printCentered("Due date is: " + dueDate);
     }
 
     public void addCatalog() {
-        System.out.println("--- Adding a New Book ---");
+        ConsoleUtils.clearScreen();
+        ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║             Adding a New Book            ║");
+        ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
+        System.out.println();
         String id = bm.generateNextBookId();
-        System.out.println("Generated Book ID: " + id);
+        ConsoleUtils.printCentered("Generated Book ID: " + id);
 
         String name = getNonEmptyInput("Enter the Book Name: ");
         String genre = getNonEmptyInput("Enter the Genre: ");
@@ -201,7 +212,7 @@ public class Admin extends User {
         bm.addBook(newBook);
         bm.saveBooksToFile();
     
-        System.out.println("\nSuccess! [" + name + "] has been added to the catalog.");
+        ConsoleUtils.printCentered("Success! [" + name + "] has been added to the catalog.");
         scanner.nextLine();
 
     }
@@ -209,11 +220,11 @@ public class Admin extends User {
     private String getNonEmptyInput(String prompt) {
     String input = "";
     while (input.isEmpty()) {
-        System.out.print(prompt);
+        ConsoleUtils.printCenteredInput(prompt);
         input = scanner.nextLine().trim();
         
         if (input.isEmpty()) {
-            System.out.println("Error: Please write something!");
+            ConsoleUtils.printCentered("Error: Please write something!");
         }
         }
         return input;
@@ -221,61 +232,67 @@ public class Admin extends User {
 
 
     public void removeCatalog() {
-        System.out.println("--- Removing a Book ---");
-        System.out.println("Enter the Book ID to remove: ");
+        ConsoleUtils.clearScreen();
+        ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║             Removing a Book              ║");        
+        ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
+        ConsoleUtils.printCenteredInput("Enter the Book ID to remove: ");
         String id = scanner.nextLine();
         Book bookToRemove = bm.getBookById(id);
 
         if (bookToRemove != null) {
-            System.out.println("Book found: " + bookToRemove.getBookName());
-            System.out.println("\n---Current Details---");
-            System.out.println("ID: " + bookToRemove.getBookId() + "\n");
-            System.out.println("Name: " + bookToRemove.getBookName());
-            System.out.println("Genre: " + bookToRemove.getBookGenre());
-            System.out.println("ISBN: " + bookToRemove.getBookISBN());
-            System.out.println("Section: " + bookToRemove.getBookSection());
-            System.out.println("Status: " + bookToRemove.getBookStatus());
-            System.out.println("Are you sure you want to remove this book? (Y/N)");
+            ConsoleUtils.printCentered("Book found: " + bookToRemove.getBookName());
+            ConsoleUtils.printCentered("\n---Current Details---");
+            ConsoleUtils.printCentered("ID: " + bookToRemove.getBookId() + "\n");
+            ConsoleUtils.printCentered("Name: " + bookToRemove.getBookName());
+            ConsoleUtils.printCentered("Genre: " + bookToRemove.getBookGenre());
+            ConsoleUtils.printCentered("ISBN: " + bookToRemove.getBookISBN());
+            ConsoleUtils.printCentered("Section: " + bookToRemove.getBookSection());
+            ConsoleUtils.printCentered("Status: " + bookToRemove.getBookStatus());
+            ConsoleUtils.printCenteredInput("Are you sure you want to remove this book? (Y/N): ");
             String confirmation = scanner.nextLine();
             switch (confirmation.toUpperCase()) {
                 case "Y":
                     bm.removeBook(bookToRemove);
                     bm.saveBooksToFile();
-                    System.out.println("Book [" + bookToRemove.getBookName() + "] has been removed from the catalog.");
+                    ConsoleUtils.printCentered("Book [" + bookToRemove.getBookName() + "] has been removed from the catalog.");
                     scanner.nextLine();
                     break;
                 case "N":
-                    System.out.println("Removal cancelled.");
+                    ConsoleUtils.printCentered("Removal cancelled.");
                     scanner.nextLine();
                     break;
                 default:
-                    System.out.println("Invalid input. Removal cancelled.");
+                    ConsoleUtils.printCentered("Invalid input. Removal cancelled.");
                     scanner.nextLine();
                     break;
             }
             }
             else {
-                System.out.println("Book not found.");
+                ConsoleUtils.printCentered("Book not found.");
                 scanner.nextLine();
         }
     }
 
     public void updateCatalog() {
-        System.out.println("--- Updating Book Details ---");
-        System.out.println("Enter the Book ID to update: ");
+        ConsoleUtils.clearScreen();
+        ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║             Updating Book Details        ║");
+        ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
+        ConsoleUtils.printCenteredInput("Enter the Book ID to update: ");
         String id = scanner.nextLine();
 
         Book bookToUpdate = bm.getBookById(id);
         if(bookToUpdate != null) {
-            System.out.println("\n---Current Details---");
-            System.out.println("ID: " + bookToUpdate.getBookId() + "\n");
-            System.out.println("1. Name: " + bookToUpdate.getBookName());
-            System.out.println("2. Genre: " + bookToUpdate.getBookGenre());
-            System.out.println("3. ISBN: " + bookToUpdate.getBookISBN());
-            System.out.println("4. Section: " + bookToUpdate.getBookSection());
-            System.out.println("5. Status: " + bookToUpdate.getBookStatus());
-            System.out.println("6. Cancel Update");
-            System.out.print("\nSelect the detail to update (1-6): ");
+            ConsoleUtils.printCentered("\n---Current Details---");
+            ConsoleUtils.printCentered("ID: " + bookToUpdate.getBookId() + "\n");
+            ConsoleUtils.printCentered("1. Name: " + bookToUpdate.getBookName());
+            ConsoleUtils.printCentered("2. Genre: " + bookToUpdate.getBookGenre());
+            ConsoleUtils.printCentered("3. ISBN: " + bookToUpdate.getBookISBN());
+            ConsoleUtils.printCentered("4. Section: " + bookToUpdate.getBookSection());
+            ConsoleUtils.printCentered("5. Status: " + bookToUpdate.getBookStatus());
+            ConsoleUtils.printCentered("6. Cancel Update");
+            ConsoleUtils.printCenteredInput("\nSelect the detail to update (1-6): ");
             String choice = scanner.nextLine();
 
             switch (choice) {
@@ -300,44 +317,47 @@ public class Admin extends User {
                     break;
 
                 case "6" :
-                    System.out.println("Update cancelled");
+                    ConsoleUtils.printCentered("Update cancelled");
                     scanner.nextLine();
                     return;
             
                 default:
-                    System.out.println("Invalid choice");
+                    ConsoleUtils.printCentered("Invalid choice");
                     scanner.nextLine();
                     return;
             }
 
             bm.saveBooksToFile();
-            System.out.println("\nBook details updated successfully.");
+            ConsoleUtils.printCentered("\nBook details updated successfully.");
             scanner.nextLine();
         
         }else{
-            System.out.println("Book ID [" + id + "] not found.");
+            ConsoleUtils.printCentered("Book ID [" + id + "] not found.");
             scanner.nextLine();
         } 
 
     }
 
     public void registerNewAdmin() {
-        System.out.println("--- Register New Admin ---");
+        ConsoleUtils.clearScreen();
+        ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║             Register New Admin           ║");
+        ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
 
         // 1. Load the current number from the file
         int currentIdNumber = loadCounter();
 
         // 2. Generate the ID
         String newAdminId = "ADM-" + currentIdNumber;
-        System.out.println("Auto-generated Admin ID : " + newAdminId);
+        ConsoleUtils.printCentered("Auto-generated Admin ID : " + newAdminId);
 
-        System.out.print("Enter Admin Name        : ");
+        ConsoleUtils.printCenteredInput("Enter Admin Name        : ");
         String name = scanner.nextLine();
 
-        System.out.print("Enter Admin Email       : ");
+        ConsoleUtils.printCenteredInput("Enter Admin Email       : ");
         String email = scanner.nextLine();
 
-        System.out.print("Enter Admin Phone No    : ");
+        ConsoleUtils.printCenteredInput("Enter Admin Phone No    : ");
         String phone = scanner.nextLine();
 
         // 3. Add +1 to the number and save it to the file for the NEXT admin
@@ -383,7 +403,7 @@ public class Admin extends User {
                 return count;
             }
         } catch (Exception e) {
-            System.out.println("Could not load counter, starting fresh.");
+            ConsoleUtils.printCentered("Could not load counter, starting fresh.");
         }
         return 1001; // Default starting number
     }
@@ -395,7 +415,7 @@ public class Admin extends User {
             writer.write(String.valueOf(currentCount));
             writer.close();
         } catch (IOException e) {
-            System.out.println("Error saving the counter!");
+            ConsoleUtils.printCentered("Error saving the counter!");
         }
     }
 
@@ -414,15 +434,21 @@ public class Admin extends User {
                 fileScanner.close();
             }
         } catch (Exception e) {
-            System.out.println("Error loading admin IDs.");
+            ConsoleUtils.printCentered("Error loading admin IDs.");
         }
     }
 
     public void viewPendingFines() {
-        System.out.println("\n--- Viewing Pending Fines ---");
+        ConsoleUtils.clearScreen();
+        ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║             Viewing Pending Fines        ║");
+        ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
 
         List<User> allUsers = db.getAllUsers();
         boolean foundFines = false;
+
+        System.out.printf("%-10s | %-20s | %-10s\n", "User ID", "Name", "Amount Due");
+        ConsoleUtils.printCentered("--------------------------------------------------");
 
         for (User user : allUsers) {
 
@@ -461,16 +487,17 @@ public class Admin extends User {
         } // <-- Closes the main (User user : allUsers) loop
 
         if (!foundFines) {
-            System.out.println("No pending fines found in the system.");
+            ConsoleUtils.printCentered("No pending fines found in the system.");
         }
 
-        System.out.println("\nPress Enter to return to menu...");
+        ConsoleUtils.printCentered("Press Enter to return to menu...");
         scanner.nextLine();
     }
 
     public void removeBookReservation() {
-        System.out.println("--- Book Reservation Removal ---");
-        System.out.println("Enter Book ID to remove reservation: ");
+        ConsoleUtils.clearScreen();
+        ConsoleUtils.printCentered("--- Book Reservation Removal ---");
+        ConsoleUtils.printCenteredInput("Enter Book ID to remove reservation: ");
         String id = scanner.nextLine();
         Book bookToCancel = bm.getBookById(id);
 
@@ -478,10 +505,10 @@ public class Admin extends User {
             if ("Reserved".equals(bookToCancel.getBookStatus())) {            
             bm.updateBookAvailable(bookToCancel); 
         } else {
-            System.out.println("This book is not currently reserved.");
+            ConsoleUtils.printCentered("This book is not currently reserved.");
         }
         } else {
-        System.out.println("Book ID [" + id + "] not found.");
+        ConsoleUtils.printCentered("Book ID [" + id + "] not found.");
         }
         scanner.nextLine();
     }
@@ -489,12 +516,12 @@ public class Admin extends User {
     public void viewLostBooks() {
         String choice = "0";
         while (!choice.equals("4")) {
-            System.out.println("\n--- Lost Books Management ---");
-            System.out.println("1. Mark Book as Lost");
-            System.out.println("2. Display List of Lost Books");
-            System.out.println("3. Mark Book as Restored");
-            System.out.println("4. Back to Admin Menu");
-            System.out.print("\nEnter choice: ");
+            ConsoleUtils.printCentered("\n--- Lost Books Management ---");
+            ConsoleUtils.printCentered("1. Mark Book as Lost");
+            ConsoleUtils.printCentered("2. Display List of Lost Books");
+            ConsoleUtils.printCentered("3. Mark Book as Restored");
+            ConsoleUtils.printCentered("4. Back to Admin Menu");
+            ConsoleUtils.printCenteredInput("Enter choice: ");
             choice = scanner.nextLine();
 
             switch (choice) {
@@ -517,7 +544,7 @@ public class Admin extends User {
     }
 
     private void markBookAsLost() {
-        System.out.print("Enter Book ID to mark as LOST: ");
+        ConsoleUtils.printCentered("Enter Book ID to mark as LOST: ");
         String id = scanner.nextLine();
         Book book = bm.getBookById(id);
 
@@ -525,43 +552,44 @@ public class Admin extends User {
             // Auto-update status to Unavailable
             book.setBookStatus("Lost (Unavailable)");
             bm.saveBooksToFile();
-            System.out.println("Success: [" + book.getBookName() + "] is now marked as Lost.");
+            ConsoleUtils.printCentered("Success: [" + book.getBookName() + "] is now marked as Lost.");
         } else {
-            System.out.println("Error: Book ID not found.");
+            ConsoleUtils.printCentered("Error: Book ID not found.");
         }
         scanner.nextLine();
     }
 
 
     private void displayLostBooks() {
-        System.out.println("\n--- List of Lost Books ---");
+        ConsoleUtils.clearScreen();
+        ConsoleUtils.printCentered("\n--- List of Lost Books ---");
         List<Book> allBooks = bm.getAllBooks(); // Assuming db has a method to get the list
         boolean found = false;
 
         for (Book book : allBooks) {
             if (book.getBookStatus().equalsIgnoreCase("Lost (Unavailable)")) {
-                System.out.println("ID: " + book.getBookId() + " | Title: " + book.getBookName());
+                ConsoleUtils.printCentered("ID: " + book.getBookId() + " | Title: " + book.getBookName());
                 found = true;
             }
         }
 
         if (!found) {
-            System.out.println("No books are currently marked as lost.");
+            ConsoleUtils.printCentered("No books are currently marked as lost.");
         }
         scanner.nextLine();
     }
 
     private void restoreLostBook() {
-        System.out.print("Enter Book ID to RESTORE: ");
+        ConsoleUtils.printCenteredInput("Enter Book ID to RESTORE: ");
         String id = scanner.nextLine();
         Book book = bm.getBookById(id);
 
         if (book != null && book.getBookStatus().equalsIgnoreCase("Lost (Unavailable)")) {
             book.setBookStatus("Available");
             bm.saveBooksToFile();
-            System.out.println("Success: [" + book.getBookName() + "] has been restored to 'Available'.");
+            ConsoleUtils.printCentered("Success: [" + book.getBookName() + "] has been restored to 'Available'.");
         } else {
-            System.out.println("Error: Book ID not found or book is not currently marked as lost.");
+            ConsoleUtils.printCentered("Error: Book ID not found or book is not currently marked as lost.");
         }
         scanner.nextLine();
     }

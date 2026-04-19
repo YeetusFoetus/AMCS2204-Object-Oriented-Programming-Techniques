@@ -31,15 +31,24 @@ public class LoginScreen {
         }
     }
 
-    void showMenu() {
-        System.out.println("\n====================");
-        System.out.println("   ABC Library");
-        System.out.println("====================");
-        System.out.println("1. Member Login");
-        System.out.println("2. Admin Login");
-        System.out.println("3. Register Member");
-        System.out.println("4. Exit");
 
-        System.out.print("Enter choice: ");
+    void showMenu() {
+        ConsoleUtils.clearScreen();
+        System.out.println("\n\n\n\n");
+        ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║                                          ║");
+        ConsoleUtils.printCentered("║               ABC LIBRARY                ║");
+        ConsoleUtils.printCentered("║                                          ║");
+        ConsoleUtils.printCentered("╠══════════════════════════════════════════╣");
+        ConsoleUtils.printCentered("║                                          ║");
+        ConsoleUtils.printCentered("║             1. Member Login              ║");
+        ConsoleUtils.printCentered("║             2. Admin Login               ║");
+        ConsoleUtils.printCentered("║             3. Register Member           ║");
+        ConsoleUtils.printCentered("║             4. Exit                      ║");
+        ConsoleUtils.printCentered("║                                          ║");
+        ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
+        System.out.println();
+        
+        ConsoleUtils.printCenteredInput("Enter choice: ");
     }
 }

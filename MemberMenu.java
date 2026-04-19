@@ -25,6 +25,7 @@ public class MemberMenu {
             boolean loggedIn = true; // Loop control variable
 
             while (loggedIn) {
+                ConsoleUtils.clearScreen();
                 System.out.println("\n==================");
                 System.out.println("Welcome " + member.getUserName());
                 System.out.println("==================");
