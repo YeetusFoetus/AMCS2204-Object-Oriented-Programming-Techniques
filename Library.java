@@ -1,14 +1,14 @@
 import java.util.Scanner;
 
 public class Library {
-    public static void main(String[] args) {    
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        LibraryDatabase globalDb = new LibraryDatabase(); //Zheng add 27/3/2026
+        LibraryDatabase globalDb = new LibraryDatabase();
         BookManager globalBm = new BookManager();
         LoanManager globalLm = new LoanManager();
-        globalBm.loadBooksFromFile(); //Zheng add 2/4/2026
-        globalDb.loadUsersFromFile(); //Zheng add 10/4/2026
+        globalBm.loadBooksFromFile();
+        globalDb.loadUsersFromFile();
 
         while (true) {
             LoginScreen loginScreen = new LoginScreen(scanner);
@@ -16,48 +16,67 @@ public class Library {
 
             if (role == 1) {
                 MemberMenu memberMenu = new MemberMenu(scanner);
-                
-                memberMenu.db = globalDb; //Zheng add 27/3/2026
+
+                memberMenu.db = globalDb;
 
                 memberMenu.login1();
             } else if (role == 2) {
                 Admin admin = new Admin(scanner, globalDb, globalBm, globalLm);
                 admin.adminLogin();
             } else if (role == 3) {
-                System.out.println("Enter your  id: ");
+                ConsoleUtils.clearScreen();
+                System.out.println();
+                ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+                ConsoleUtils.printCentered("║              REGISTER MEMBER             ║");
+                ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
+                System.out.println();
 
-                String id = scanner.nextLine();
+                ConsoleUtils.printCenteredInput("Enter your ID: ");
+                String id = scanner.nextLine().trim();
 
-                System.out.println("Enter your name: ");
+                System.out.println();
+                ConsoleUtils.printCenteredInput("Enter your name: ");
+                String name = scanner.nextLine().trim();
 
-                String name = scanner.nextLine();
+                System.out.println();
+                ConsoleUtils.printCenteredInput("Enter your email: ");
+                String email = scanner.nextLine().trim();
 
-                System.out.println("Enter your email: ");
+                System.out.println();
+                ConsoleUtils.printCenteredInput("Enter your password: ");
+                String password = scanner.nextLine().trim();
 
-                String email = scanner.nextLine();
-
-                System.out.println("Enter your password: ");
-
-                String password = scanner.nextLine();
-                
                 globalDb.loadUsersFromFile();
                 globalDb.addUser(new Member(id, name, email, password, 0));
                 globalDb.saveUsersToFile();
 
+                System.out.println();
+                ConsoleUtils.printCentered("Registration successful!");
+                System.out.println();
+
                 // Testing
                 globalDb.getLastUser();
+
 
             } else if (role == 4) {
                 exitProgram();
             } else if (role == 0) {
-                System.out.println("Please try again.");
+                // The LoginScreen handles invalid inputs, but just in case it slips through:
+                System.out.println();
+                ConsoleUtils.printCentered("Please try again.");
+
             }
         }
     }
 
     static void exitProgram() {
-        System.out.println("Exiting...");
+        ConsoleUtils.clearScreen();
+        System.out.println();
+        ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║            EXITING SYSTEM...             ║");
+        ConsoleUtils.printCentered("║                 GOODBYE!                 ║");
+        ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
+        System.out.println();
         System.exit(0);
     }
 }
-

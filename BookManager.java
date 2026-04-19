@@ -54,23 +54,23 @@ public class BookManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }    
-    
+    }
+
     public Book getBookById(String id) {
         for (Book b : books) {
             if (b.getBookId().equals(id)) {
                 return b;
-            } //else {
-                //System.out.println("We couldn't find the book you're searching for");} zheng add// 2/4/2026
+            }
         }
         return null;
     }
 
     public Book getBookByName(String name) {
         for (Book b : books) {
-            if (b.getBookName().equals(name)) {
+            // Using equalsIgnoreCase is safer for user searches
+            if (b.getBookName().equalsIgnoreCase(name)) {
                 return b;
-            } 
+            }
         }
         return null;
     }
@@ -81,20 +81,9 @@ public class BookManager {
         }
     }
 
-    /*public Book updateBookOnLoan(Book b1) {
-        for (Book b2 : books) {
-            if (b1 == b2) {
-                b1.changeStatusToLoan();
-            }
-            else {
-                System.out.println("This book doesn't exist");
-            }
-        }
-    }*/
-
     public Book getBookByGenre(String genre) {
         for (Book b : books) {
-            if (b.getBookGenre().equals(genre)) {
+            if (b.getBookGenre().equalsIgnoreCase(genre)) {
                 return b;
             }
         }
@@ -105,25 +94,25 @@ public class BookManager {
         for (Book b : books) {
             if (b.getBookISBN().equals(isbn)) {
                 return b;
-            } 
+            }
         }
         return null;
     }
 
     public Book getBookBySection(String section) {
         for (Book b : books) {
-            if (b.getBookSection().equals(section)) {
+            if (b.getBookSection().equalsIgnoreCase(section)) {
                 return b;
-            } 
+            }
         }
         return null;
     }
 
     public Book getBookByStatus(String status) {
         for (Book b : books) {
-            if (b.getBookStatus().equals(status)) {
+            if (b.getBookStatus().equalsIgnoreCase(status)) {
                 return b;
-            } 
+            }
         }
         return null;
     }
@@ -133,11 +122,13 @@ public class BookManager {
             if (b1 == b2) {
                 b1.changeStatustoReserved();
                 saveBooksToFile();
-                System.out.println("Book reserved successfully");
-                return; // Exit the method
+                System.out.println();
+                ConsoleUtils.printCentered("Book reserved successfully");
+                return;
             }
         }
-        System.out.println("This book doesn't exist");
+        System.out.println();
+        ConsoleUtils.printCentered("This book doesn't exist");
     }
 
     public void updateBookAvailable(Book b1) {
@@ -145,32 +136,41 @@ public class BookManager {
             if (b1 == b2) {
                 b1.changeStatustoAvailable();
                 saveBooksToFile();
-                System.out.println("Reservation unset successfully");
-                return; // Exit the method
+                System.out.println();
+                ConsoleUtils.printCentered("Reservation unset successfully");
+                return;
             }
         }
-        System.out.println("This book doesn't exist");
+        System.out.println();
+        ConsoleUtils.printCentered("This book doesn't exist");
+        ConsoleUtils.clearScreen();
     }
 
     public void printAllBooks() {
-        //loadBooksFromFile(); zheng delete 2/4/2026
         if (books.isEmpty()) {
-            System.out.println("No books in the catalog.");
+            System.out.println();
+            ConsoleUtils.printCentered("No books in the catalog.");
+            System.out.println();
             return;
-        }  //zheng add 2/4/2026
-        
+        }
+
+        String header = String.format("%-3s %-5s %-15s %-10s %-10s %-10s %-13s",
+                "#", "ID", "Name", "Genre", "ISBN", "Section", "Status");
+        ConsoleUtils.printCentered(header);
+        ConsoleUtils.printCentered("---------------------------------------------------------------------------");
+
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
-
-            System.out.printf("%-3d %-5s %-15s %-10s %-10s %-10s %-13s\n", 
-                i + 1,
-                book.getBookId(),
-                book.getBookName(),
-                book.getBookGenre(),
-                book.getBookISBN(),
-                book.getBookSection(),
-                book.getBookStatus()
+            String bookData = String.format("%-3d %-5s %-15s %-10s %-10s %-10s %-13s",
+                    i + 1,
+                    book.getBookId(),
+                    book.getBookName(),
+                    book.getBookGenre(),
+                    book.getBookISBN(),
+                    book.getBookSection(),
+                    book.getBookStatus()
             );
+            ConsoleUtils.printCentered(bookData);
         }
     }
 
@@ -194,17 +194,27 @@ public class BookManager {
         loadBooksFromFile();
         Random r = new Random();
 
+        ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║             BORROW STATISTICS            ║");
+        ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
+        System.out.println();
+
+        String header = String.format("%-25s %-16s %-16s", "Book Name", "Total Borrowed", "Total Returned");
+        ConsoleUtils.printCentered(header);
+        ConsoleUtils.printCentered("-----------------------------------------------------------");
+
         for (Book book : books) {
             int totalBorrowed = r.nextInt(20);
             int totalReturned = r.nextInt(20);
 
-        System.out.printf("%-25s %-16d %-16d\n",
-                      book.getBookName(), totalBorrowed, totalReturned);
+            String data = String.format("%-25s %-16d %-16d",
+                    book.getBookName(), totalBorrowed, totalReturned);
+            ConsoleUtils.printCentered(data);
         }
     }
 
     public void printBookDetails(Book book) {
-        System.out.printf("%-5s %-15s %-10s %-10s %-10s %-13s\n", 
+        String bookData = String.format("%-5s %-15s %-10s %-10s %-10s %-13s",
                 book.getBookId(),
                 book.getBookName(),
                 book.getBookGenre(),
@@ -212,44 +222,57 @@ public class BookManager {
                 book.getBookSection(),
                 book.getBookStatus()
         );
+        ConsoleUtils.printCentered(bookData);
     }
 
     //(WIP)
     public List<Book> printAllBooksByGenre(String genre) {
         List<Book> foundGenre = new ArrayList<>();
+        boolean headerPrinted = false;
 
         for (Book b : books) {
-            if (b.getBookGenre().equals(genre)) {
-                foundGenre.add(b);
+            if (b.getBookGenre().equalsIgnoreCase(genre)) {
+                if (!headerPrinted) {
+                    String header = String.format("%-5s %-15s %-10s %-10s %-10s %-13s", "ID", "Name", "Genre", "ISBN", "Section", "Status");
+                    ConsoleUtils.printCentered(header);
+                    ConsoleUtils.printCentered("------------------------------------------------------------------");
+                    headerPrinted = true;
+                }
 
+                foundGenre.add(b);
                 printBookDetails(b);
             }
         }
 
         if (foundGenre.isEmpty()) {
-            System.out.println("Genre not found.");
+            ConsoleUtils.printCentered("Genre not found.");
         }
 
         return foundGenre;
-    }   
-    
+    }
+
     public List<Book> printAllBooksBySection(String section) {
         List<Book> foundSection = new ArrayList<>();
+        boolean headerPrinted = false;
 
         for (Book b : books) {
-            if (b.getBookSection().equals(section)) {
-                foundSection.add(b);
+            if (b.getBookSection().equalsIgnoreCase(section)) {
+                if (!headerPrinted) {
+                    String header = String.format("%-5s %-15s %-10s %-10s %-10s %-13s", "ID", "Name", "Genre", "ISBN", "Section", "Status");
+                    ConsoleUtils.printCentered(header);
+                    ConsoleUtils.printCentered("------------------------------------------------------------------");
+                    headerPrinted = true;
+                }
 
+                foundSection.add(b);
                 printBookDetails(b);
             }
         }
 
         if (foundSection.isEmpty()) {
-            System.out.println("Section not found.");
+            ConsoleUtils.printCentered("Section not found.");
         }
 
         return foundSection;
-    }   
-
-
+    }
 }
