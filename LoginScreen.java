@@ -29,45 +29,25 @@ public class LoginScreen {
         }
     }
 
-    
-    private void printCentered(String text) {
-        int width = 120;
-        int padding = (width - text.length()) / 2;
-        if (padding > 0) {
-            System.out.println(" ".repeat(padding) + text);
-        } else {
-            System.out.println(text);
-        }
-    }
-
-    private void printCenteredInput(String text) {
-        int width = 120;
-        int padding = (width - text.length()) / 2; 
-        if (padding > 0) {
-            System.out.print(" ".repeat(padding) + text);
-        } else {
-            System.out.print(text);
-        }
-    }
 
     void showMenu() {
         ConsoleUtils.clearScreen();
         System.out.println("\n\n\n\n");
-        printCentered("╔══════════════════════════════════════════╗");
-        printCentered("║                                          ║");
-        printCentered("║               ABC LIBRARY                ║");
-        printCentered("║                                          ║");
-        printCentered("╠══════════════════════════════════════════╣");
-        printCentered("║                                          ║");
-        printCentered("║             1. Member Login              ║");
-        printCentered("║             2. Admin Login               ║");
-        printCentered("║             3. Register Member           ║");
-        printCentered("║             4. Exit                      ║");
-        printCentered("║                                          ║");
-        printCentered("╚══════════════════════════════════════════╝");
+        ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║                                          ║");
+        ConsoleUtils.printCentered("║               ABC LIBRARY                ║");
+        ConsoleUtils.printCentered("║                                          ║");
+        ConsoleUtils.printCentered("╠══════════════════════════════════════════╣");
+        ConsoleUtils.printCentered("║                                          ║");
+        ConsoleUtils.printCentered("║             1. Member Login              ║");
+        ConsoleUtils.printCentered("║             2. Admin Login               ║");
+        ConsoleUtils.printCentered("║             3. Register Member           ║");
+        ConsoleUtils.printCentered("║             4. Exit                      ║");
+        ConsoleUtils.printCentered("║                                          ║");
+        ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
         System.out.println();
         
-        printCenteredInput("Enter choice: ");
+        ConsoleUtils.printCenteredInput("Enter choice: ");
     }
 
     /*void option1() {

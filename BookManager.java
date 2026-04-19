@@ -153,7 +153,7 @@ public class BookManager {
     }
 
     public void printAllBooks() {
-        //loadBooksFromFile(); zheng delete 2/4/2026
+        loadBooksFromFile();
         if (books.isEmpty()) {
             System.out.println("No books in the catalog.");
             return;
