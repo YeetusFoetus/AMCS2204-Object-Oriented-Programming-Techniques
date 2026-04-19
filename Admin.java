@@ -12,7 +12,7 @@ public class Admin extends User {
     //Scanner scanner;
     //LibraryDatabase db; zheng delete 9/4/2026
     ReportGen rg = new ReportGen();
-    
+
 
     private static int nextIdCounter = 1001;
 
@@ -177,6 +177,7 @@ public class Admin extends User {
         Loan newLoan = new Loan(userId, bookId, borrowedDate, dueDate);
         lm.addLoan(newLoan);
 
+        lm.saveLoansToFile();
         bm.saveBooksToFile();
 
         System.out.println("Success! Book '" + book.getBookName() + "' lent to " + user.getUserName());

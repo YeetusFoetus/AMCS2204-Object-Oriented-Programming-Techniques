@@ -36,8 +36,11 @@ public class LoanManager {
             String line;
 
             while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty()) continue; // Skip blank lines
+                
                 String[] data = line.split(",");
-
+                if (data.length < 4) continue; // Safety check for malformed rows
+                
                 Loan loan = createLoan(data);
                 loans.add(loan);
             }
@@ -57,5 +60,21 @@ public class LoanManager {
         LocalDate due = LocalDate.parse(data[3]);
 
         return new Loan(uid, bid, borrow, due);
+    }
+
+    public String printAllLoans() {
+        loadLoansFromFile();
+        
+        // Use StringBuilder for efficiency when concatenating in a loop
+        StringBuilder report = new StringBuilder();
+
+        for (Loan loan : loans) {
+            // 1. Call toString() ON the loan object
+            // 2. Add a newline (\n) so they don't all appear on one line
+            report.append(loan.toString()).append("\n");
+        }
+
+        // Return the full string instead of null
+        return report.toString();
     }
 }
