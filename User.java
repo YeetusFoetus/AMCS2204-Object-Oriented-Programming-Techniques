@@ -64,6 +64,10 @@ abstract class User {
         this.borrowCounter++;
     }
 
+    public void setBorrowCounter(int borrowCounter) {
+        this.borrowCounter = borrowCounter;
+    }
+
     public void decrementBorrowCounter() {
         if (this.borrowCounter > 0) {
             this.borrowCounter--;

@@ -165,6 +165,7 @@ public class Admin extends User {
         // 4. Update User info
         // Increment the counter (current count + 1)
         user.incrementBorrowCounter();
+        db.saveUsersToFile();
 
         // 5. Update Book info
         book.setBookStatus("On Loan");

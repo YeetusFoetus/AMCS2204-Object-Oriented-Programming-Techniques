@@ -38,6 +38,7 @@ public class RoomManager {
                 if (room.getStatus()) { // If status is true (available)
                     room.setStatus(false); // Change to occupied
                     System.out.println("Success: " + id + " has been reserved.");
+                    room.incrementBookingCount();
                     return true; 
                 } else {
                     System.out.println("Error: " + id + " is already occupied.");
