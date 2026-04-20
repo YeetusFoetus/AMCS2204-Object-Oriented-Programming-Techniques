@@ -20,7 +20,6 @@ public class Library {
 
                 memberMenu.db = globalDb; //Zheng add 27/3/2026
 
-
                 memberMenu.login1();
             } else if (role == 2) {
                 Admin admin = new Admin(scanner, globalDb, globalBm, globalLm);
@@ -42,6 +41,7 @@ public class Library {
                 globalDb.addUser(new Member(id, name, email, password, 0));
                 globalDb.saveUsersToFile();
                 globalDb.getLastUser();
+                scanner.nextLine();
 
             } else if (role == 4) {
                 LoginScreen.exitProgram();

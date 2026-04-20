@@ -191,17 +191,10 @@ public class BookManager {
     }
 
 
-    public void printBorrowCountBooks(String offset) {
+    public void printBorrowCountBooks(String offset) {        
         LibraryDatabase ld = new LibraryDatabase();
         ld.loadUsersFromFile();
         List<User> BorrowUser = ld.getAllUsers();
-
-        ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
-        ConsoleUtils.printCentered("║             BORROW STATISTICS            ║");
-        ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
-        System.out.println();
-
-        ConsoleUtils.printCentered("-----------------------------------------------------------");
 
         for (User user : BorrowUser){
         System.out.print(offset);

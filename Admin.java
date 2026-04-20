@@ -393,6 +393,7 @@ public class Admin extends User {
         }
 
         ConsoleUtils.printCentered("Success! New admin [" + name + "] registered with ID [" + newAdminId + "].");
+        scanner.nextLine();
     }
 
     // Reads the last saved ID from a file. If the file doesn't exist, it starts at 1001.

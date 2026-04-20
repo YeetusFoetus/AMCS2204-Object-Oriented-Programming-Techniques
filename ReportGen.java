@@ -18,7 +18,7 @@ public class ReportGen {
                 switch(choice){
                     case 1:
                         displayTotalBorrowed();
-                        break; //ts for BorrowStat
+                        break; 
                     case 2:
                         displayStudyRoom();
                         break;
@@ -42,6 +42,7 @@ public class ReportGen {
 
     public static int printMenu(){
         ConsoleUtils.clearScreen();
+        
         System.out.println("\n\n\n\n");
         ConsoleUtils.printCentered("╔════════════════════════════════════════════════════════════════════════════╗");
         ConsoleUtils.printCentered("║  This is the report generator part. Which one do you want to access here?  ║");
@@ -59,13 +60,19 @@ public class ReportGen {
 
     // book name : number
     public void displayTotalBorrowed(){
+        ConsoleUtils.clearScreen();
+
         bm.loadBooksFromFile();
         int tableWidth = 46; 
         String offset = ConsoleUtils.getPadding(tableWidth);
 
+        ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
+        ConsoleUtils.printCentered("║             BORROW STATISTICS            ║");
+        ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
+
         System.out.print(offset);
         System.out.printf("%-20s | %-16s\n", "User's name", "Total borrow count");
-        
+
         System.out.print(offset);
         System.out.println("-".repeat(tableWidth));
 
@@ -78,14 +85,21 @@ public class ReportGen {
 
 
     public void displayStudyRoom(){
+        ConsoleUtils.clearScreen();
+
         List<DiscussionRoom> room2 = RoomManager.rooms;
         int tableWidth = 46; 
         String offset = ConsoleUtils.getPadding(tableWidth);
         ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
         ConsoleUtils.printCentered("║    Discussion Room Booking Statistics    ║");
         ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
+
         System.out.print(offset);
         System.out.printf("%-9s | %-20s\n", "Room ID", "Total Booking Count");
+
+        System.out.print(offset);
+        System.out.println("-".repeat(tableWidth));
+
         for (DiscussionRoom r : room2){
             System.out.print(offset);
             System.out.printf("%-9s | %-20d\n", r.getRoomID(), r.getBookingCount());

@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class LoginScreen {
     Scanner scanner;
     //MemberMenu login = new MemberMenu();
-    RegisterMember register = new RegisterMember();
 
     public LoginScreen(Scanner scanner) {
         this.scanner = scanner;

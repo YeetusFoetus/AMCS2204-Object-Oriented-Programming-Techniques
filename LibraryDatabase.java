@@ -87,6 +87,8 @@ public class LibraryDatabase {
     }
 
     public void getLastUser() {
+        ConsoleUtils.clearScreen();
+        
         if (!users.isEmpty()) {
 
             User lastUser = users.get(users.size() - 1);
@@ -108,6 +110,8 @@ public class LibraryDatabase {
 
             ConsoleUtils.printCentered("║                                          ║");
             ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
+            System.out.println("\n");
+            ConsoleUtils.printCentered("Press ENTER to return...");
             System.out.println();
         } else {
             System.out.println();
