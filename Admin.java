@@ -553,7 +553,8 @@ public class Admin extends User {
                 case "4":
                     break;
                 default:
-                    System.out.println("Invalid choice!");
+                    ConsoleUtils.printCentered("Invalid choice!");
+                    scanner.nextLine();
                     break;
             }
         }

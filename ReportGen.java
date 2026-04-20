@@ -26,10 +26,14 @@ public class ReportGen {
                         return;
                     default:
                         ConsoleUtils.printCentered("Invalid input");
+                        ConsoleUtils.printCenteredInput("Press ENTER to try again...");
                         scanner.nextLine();
                     }
                 } catch (Exception e){
-                    ConsoleUtils.printCentered("Invalid input! Try again.");
+                    ConsoleUtils.printCentered("Invalid input");
+                    scanner.nextLine();
+                    ConsoleUtils.printCenteredInput("Press ENTER to try again...");
+                    scanner.nextLine();
              }
         } while (choice != 3);
         scanner.nextLine();
@@ -86,6 +90,8 @@ public class ReportGen {
             System.out.print(offset);
             System.out.printf("%-9s | %-20d\n", r.getRoomID(), r.getBookingCount());
         }
+        System.out.println();
+        ConsoleUtils.printCenteredInput("Press Enter to return...");
         scanner.nextLine();
     } // it works
 
