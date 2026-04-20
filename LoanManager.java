@@ -76,16 +76,12 @@ public class LoanManager {
             return "No loan records found in the system.";
         }
         
-        // Use StringBuilder for efficiency when concatenating in a loop
         StringBuilder report = new StringBuilder();
 
         for (Loan loan : loans) {
-            // 1. Call toString() ON the loan object
-            // 2. Add a newline (\n) so they don't all appear on one line
             report.append(loan.toString()).append("\n");
         }
 
-        // Return the full string instead of null
         return report.toString();
     }
 }

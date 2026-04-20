@@ -29,12 +29,9 @@ public class Fine {
         this.amount = amount;
     }
 
-    // toString method for easy printing
     @Override
     public String toString() {
-        return "Fine{" +
-                "reason='" + reason + '\'' +
-                ", amount=$" + String.format("%.2f", amount) +
-                '}';
+        return "Reason = '" + reason + '\'' +
+                ", amount = $" + String.format("%.2f", amount);
     }
 }

@@ -90,7 +90,7 @@ public class Admin extends User {
         switch (choice) {
             case "1":
                 ConsoleUtils.clearScreen();
-                String UID = getNonEmptyInput("Enter user ID:");
+                String UID = getNonEmptyInput("Enter user ID: ");
                 String BID = getNonEmptyInput("Enter book ID: ");
                 lendBook(UID, BID);
                 scanner.nextLine();
@@ -189,7 +189,6 @@ public class Admin extends User {
 
         ConsoleUtils.printCentered("Success! Book '" + book.getBookName() + "' lent to " + user.getUserName());
         ConsoleUtils.printCentered("Due date is: " + dueDate);
-        scanner.nextLine();
     }
 
     public void addCatalog() {
@@ -454,9 +453,6 @@ public class Admin extends User {
         int tableWidth = 46; 
         String offset = ConsoleUtils.getPadding(tableWidth);
 
-        System.out.print(offset);
-        System.out.printf("%-10s | %-20s | %-10s\n", "User ID", "Name", "Amount Due");
-        ConsoleUtils.printCentered("--------------------------------------------------");
 
         for (User user : allUsers) {
 
@@ -480,16 +476,13 @@ public class Admin extends User {
 
             // 5. Print out the details if they owe money
             if (user.getFineAmount() > 0) {
-                ConsoleUtils.printCentered("╔══════════════════════════════════════════╗");
-                ConsoleUtils.printCentered("║            Pending Fines                 ║");
-                ConsoleUtils.printCentered("╚══════════════════════════════════════════╝");
-                System.out.println("User: " + user.getUserName() + " (ID: " + user.getUserId() + ")");
-                System.out.println("Total Amount Due: $" + String.format("%.2f", user.getFineAmount()));
-                System.out.println("Breakdown:");
+                System.out.println("\n");
+                ConsoleUtils.printCentered("User: " + user.getUserName() + " (" + user.getUserId() + ")");
+                ConsoleUtils.printCentered("Breakdown:");
 
                 // Loops through the Fine objects
                 for (Fine fineRecord : user.getFineDetails()) {
-                    System.out.println("  -> " + fineRecord.toString());
+                    ConsoleUtils.printCentered(fineRecord.toString());
                 }
                 foundFines = true;
             }
@@ -500,6 +493,7 @@ public class Admin extends User {
             ConsoleUtils.printCentered("No pending fines found in the system.");
         }
 
+        System.out.println("\n");
         ConsoleUtils.printCentered("Press Enter to return to menu...");
         scanner.nextLine();
     }
