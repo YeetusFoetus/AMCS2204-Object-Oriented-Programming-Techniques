@@ -155,14 +155,14 @@ public class BookManager {
             return;
         }
 
-        String header = String.format("%-1s %-5s %-32s %-15s %-15s %-15s %-20s",
+        String header = String.format("%-3s %-6s %-30s %-16s %-16s %-16s %-18s",
                 "#", "ID", "Name", "Genre", "ISBN", "Section", "Status");
         ConsoleUtils.printCentered(header);
-        ConsoleUtils.printCentered("------------------------------------------------------------------------------------------");
+        ConsoleUtils.printCentered("-----------------------------------------------------------------------------------------------------------");
 
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
-            String bookData = String.format("%-1d %-5s %-32s %-15s %-15s %-15s %-20s",
+            String bookData = String.format("%-3d %-6s %-30s %-16s %-16s %-16s %-18s",
                     i + 1,
                     book.getBookId(),
                     book.getBookName(),

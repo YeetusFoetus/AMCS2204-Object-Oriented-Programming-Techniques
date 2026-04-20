@@ -22,11 +22,15 @@ public class LoginScreen {
                 if (choice >= 1 && choice <= 4) {
                     return choice;
                 } else {
-                    System.out.println("Error: Please choose a number between 1 and 4.");
+                    ConsoleUtils.printCentered("Error: Please choose a number between 1 and 4.");
+                    ConsoleUtils.printCenteredInput("Press ENTER to try again...");
+                    scanner.nextLine();
                 }
-            } else {
-                System.out.println("Error: Invalid input. Please enter a NUMBER.");
+            }else {
+                ConsoleUtils.printCentered("Error: Invalid input. Please enter a NUMBER.");
                 scanner.nextLine(); 
+                ConsoleUtils.printCenteredInput("Press ENTER to try again...");
+                scanner.nextLine();
             }
         }
     }
