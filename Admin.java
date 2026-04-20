@@ -90,11 +90,10 @@ public class Admin extends User {
         switch (choice) {
             case "1":
                 ConsoleUtils.clearScreen();
-                ConsoleUtils.printCenteredInput("Enter user ID:");
-                String UID = scanner.nextLine();
-                ConsoleUtils.printCenteredInput("Enter book ID: ");
-                String BID = scanner.nextLine();
+                String UID = getNonEmptyInput("Enter user ID:");
+                String BID = getNonEmptyInput("Enter book ID: ");
                 lendBook(UID, BID);
+                scanner.nextLine();
                 break;
 
             case "2":
